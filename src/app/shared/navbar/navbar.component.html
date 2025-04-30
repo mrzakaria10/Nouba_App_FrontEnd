@@ -1,0 +1,20 @@
+<!-- Barre de navigation principale de Nouba -->
+<nav class="flex items-center justify-between px-6 py-2 border-b">
+    <!-- Logo et slogan -->
+    <div>
+      <span class="text-xl font-bold text-blue-600">Nouba</span>
+      <span class="block text-xs text-gray-500">Gestion intelligente des files</span>
+    </div>
+    <!-- Liens de navigation -->
+    <ul class="flex space-x-6 items-center">
+      <li><a routerLink="/" class="text-blue-600 font-semibold">Accueil</a></li>
+      <li><a routerLink="/agencies" class="hover:text-blue-600">Pour les agences</a></li>
+      <li><a routerLink="/dashboard" class="hover:text-blue-600">Espace<br>Agence<br>Admin</a></li>
+      <li><a routerLink="/contact" class="hover:text-blue-600">Contact</a></li>
+    </ul>
+    <!-- Boutons Connexion / Inscription -->
+    <div class="flex space-x-2">
+      <button routerLink="/auth/login" class="border px-3 py-1 rounded text-gray-700">Connexion</button>
+      <button routerLink="/auth/register" class="bg-blue-500 text-white px-3 py-1 rounded">S'inscrire</button>
+    </div>
+  </nav>
