@@ -36,7 +36,7 @@ interface Register {
     ReactiveFormsModule,
     RouterModule
   ]
-}) 
+})
 
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;

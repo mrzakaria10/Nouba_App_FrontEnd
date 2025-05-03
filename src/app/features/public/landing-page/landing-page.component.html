@@ -1,54 +1,199 @@
-<app-navbar></app-navbar>
-<!--
-  Page d'accueil de Nouba.
-  On utilise le composant Navbar partagé en haut de la page.
-  Le reste de la page reprend la maquette fournie.
--->
+<!-- Conteneur principal de la landing page -->
+<div class="bg-white min-h-screen flex flex-col">
+  <!-- Navbar (à inclure avec <app-navbar> si tu as un composant dédié) -->
+  <app-navbar></app-navbar>
 
-
-
-<!-- Section vide pour le slogan ou une image -->
-<div class="h-48 flex items-center justify-center">
-    <span class="text-gray-400">Gestion intelligente</span>
-  </div>
-  
-  <!-- Section "Pourquoi choisir Nouba ?" -->
-  <section class="text-center my-12">
-    <h2 class="text-3xl font-bold text-blue-600 mb-8">Pourquoi choisir Nouba ?</h2>
-    <div class="flex flex-col md:flex-row justify-center gap-6">
-      <!-- Carte 1 : Tickets virtuels -->
-      <div class="border rounded-lg p-6 w-full md:w-1/4 flex flex-col items-center">
-        <span class="mb-4 text-4xl">📱</span>
-        <h3 class="text-blue-500 font-semibold mb-2">Tickets virtuels</h3>
-        <p class="text-gray-600 mb-4 text-sm">
-          Permettez à vos clients de prendre des tickets à distance et de suivre leur position en temps réel.
+  <!-- Section Hero : responsive sur mobile, tablette et desktop -->
+  <section class="bg-blue-50 flex items-center min-h-[85vh] py-8 md:py-16">
+    <div class="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center w-full px-4 md:px-8">
+      <!-- Texte principal -->
+      <div class="w-full md:w-1/2 mt-8 md:mt-0">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-center md:text-left">
+          Nouba – <span class="text-blue-600">La solution intelligente</span> pour gérer vos files d'attente
+        </h1>
+        <p class="text-gray-600 mb-6 text-center md:text-left">
+          Optimisez l'expérience client et réduisez les temps d'attente dans vos agences.
         </p>
-        <button class="bg-blue-500 text-white px-4 py-1 rounded text-xs">Obtenir un ticket en 2 clics →</button>
+        <div class="flex flex-col sm:flex-row gap-2 justify-center md:justify-start">
+          <button class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">
+            Obtenir un ticket en 2 clics
+          </button>
+          <button class="bg-white border border-blue-600 text-blue-600 px-6 py-2 rounded font-semibold hover:bg-blue-50 transition">
+            Vérifier votre ticket
+          </button>
+        </div>
+        <ul class="mt-6 text-gray-500 space-y-1 text-sm text-center md:text-left">
+          <li>• Réduction du temps d'attente de 40%</li>
+          <li>• Solution utilisée par plus de 200 agences</li>
+        </ul>
       </div>
-      <!-- Carte 2 : Notifications intelligentes -->
-      <div class="border rounded-lg p-6 w-full md:w-1/4 flex flex-col items-center">
-        <span class="mb-4 text-4xl">🔔</span>
-        <h3 class="text-blue-500 font-semibold mb-2">Notifications intelligentes</h3>
-        <p class="text-gray-600 mb-4 text-sm">
-          Alertes automatiques lorsque le tour du client approche, réduisant les temps d'attente sur place.
-        </p>
-        <button class="bg-blue-500 text-white px-4 py-1 rounded text-xs">Obtenir un ticket en 2 clics →</button>
-      </div>
-      <!-- Carte 3 : Tableau de bord complet -->
-      <div class="border rounded-lg p-6 w-full md:w-1/4 flex flex-col items-center">
-        <span class="mb-4 text-4xl">📊</span>
-        <h3 class="text-blue-500 font-semibold mb-2">Tableau de bord complet</h3>
-        <p class="text-gray-600 mb-4 text-sm">
-          Suivez les statistiques de fréquentation et optimisez vos ressources en temps réel.
-        </p>
-        <button class="bg-blue-500 text-white px-4 py-1 rounded text-xs">Obtenir un ticket en 2 clics →</button>
+      <!-- Vidéo illustrative responsive -->
+      <div class="w-full md:w-1/2 flex justify-center">
+        <video 
+        class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg rounded shadow object-cover aspect-video"
+          autoplay
+          muted
+          playsinline
+        controls>
+        <source src="assets/Noua_video.mp4" type="video/mp4">
+         
+          Votre navigateur ne supporte pas la lecture vidéo.
+        </video>
       </div>
     </div>
   </section>
-  
-  <!-- Section "Comment ça marche ?" -->
-  <section class="bg-blue-100 py-12 text-center">
-    <h2 class="text-3xl font-bold text-blue-600">Comment ça marche ?</h2>
-    <!-- Ajouter ici des étapes ou illustrations -->
+
+  <!-- Section Vérifiez votre ticket -->
+  <section class="min-h-[60vh]  ">
+    <div class="max-w-2xl mx-auto text-center ">
+      <h2 class="text-2xl font-bold text-blue-600 mt-10 ">Vérifiez votre ticket</h2>
+      <div class="bg-blue-50 p-6 rounded shadow mt-10">
+        <label class="block text-left text-gray-700 mb-2 font-medium">Statut de votre ticket</label>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input type="text" placeholder="Entrez votre numéro de ticket"
+            class="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            Vérifier le ticket
+          </button>
+        </div>
+      </div>
+    </div>
   </section>
-<app-footer></app-footer>
+
+  <!-- Section Pourquoi choisir Nouba -->
+  <section class="bg-blue-50  min-h-[60vh]">
+    <div class="max-w-5xl mx-auto text-center px-4">
+      <h2 class="text-2xl md:text-3xl font-bold text-blue-600 mt-10">
+        Pourquoi choisir Nouba&nbsp;?
+      </h2>
+      <!-- Grille responsive : 1 colonne sur mobile, 3 sur desktop -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+        <!-- Carte fonctionnalité 1 -->
+        <div class="bg-white rounded shadow p-6 flex flex-col items-center">
+          <!-- Icône illustrative (remplace src par ton icône) -->
+          <img src="assets/ticket-icon.svg" alt="Tickets virtuels" class="w-12 h-12 mb-4" />
+          <h3 class="font-semibold mb-2">Tickets virtuels</h3>
+          <p class="text-gray-500 text-sm mb-4">
+            Permettez à vos clients de prendre des tickets à distance et de suivre leur position en temps réel.
+          </p>
+          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-sm">
+            Obtenir un ticket en 2 clics
+          </button>
+        </div>
+        <!-- Carte fonctionnalité 2 -->
+        <div class="bg-white rounded shadow p-6 flex flex-col items-center">
+          <img src="assets/notification-icon.svg" alt="Notifications intelligentes" class="w-12 h-12 mb-4" />
+          <h3 class="font-semibold mb-2">Notifications intelligentes</h3>
+          <p class="text-gray-500 text-sm mb-4">
+            Alertes automatiques lorsque le tour du client approche, réduisant les temps d'attente sur place.
+          </p>
+          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-sm">
+            Obtenir un ticket en 2 clics
+          </button>
+        </div>
+        <!-- Carte fonctionnalité 3 -->
+        <div class="bg-white rounded shadow p-6 flex flex-col items-center">
+          <img src="assets/dashboard-icon.svg" alt="Tableau de bord complet" class="w-12 h-12 mb-4" />
+          <h3 class="font-semibold mb-2">Tableau de bord complet</h3>
+          <p class="text-gray-500 text-sm mb-4">
+            Suivez les statistiques de fréquentation et optimisez vos ressources en temps réel.
+          </p>
+          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-sm">
+            Obtenir un ticket en 2 clics
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+  <!-- Section Comment ça marche -->
+<section class="min-h-[60vh] items-center ">
+  <div class="max-w-5xl mx-auto text-center items-center ">
+    <h2 class="text-2xl font-bold text-blue-600 mb-10">Comment ça marche ?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="text-blue-600 text-3xl font-bold mb-2">1</div>
+        <div class="font-semibold mb-1">Le client réserve</div>
+        <div class="text-gray-500 text-sm">Depuis son smartphone ou sur le site web</div>
+      </div>
+      <div>
+        <div class="text-blue-600 text-3xl font-bold mb-2">2</div>
+        <div class="font-semibold mb-1">Suivi en temps réel</div>
+        <div class="text-gray-500 text-sm">Visualisation de la position dans la file</div>
+      </div>
+      <div>
+        <div class="text-blue-600 text-3xl font-bold mb-2">3</div>
+        <div class="font-semibold mb-1">Notification automatique</div>
+        <div class="text-gray-500 text-sm">Alerte 5-10 minutes avant le passage</div>
+      </div>
+      <div>
+        <div class="text-blue-600 text-3xl font-bold mb-2">4</div>
+        <div class="font-semibold mb-1">Service optimisé</div>
+        <div class="text-gray-500 text-sm">Meilleure expérience pour clients et agents</div>
+      </div>
+    </div>
+    <button class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">
+      Obtenir un ticket en 2 clics
+    </button>
+  </div>
+</section>
+
+  <!-- Section Témoignages clients -->
+  <section class="bg-blue-50 min-h-[60vh]">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-2xl font-bold text-blue-600 mb-10">Ce que nos clients disent</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Carte témoignage -->
+        <div class="bg-white rounded shadow p-6">
+          <div class="flex items-center mb-2">
+            <span class="text-yellow-400 text-xl mr-2">★★★★★</span>
+            <span class="font-semibold">Sophie Martin</span>
+          </div>
+          <p class="text-gray-500 text-sm">"Depuis que nous utilisons Nouba, le temps d'attente dans nos agences a diminué de 40%. Nos clients sont ravis et notre équipe travaille dans de meilleures conditions."</p>
+        </div>
+        <div class="bg-white rounded shadow p-6">
+          <div class="flex items-center mb-2">
+            <span class="text-yellow-400 text-xl mr-2">★★★★★</span>
+            <span class="font-semibold">Thomas Dubois</span>
+          </div>
+          <p class="text-gray-500 text-sm">"L'interface est intuitive et les notifications sont très utiles. Nos employés sont plus efficaces et nos clients mieux informés du déroulement de leur attente."</p>
+        </div>
+        <div class="bg-white rounded shadow p-6">
+          <div class="flex items-center mb-2">
+            <span class="text-yellow-400 text-xl mr-2">★★★★★</span>
+            <span class="font-semibold">Marie Lefevre</span>
+          </div>
+          <p class="text-gray-500 text-sm">"La possibilité de voir le temps d'attente estimé et de recevoir des notifications est un vrai plus. Je recommande vivement ce service à toutes les agences."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Contact / Démo -->
+  
+<section class="min-h-[50vh]">
+  <div class="max-w-2xl mx-auto bg-blue-50 rounded shadow p-8">
+    <h2 class="text-xl font-bold text-blue-600 mb-4">
+      Prêt à transformer l'expérience d'attente dans votre agence ?
+    </h2>
+    <p class="mb-6 text-gray-600">
+      Contactez-nous pour une démonstration personnalisée de notre solution.
+    </p>
+    <form class="space-y-4">
+      <div class="flex flex-col md:flex-row gap-4">
+        <input type="text" placeholder="Nom" class="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+        <input type="email" placeholder="Email" class="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+      <textarea placeholder="Comment pouvons-nous vous aider ?" rows="3"
+        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition font-medium">
+        Envoyer ma demande
+      </button>
+    </form>
+  </div>
+</section>
+
+  <!-- Footer (à inclure avec <app-footer> si tu as un composant dédié) -->
+  <app-footer></app-footer>
+</div>
