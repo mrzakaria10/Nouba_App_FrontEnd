@@ -22,12 +22,12 @@ interface Register {
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    RouterModule
+    ReactiveFormsModule, // Nécessaire pour les formulaires réactifs
+    RouterModule // Pour les directives routerLink
   ]
 })
 export class RegisterComponent implements OnInit {
-  registerForm!: FormGroup;
+  registerForm: FormGroup;
   isLoading = false;
   errorMessage: string | null = null;
 
@@ -44,44 +44,47 @@ export class RegisterComponent implements OnInit {
       address: ['', [Validators.required, Validators.minLength(5)]]
     });
   }
-
   ngOnInit(): void {
-    // Add console logs for debugging
+    // Initialize any necessary data or perform setup tasks here
     console.log('RegisterComponent initialized');
   }
 
   onSubmit(): void {
-    console.log('Form submitted', this.registerForm.value);
-    
     if (this.registerForm.invalid) {
       console.log('Form is invalid', this.registerForm.errors);
       return;
     }
 
+    
+
     this.isLoading = true;
     this.errorMessage = null;
 
+    // Create the Register object with phone as number
     const registerData: Register = {
       name: this.registerForm.value.name,
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
-      phone: Number(this.registerForm.value.phone),
+      phone: Number(this.registerForm.value.phone), // Convert to number
       address: this.registerForm.value.address,
       roles: ['client']
     };
+    console.log('Payload sent to backend:', registerData);
 
-    console.log('Sending registration data:', registerData);
+    // Create a DTO object for the API call with phone as string
+    const apiData = {
+      ...registerData,
+      phone: this.registerForm.value.phone // Keep as string for API
+    };
 
-    this.authService.register(registerData).subscribe({
+    this.authService.register(apiData).subscribe({
       next: (response) => {
-        console.log('Registration successful:', response);
         this.isLoading = false;
         this.router.navigate(['/auth/register-success'], {
           state: { email: registerData.email }
         });
       },
       error: (err) => {
-        console.error('Registration error:', err);
         this.isLoading = false;
         this.errorMessage = err.error?.message || 'Une erreur est survenue lors de l\'inscription';
       }

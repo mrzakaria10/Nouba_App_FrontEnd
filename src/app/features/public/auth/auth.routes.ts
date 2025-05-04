@@ -13,6 +13,11 @@ export const AUTH_ROUTES: Routes = [
       import('./register/register.component').then(m => m.RegisterComponent),
   },
   {
+    path: 'register-success',
+    loadComponent: () =>
+      import('./register-success/register-success.component').then(m => m.RegisterSuccessComponent),
+  },
+  {
     path: 'forgot-password',
     loadComponent: () =>
       import('./forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),

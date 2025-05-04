@@ -18,7 +18,7 @@
           <button class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">
             Obtenir un ticket en 2 clics
           </button>
-          <button class="bg-white border border-blue-600 text-blue-600 px-6 py-2 rounded font-semibold hover:bg-blue-50 transition">
+          <button type="button"  routerLink="/verifier" class="bg-white border border-blue-600 text-blue-600 px-6 py-2 rounded font-semibold hover:bg-blue-50 transition">
             Vérifier votre ticket
           </button>
         </div>
@@ -35,7 +35,7 @@
           muted
           playsinline
         controls>
-        <source src="assets/Noua_video.mp4" type="video/mp4">
+        <source src="assets/Nouba_video.mp4" type="video/mp4">
          
           Votre navigateur ne supporte pas la lecture vidéo.
         </video>
@@ -43,62 +43,48 @@
     </div>
   </section>
 
-  <!-- Section Vérifiez votre ticket -->
-  <section class="min-h-[60vh]  ">
-    <div class="max-w-2xl mx-auto text-center ">
-      <h2 class="text-2xl font-bold text-blue-600 mt-10 ">Vérifiez votre ticket</h2>
-      <div class="bg-blue-50 p-6 rounded shadow mt-10">
-        <label class="block text-left text-gray-700 mb-2 font-medium">Statut de votre ticket</label>
-        <div class="flex flex-col sm:flex-row gap-2">
-          <input type="text" placeholder="Entrez votre numéro de ticket"
-            class="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            Vérifier le ticket
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- Section Pourquoi choisir Nouba -->
-  <section class="bg-blue-50  min-h-[60vh]">
-    <div class="max-w-5xl mx-auto text-center px-4">
-      <h2 class="text-2xl md:text-3xl font-bold text-blue-600 mt-10">
+  <section class=" flex items-center min-h-[60vh] py-8">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold text-blue-600 text-center mb-4">
         Pourquoi choisir Nouba&nbsp;?
       </h2>
-      <!-- Grille responsive : 1 colonne sur mobile, 3 sur desktop -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-        <!-- Carte fonctionnalité 1 -->
-        <div class="bg-white rounded shadow p-6 flex flex-col items-center">
-          <!-- Icône illustrative (remplace src par ton icône) -->
-          <img src="assets/ticket-icon.svg" alt="Tickets virtuels" class="w-12 h-12 mb-4" />
-          <h3 class="font-semibold mb-2">Tickets virtuels</h3>
-          <p class="text-gray-500 text-sm mb-4">
+      <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">
+        Notre solution innovante transforme la gestion des files d'attente pour une expérience client optimale.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Carte 1 -->
+        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center transition hover:scale-105 duration-200">
+          <img src="assets/ticket-icon.svg" alt="Tickets virtuels" class="w-14 h-14 mb-4" />
+          <h3 class="font-bold text-lg mb-2 text-gray-900">Tickets virtuels</h3>
+          <p class="text-gray-500 text-center mb-6">
             Permettez à vos clients de prendre des tickets à distance et de suivre leur position en temps réel.
           </p>
-          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-sm">
+          <button class="bg-blue-600 text-white px-5 py-2 rounded font-semibold hover:bg-blue-700 transition text-sm w-full">
             Obtenir un ticket en 2 clics
           </button>
         </div>
-        <!-- Carte fonctionnalité 2 -->
-        <div class="bg-white rounded shadow p-6 flex flex-col items-center">
-          <img src="assets/notification-icon.svg" alt="Notifications intelligentes" class="w-12 h-12 mb-4" />
-          <h3 class="font-semibold mb-2">Notifications intelligentes</h3>
-          <p class="text-gray-500 text-sm mb-4">
+        <!-- Carte 2 -->
+        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center transition hover:scale-105 duration-200">
+          <img src="assets/notification-icon.svg" alt="Notifications intelligentes" class="w-14 h-14 mb-4" />
+          <h3 class="font-bold text-lg mb-2 text-gray-900">Notifications intelligentes</h3>
+          <p class="text-gray-500 text-center mb-6">
             Alertes automatiques lorsque le tour du client approche, réduisant les temps d'attente sur place.
           </p>
-          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-sm">
+          <button class="bg-blue-600 text-white px-5 py-2 rounded font-semibold hover:bg-blue-700 transition text-sm w-full">
             Obtenir un ticket en 2 clics
           </button>
         </div>
-        <!-- Carte fonctionnalité 3 -->
-        <div class="bg-white rounded shadow p-6 flex flex-col items-center">
-          <img src="assets/dashboard-icon.svg" alt="Tableau de bord complet" class="w-12 h-12 mb-4" />
-          <h3 class="font-semibold mb-2">Tableau de bord complet</h3>
-          <p class="text-gray-500 text-sm mb-4">
+        <!-- Carte 3 -->
+        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center transition hover:scale-105 duration-200">
+          <img src="assets/dashboard-icon.svg" alt="Tableau de bord complet" class="w-14 h-14 mb-4" />
+          <h3 class="font-bold text-lg mb-2 text-gray-900">Tableau de bord complet</h3>
+          <p class="text-gray-500 text-center mb-6">
             Suivez les statistiques de fréquentation et optimisez vos ressources en temps réel.
           </p>
-          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-sm">
+          <button class="bg-blue-600 text-white px-5 py-2 rounded font-semibold hover:bg-blue-700 transition text-sm w-full">
             Obtenir un ticket en 2 clics
           </button>
         </div>
@@ -106,93 +92,257 @@
     </div>
   </section>
 
- 
-  <!-- Section Comment ça marche -->
-<section class="min-h-[60vh] items-center ">
-  <div class="max-w-5xl mx-auto text-center items-center ">
-    <h2 class="text-2xl font-bold text-blue-600 mb-10">Comment ça marche ?</h2>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-      <div>
-        <div class="text-blue-600 text-3xl font-bold mb-2">1</div>
-        <div class="font-semibold mb-1">Le client réserve</div>
-        <div class="text-gray-500 text-sm">Depuis son smartphone ou sur le site web</div>
-      </div>
-      <div>
-        <div class="text-blue-600 text-3xl font-bold mb-2">2</div>
-        <div class="font-semibold mb-1">Suivi en temps réel</div>
-        <div class="text-gray-500 text-sm">Visualisation de la position dans la file</div>
-      </div>
-      <div>
-        <div class="text-blue-600 text-3xl font-bold mb-2">3</div>
-        <div class="font-semibold mb-1">Notification automatique</div>
-        <div class="text-gray-500 text-sm">Alerte 5-10 minutes avant le passage</div>
-      </div>
-      <div>
-        <div class="text-blue-600 text-3xl font-bold mb-2">4</div>
-        <div class="font-semibold mb-1">Service optimisé</div>
-        <div class="text-gray-500 text-sm">Meilleure expérience pour clients et agents</div>
-      </div>
-    </div>
-    <button class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">
-      Obtenir un ticket en 2 clics
-    </button>
-  </div>
-</section>
 
-  <!-- Section Témoignages clients -->
-  <section class="bg-blue-50 min-h-[60vh]">
-    <div class="max-w-6xl mx-auto text-center">
-      <h2 class="text-2xl font-bold text-blue-600 mb-10">Ce que nos clients disent</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Carte témoignage -->
-        <div class="bg-white rounded shadow p-6">
-          <div class="flex items-center mb-2">
-            <span class="text-yellow-400 text-xl mr-2">★★★★★</span>
-            <span class="font-semibold">Sophie Martin</span>
+  <!-- Section Comment ça marche -->
+  <section class="bg-blue-50 flex items-center min-h-[60vh] py-8">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col items-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-600 text-center mb-4">Comment ça marche ?</h2>
+      <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+        Un processus simple en quatre étapes pour optimiser l'expérience d'attente.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+        <!-- Étape 1 -->
+        <div class="flex flex-col items-center">
+          <div class="bg-blue-500 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+            <img src="assets/ticket-icon_CCM.svg" alt="Réserver" class="w-8 h-8" />
           </div>
-          <p class="text-gray-500 text-sm">"Depuis que nous utilisons Nouba, le temps d'attente dans nos agences a diminué de 40%. Nos clients sont ravis et notre équipe travaille dans de meilleures conditions."</p>
+          <div class="font-bold text-lg text-center mb-1">Le client réserve</div>
+          <div class="text-gray-600 text-center text-sm">Depuis son smartphone ou sur le site web</div>
         </div>
-        <div class="bg-white rounded shadow p-6">
-          <div class="flex items-center mb-2">
-            <span class="text-yellow-400 text-xl mr-2">★★★★★</span>
-            <span class="font-semibold">Thomas Dubois</span>
+        <!-- Étape 2 -->
+        <div class="flex flex-col items-center">
+          <div class="bg-blue-500 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+            <img src="assets/clock-icon_CCM.svg" alt="Suivi" class="w-8 h-8" />
           </div>
-          <p class="text-gray-500 text-sm">"L'interface est intuitive et les notifications sont très utiles. Nos employés sont plus efficaces et nos clients mieux informés du déroulement de leur attente."</p>
+          <div class="font-bold text-lg text-center mb-1">Suivi en temps réel</div>
+          <div class="text-gray-600 text-center text-sm">Visualisation de la position dans la file</div>
         </div>
-        <div class="bg-white rounded shadow p-6">
-          <div class="flex items-center mb-2">
-            <span class="text-yellow-400 text-xl mr-2">★★★★★</span>
-            <span class="font-semibold">Marie Lefevre</span>
+        <!-- Étape 3 -->
+        <div class="flex flex-col items-center">
+          <div class="bg-blue-500 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+            <img src="assets/notification-icon_CCM.svg" alt="Notification" class="w-8 h-8" />
           </div>
-          <p class="text-gray-500 text-sm">"La possibilité de voir le temps d'attente estimé et de recevoir des notifications est un vrai plus. Je recommande vivement ce service à toutes les agences."</p>
+          <div class="font-bold text-lg text-center mb-1">Notification automatique</div>
+          <div class="text-gray-600 text-center text-sm">Alerte 5-10 minutes avant le passage</div>
         </div>
+        <!-- Étape 4 -->
+        <div class="flex flex-col items-center">
+          <div class="bg-blue-500 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+            <img src="assets/user-group-icon_CCM.PNG" alt="Optimisé" class="w-8 h-8" />
+          </div>
+          <div class="font-bold text-lg text-center mb-1">Service optimisé</div>
+          <div class="text-gray-600 text-center text-sm">Meilleure expérience pour clients et agents</div>
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <button class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">
+          Obtenir un ticket en 2 clics
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- Section Contact / Démo -->
-  
-<section class="min-h-[50vh]">
-  <div class="max-w-2xl mx-auto bg-blue-50 rounded shadow p-8">
-    <h2 class="text-xl font-bold text-blue-600 mb-4">
-      Prêt à transformer l'expérience d'attente dans votre agence ?
-    </h2>
-    <p class="mb-6 text-gray-600">
-      Contactez-nous pour une démonstration personnalisée de notre solution.
-    </p>
-    <form class="space-y-4">
-      <div class="flex flex-col md:flex-row gap-4">
-        <input type="text" placeholder="Nom" class="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-        <input type="email" placeholder="Email" class="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+    <!-- Section Témoignages clients -->
+    <section class="flex items-center min-h-[60vh] py-8">
+      <div class="max-w-7xl mx-auto px-4">
+        <!-- Titre principal -->
+        <h2 class="text-3xl md:text-4xl font-bold text-blue-600 text-center mb-2">
+          Ce que nos clients disent
+        </h2>
+        <!-- Sous-titre -->
+        <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+          Découvrez comment Nouba transforme l'expérience d'attente pour nos clients.
+        </p>
+        <!-- Grille des témoignages -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Témoignage 1 -->
+          <div class="bg-white rounded-xl border border-blue-100 shadow p-8 flex flex-col justify-between h-full">
+            <!-- Étoiles -->
+            <div class="mb-4">
+              <span class="text-yellow-400 text-xl">★★★★★</span>
+            </div>
+            <!-- Citation -->
+            <p class="italic text-gray-700 mb-6">
+              "Depuis que nous utilisons Nouba, le temps d'attente dans notre agence a diminué de 40%. Nos clients sont ravis de pouvoir attendre leur tour confortablement."
+            </p>
+            <!-- Profil -->
+            <div class="flex items-center gap-3 mt-auto">
+              <div class="bg-gray-100 rounded-full w-10 h-10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1112 21a8.963 8.963 0 01-6.879-3.196z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+              </div>
+              <div>
+                <div class="font-bold">Sophie Martin</div>
+                <div class="text-gray-500 text-sm">Directrice d'agence, Banque Nationale</div>
+              </div>
+            </div>
+          </div>
+          <!-- Témoignage 2 -->
+          <div class="bg-white rounded-xl border border-blue-100 shadow p-8 flex flex-col justify-between h-full">
+            <div class="mb-4">
+              <span class="text-yellow-400 text-xl">★★★★★</span>
+            </div>
+            <p class="italic text-gray-700 mb-6">
+              "L'interface est intuitive et les notifications sont précises. Nos employés sont plus efficaces et nos clients moins stressés. Un vrai changement pour notre service client."
+            </p>
+            <div class="flex items-center gap-3 mt-auto">
+              <div class="bg-gray-100 rounded-full w-10 h-10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1112 21a8.963 8.963 0 01-6.879-3.196z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+              </div>
+              <div>
+                <div class="font-bold">Thomas Dubois</div>
+                <div class="text-gray-500 text-sm">Responsable Service Client, Assurances Mutuelles</div>
+              </div>
+            </div>
+          </div>
+          <!-- Témoignage 3 -->
+          <div class="bg-white rounded-xl border border-blue-100 shadow p-8 flex flex-col justify-between h-full">
+            <div class="mb-4">
+              <span class="text-yellow-400 text-xl">★★★★★</span>
+            </div>
+            <p class="italic text-gray-700 mb-6">
+              "La possibilité de voir le temps d'attente estimé et de recevoir des notifications est révolutionnaire. Je peux désormais gérer mon temps efficacement."
+            </p>
+            <div class="flex items-center gap-3 mt-auto">
+              <div class="bg-gray-100 rounded-full w-10 h-10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1112 21a8.963 8.963 0 01-6.879-3.196z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+              </div>
+              <div>
+                <div class="font-bold">Marie Lefevre</div>
+                <div class="text-gray-500 text-sm">Cliente, Particulier</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Deuxième ligne de témoignages -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+          <!-- Témoignage 4 -->
+          <div class="bg-white rounded-xl border border-blue-100 shadow p-8 flex flex-col justify-between h-full">
+            <div class="mb-4">
+              <span class="text-yellow-400 text-xl">★★★★★</span>
+            </div>
+            <p class="italic text-gray-700 mb-6">
+              "Nouba a complètement transformé notre service à la clientèle. Les files d'attente physiques ont disparu et nos clients sont beaucoup plus satisfaits."
+            </p>
+            <div class="flex items-center gap-3 mt-auto">
+              <div class="bg-gray-100 rounded-full w-10 h-10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1112 21a8.963 8.963 0 01-6.879-3.196z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+              </div>
+              <div>
+                <div class="font-bold">Jean Moreau</div>
+                <div class="text-gray-500 text-sm">Gérant, Pharmacie Centrale</div>
+              </div>
+            </div>
+          </div>
+          <!-- Témoignage 5 -->
+          <div class="bg-white rounded-xl border border-blue-100 shadow p-8 flex flex-col justify-between h-full">
+            <div class="mb-4">
+              <span class="text-yellow-400 text-xl">★★★★★</span>
+            </div>
+            <p class="italic text-gray-700 mb-6">
+              "En tant que médecin, la gestion du temps est cruciale. Nouba me permet d'optimiser mes consultations tout en respectant le temps de chacun."
+            </p>
+            <div class="flex items-center gap-3 mt-auto">
+              <div class="bg-gray-100 rounded-full w-10 h-10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1112 21a8.963 8.963 0 01-6.879-3.196z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+              </div>
+              <div>
+                <div class="font-bold">Dr. Claire Dupont</div>
+                <div class="text-gray-500 text-sm">Médecin généraliste, Cabinet Médical</div>
+              </div>
+            </div>
+          </div>
+          <!-- Témoignage 6 -->
+          <div class="bg-white rounded-xl border border-blue-100 shadow p-8 flex flex-col justify-between h-full">
+            <div class="mb-4">
+              <span class="text-yellow-400 text-xl">★★★★★</span>
+            </div>
+            <p class="italic text-gray-700 mb-6">
+              "Notre administration municipale a gagné en efficacité. Les citoyens sont plus satisfaits et nos employés moins stressés. Une solution gagnant-gagnant."
+            </p>
+            <div class="flex items-center gap-3 mt-auto">
+              <div class="bg-gray-100 rounded-full w-10 h-10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1112 21a8.963 8.963 0 01-6.879-3.196z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+              </div>
+              <div>
+                <div class="font-bold">Philippe Rousseau</div>
+                <div class="text-gray-500 text-sm">Directeur, Mairie de Lyon</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <textarea placeholder="Comment pouvons-nous vous aider ?" rows="3"
-        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
-      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition font-medium">
-        Envoyer ma demande
-      </button>
-    </form>
-  </div>
-</section>
+    </section>
+    <!-- Fin section témoignages -->
+
+  <!-- Section Contact / Démo -->
+  <section class="bg-white py-16  border-2 ">
+    <div class="max-w-2xl mx-auto bg-blue-100 rounded-2xl shadow-lg p-8 flex flex-col items-center border-2 border-blue-400">
+      <!-- Titre principal -->
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">
+        Prêt à transformer l'expérience<br> d'attente dans votre agence?
+      </h2>
+      <!-- Sous-titre -->
+      <p class="text-gray-700 text-center mb-8">
+        Contactez-nous pour une démonstration personnalisée de notre solution.
+      </p>
+      <!-- Formulaire de contact -->
+      <form class="w-full space-y-6">
+        <!-- Ligne Nom et Email -->
+        <div class="flex flex-col md:flex-row gap-4">
+          <!-- Champ Nom -->
+          <div class="flex-1">
+            <label class="block text-gray-700 mb-1 font-medium" for="nom">Nom</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                <!-- Icône utilisateur -->
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1112 21a8.963 8.963 0 01-6.879-3.196z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </span>
+              <input id="nom" type="text" placeholder="Votre nom"
+                class="w-full pl-10 pr-3 py-2 rounded border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" />
+            </div>
+          </div>
+          <!-- Champ Email -->
+          <div class="flex-1">
+            <label class="block text-gray-700 mb-1 font-medium" for="email">Email</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                <!-- Icône email -->
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 12l-4 4-4-4m8-4H8a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-8a2 2 0 00-2-2z" />
+                </svg>
+              </span>
+              <input id="email" type="email" placeholder="Votre email"
+                class="w-full pl-10 pr-3 py-2 rounded border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" />
+            </div>
+          </div>
+        </div>
+        <!-- Champ Message -->
+        <div>
+          <label class="block text-gray-700 mb-1 font-medium" for="message">Message</label>
+          <div class="relative">
+            <span class="absolute left-3 top-4 text-gray-400">
+              <!-- Icône message -->
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.77 9.77 0 01-4-.8l-4 1 1-4A8.96 8.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </span>
+            <textarea id="message" rows="4" placeholder="Comment pouvons-nous vous aider?"
+              class="w-full pl-10 pr-3 py-2 rounded border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white resize-none"></textarea>
+          </div>
+        </div>
+        <!-- Bouton d'envoi -->
+        <div class="flex justify-center">
+          <button type="submit"
+            class="bg-blue-600 text-white px-8 py-2 rounded font-semibold hover:bg-blue-700 transition w-full md:w-auto">
+            Envoyer ma demande
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
 
   <!-- Footer (à inclure avec <app-footer> si tu as un composant dédié) -->
   <app-footer></app-footer>

@@ -14,21 +14,21 @@
       <div>
         <h2 class="text-lg font-semibold mb-4">Navigation</h2>
         <ul class="space-y-2">
-          <li><a href="#" class="hover:text-white">Accueil</a></li>
-          <li><a href="#" class="hover:text-white">Nos agences</a></li>
-          <li><a href="#" class="hover:text-white">Espace agence</a></li>
-          <li><a href="#" class="hover:text-white">Contact</a></li>
-          <li><a href="#" class="hover:text-white">FAQ</a></li>
+          <li><a routerLink="/" class="hover:text-white">Accueil</a></li>
+          <li><a routerLink="/agencies" class="hover:text-white">Nos agences</a></li>
+          <li><a routerLink="/dashboard" class="hover:text-white">Espace agence</a></li>
+          <li><a routerLink="/contact" class="hover:text-white">Contact</a></li>
+          <li><a routerLink="/faq" class="hover:text-white">FAQ</a></li>
         </ul>
       </div>
       <!-- Informations sur l'entreprise -->
       <div>
         <h2 class="text-lg font-semibold mb-4">Entreprise</h2>
         <ul class="space-y-2">
-          <li><a href="#" class="hover:text-white">À propos</a></li>
-          <li><a href="#" class="hover:text-white">Clients</a></li>
-          <li><a href="#" class="hover:text-white">Blog</a></li>
-          <li><a href="#" class="hover:text-white">Carrières</a></li>
+          <li><a routerLink="/about" class="hover:text-white">À propos</a></li>
+          <li><a routerLink="/clients" class="hover:text-white">Clients</a></li>
+          <li><a routerLink="/blog" class="hover:text-white">Blog</a></li>
+          <li><a routerLink="/careers" class="hover:text-white">Carrières</a></li>
         </ul>
       </div>
       <!-- Contact et réseaux sociaux -->
@@ -41,10 +41,15 @@
         </ul>
         <!-- Icônes réseaux sociaux -->
         <div class="flex space-x-4 mt-4">
-          <!-- Remplacer les # par les liens réels -->
-          <a href="#" aria-label="Twitter" class="hover:text-white"><i class="fab fa-twitter"></i></a>
-          <a href="#" aria-label="Facebook" class="hover:text-white"><i class="fab fa-facebook"></i></a>
-          <a href="#" aria-label="LinkedIn" class="hover:text-white"><i class="fab fa-linkedin"></i></a>
+          <a href="https://twitter.com/nouba" target="_blank" rel="noopener" class="hover:text-white">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="https://facebook.com/nouba" target="_blank" rel="noopener" class="hover:text-white">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="https://linkedin.com/company/nouba" target="_blank" rel="noopener" class="hover:text-white">
+            <i class="fab fa-linkedin"></i>
+          </a>
         </div>
       </div>
     </div>
@@ -54,9 +59,9 @@
     <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
       <p>© 2025 Nouba. Tous droits réservés.</p>
       <div class="flex space-x-4 mt-2 md:mt-0">
-        <a href="#" class="hover:text-white">Politique de confidentialité</a>
-        <a href="#" class="hover:text-white">Conditions d'utilisation</a>
-        <a href="#" class="hover:text-white">Mentions légales</a>
+        <a routerLink="/privacy" class="hover:text-white">Politique de confidentialité</a>
+        <a routerLink="/terms" class="hover:text-white">Conditions d'utilisation</a>
+        <a routerLink="/legal" class="hover:text-white">Mentions légales</a>
       </div>
     </div>
   </footer>

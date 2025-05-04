@@ -1,127 +1,120 @@
-<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Inscription à Nouba
-      </h2>
-      <!-- <p class="mt-2 text-center text-sm text-gray-600">
-        Déjà inscrit ? 
-        <a [routerLink]="['/auth/login']" class="font-medium text-indigo-600 hover:text-indigo-500">
-          Se connecter
-        </a>
-      </p> -->
-    </div>
-  
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <form class="space-y-6" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-          <!-- Nom Complet -->
-          <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">
-              Nom complet
-            </label>
-            <div class="mt-1">
-              <input id="name" name="name" type="text" autocomplete="name" required
-                     formControlName="name"
-                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                     [ngClass]="{'border-red-300': registerForm.get('name')?.invalid && registerForm.get('name')?.touched}">
-            </div>
-            <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="mt-1 text-sm text-red-600">
-              Le nom est requis
-            </div>
-          </div>
-  
-          <!-- Email -->
-          <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">
-              Adresse email
-            </label>
-            <div class="mt-1">
-              <input id="email" name="email" type="email" autocomplete="email" required
-                     formControlName="email"
-                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                     [ngClass]="{'border-red-300': registerForm.get('email')?.invalid && registerForm.get('email')?.touched}">
-            </div>
-            <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="mt-1 text-sm text-red-600">
-              <span *ngIf="registerForm.get('email')?.errors?.['required']">L'email est requis</span>
-              <span *ngIf="registerForm.get('email')?.errors?.['email']">Veuillez entrer un email valide</span>
-            </div>
-          </div>
-  
-          <!-- Mot de passe -->
-          <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">
-              Mot de passe
-            </label>
-            <div class="mt-1">
-              <input id="password" name="password" type="password" autocomplete="new-password" required
-                     formControlName="password"
-                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                     [ngClass]="{'border-red-300': registerForm.get('password')?.invalid && registerForm.get('password')?.touched}">
-            </div>
-            <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="mt-1 text-sm text-red-600">
-              Le mot de passe doit contenir au moins 8 caractères
-            </div>
-          </div>
-  
-          <!-- Téléphone -->
-          <div>
-            <label for="phone" class="block text-sm font-medium text-gray-700">
-              Numéro de téléphone
-            </label>
-            <div class="mt-1">
-              <input id="phone" name="phone" type="tel" autocomplete="tel" required
-                     formControlName="phone"
-                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                     [ngClass]="{'border-red-300': registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched}">
-            </div>
-            <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="mt-1 text-sm text-red-600">
-              Le numéro de téléphone est requis
-            </div>
-          </div>
-  
-          <!-- Adresse -->
-          <div>
-            <label for="address" class="block text-sm font-medium text-gray-700">
-              Adresse
-            </label>
-            <div class="mt-1">
-              <input id="address" name="address" type="text" autocomplete="street-address" required
-                     formControlName="address"
-                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                     [ngClass]="{'border-red-300': registerForm.get('address')?.invalid && registerForm.get('address')?.touched}">
-            </div>
-            <div *ngIf="registerForm.get('address')?.invalid && registerForm.get('address')?.touched" class="mt-1 text-sm text-red-600">
-              L'adresse est requise
-            </div>
-          </div>
-  
-          <!-- Bouton d'inscription -->
-          <div>
-            <button type="submit" [disabled]="registerForm.invalid || isLoading"
-                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed">
-              <span *ngIf="!isLoading">S'inscrire</span>
-              <span *ngIf="isLoading" class="flex items-center">
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Traitement...
-              </span>
-            </button>
-          </div>
 
-          <p class="mt-2 text-center text-sm text-gray-600">
-            Déjà inscrit ? 
-            <a [routerLink]="['/auth/login']" class="font-medium text-indigo-600 hover:text-indigo-500">
-              Se connecter
-            </a>
-          </p>
-  
-          <!-- Message d'erreur -->
-          <div *ngIf="errorMessage" class="text-sm text-red-600">
-            {{ errorMessage }}
+<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+      Inscription à Nouba
+    </h2>
+    <p class="mt-2 text-center text-sm text-gray-600">
+      Déjà inscrit ? 
+      <a [routerLink]="['/auth/login']" class="font-medium text-blue-600 hover:text-blue-500">
+        Se connecter
+      </a>
+    </p>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <form class="space-y-6" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <!-- Nom Complet -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">
+            Nom complet
+          </label>
+          <div class="mt-1">
+            <input id="name" name="name" type="text" formControlName="name"
+                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                   [ngClass]="{'border-red-300': registerForm.get('name')?.invalid && registerForm.get('name')?.touched}">
           </div>
-        </form>
-      </div>
+          <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="mt-1 text-sm text-red-600">
+            <span *ngIf="registerForm.get('name')?.errors?.['required']">Le nom est requis</span>
+            <span *ngIf="registerForm.get('name')?.errors?.['minlength']">Minimum 3 caractères</span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">
+            Adresse email
+          </label>
+          <div class="mt-1">
+            <input id="email" name="email" type="email" formControlName="email"
+                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                   [ngClass]="{'border-red-300': registerForm.get('email')?.invalid && registerForm.get('email')?.touched}">
+          </div>
+          <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="mt-1 text-sm text-red-600">
+            <span *ngIf="registerForm.get('email')?.errors?.['required']">L'email est requis</span>
+            <span *ngIf="registerForm.get('email')?.errors?.['email']">Email invalide</span>
+          </div>
+        </div>
+
+        <!-- Mot de passe -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">
+            Mot de passe
+          </label>
+          <div class="mt-1">
+            <input id="password" name="password" type="password" formControlName="password"
+                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                   [ngClass]="{'border-red-300': registerForm.get('password')?.invalid && registerForm.get('password')?.touched}">
+          </div>
+          <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="mt-1 text-sm text-red-600">
+            <span *ngIf="registerForm.get('password')?.errors?.['required']">Le mot de passe est requis</span>
+            <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Minimum 8 caractères</span>
+          </div>
+        </div>
+
+        <!-- Téléphone -->
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700">
+            Numéro de téléphone
+          </label>
+          <div class="mt-1">
+            <input id="phone" name="phone" type="tel" formControlName="phone"
+                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                   [ngClass]="{'border-red-300': registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched}">
+          </div>
+          <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="mt-1 text-sm text-red-600">
+            <span *ngIf="registerForm.get('phone')?.errors?.['required']">Le téléphone est requis</span>
+            <span *ngIf="registerForm.get('phone')?.errors?.['pattern']">Format invalide (10 chiffres requis)</span>
+          </div>
+        </div>
+
+        <!-- Adresse -->
+        <div>
+          <label for="address" class="block text-sm font-medium text-gray-700">
+            Adresse
+          </label>
+          <div class="mt-1">
+            <input id="address" name="address" type="text" formControlName="address"
+                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                   [ngClass]="{'border-red-300': registerForm.get('address')?.invalid && registerForm.get('address')?.touched}">
+          </div>
+          <div *ngIf="registerForm.get('address')?.invalid && registerForm.get('address')?.touched" class="mt-1 text-sm text-red-600">
+            <span *ngIf="registerForm.get('address')?.errors?.['required']">L'adresse est requise</span>
+            <span *ngIf="registerForm.get('address')?.errors?.['minlength']">Minimum 5 caractères</span>
+          </div>
+        </div>
+
+        <!-- Bouton d'inscription -->
+        <div>
+          <button type="submit" [disabled]="registerForm.invalid || isLoading"
+                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+            <span *ngIf="!isLoading">S'inscrire</span>
+            <span *ngIf="isLoading" class="flex items-center">
+              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Traitement...
+            </span>
+          </button>
+        </div>
+
+        <!-- Message d'erreur -->
+        <div *ngIf="errorMessage" class="text-sm text-red-600 text-center">
+          {{ errorMessage }}
+        </div>
+      </form>
     </div>
   </div>
+</div>

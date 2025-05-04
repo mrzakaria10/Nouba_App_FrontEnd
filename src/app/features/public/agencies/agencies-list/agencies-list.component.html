@@ -1,0 +1,22 @@
+<div class="max-w-7xl mx-auto py-8">
+    <h1 class="text-3xl font-bold text-center mb-2">Nos Agences</h1>
+    <p class="text-center text-gray-500 mb-8">
+      Retrouvez toutes nos agences Nouba à travers le pays et choisissez celle la plus proche de chez vous.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let agency of agencies" class="bg-white rounded-lg shadow p-4">
+        <!-- Remplace src par agency.photoUrl si tu as une photo -->
+        <img src="assets/images/agence-default.jpg" alt="{{ agency.name }}" class="w-full h-40 object-cover rounded mb-4" />
+        <h2 class="text-lg font-bold">{{ agency.name }}</h2>
+        <div class="text-gray-500 mb-2">{{ agency.cityName }}</div>
+        <div class="flex items-center text-sm text-gray-600 mb-1">
+          <span class="material-icons mr-1">place</span> {{ agency.address }}
+        </div>
+        <div class="flex items-center text-sm text-gray-600 mb-1">
+          <span class="material-icons mr-1">phone</span> {{ agency.phone }}
+        </div>
+        <!-- Ajoute d'autres infos ici -->
+        <a class="text-blue-600 text-sm mt-2 inline-block" href="#">Espace Agence</a>
+      </div>
+    </div>
+  </div>

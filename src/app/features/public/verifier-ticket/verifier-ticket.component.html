@@ -1,0 +1,32 @@
+<app-navbar></app-navbar>
+
+
+<!-- Section Vérifiez votre ticket -->
+<section class="min-h-[60vh] flex items-center justify-center bg-white">
+  <div class="w-full max-w-xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-10 mt-8">Vérifiez votre ticket</h2>
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+      <!-- Header -->
+      <div class="bg-blue-100 px-8 py-5">
+        <span class="text-blue-600 text-xl font-semibold">Statut de votre ticket</span>
+      </div>
+      <!-- Form -->
+      <form class="flex flex-col sm:flex-row gap-3 px-6 py-6 bg-white">
+        <input
+          type="text"
+          placeholder="Entrez votre numéro de ticket"
+          class="flex-1 border border-gray-200 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-600"
+        />
+        <button
+          type="submit"
+          class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition"
+        >
+          Vérifier le ticket
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<app-footer></app-footer>
