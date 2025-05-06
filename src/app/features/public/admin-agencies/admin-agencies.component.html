@@ -1,0 +1,76 @@
+<app-navbar></app-navbar>
+<div class="max-w-5xl mx-auto py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Gérer les Agences</h1>
+    <button (click)="addAgency()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ Ajouter une Agence</button>
+  </div>
+
+  <!-- Agency List Table -->
+  <div class="bg-white rounded shadow p-4 mb-8 overflow-x-auto">
+    <table class="min-w-full">
+      <thead>
+        <tr class="bg-blue-50">
+          <th class="px-4 py-2">Photo</th>
+          <th class="px-4 py-2">Nom</th>
+          <th class="px-4 py-2">Adresse</th>
+          <th class="px-4 py-2">Téléphone</th>
+          <th class="px-4 py-2">Ville</th>
+          <th class="px-4 py-2">Email</th>
+          <th class="px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let agency of agencies" class="border-t">
+          <td class="px-2 py-2"><img [src]="'/uploads/' + agency.photoUrl" class="w-12 h-12 object-cover rounded" /></td>
+          <td class="px-2 py-2">{{ agency.name }}</td>
+          <td class="px-2 py-2">{{ agency.address }}</td>
+          <td class="px-2 py-2">{{ agency.phone }}</td>
+          <td class="px-2 py-2">{{ agency.city?.name }}</td>
+          <td class="px-2 py-2">{{ agency.email }}</td>
+          <td class="px-2 py-2 flex gap-2">
+            <button (click)="editAgency(agency)" class="text-blue-600 hover:underline">Modifier</button>
+            <button (click)="deleteAgency(agency.id)" class="text-red-600 hover:underline">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Agency Form Modal -->
+  <div *ngIf="showForm" class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg">
+      <h2 class="text-xl font-bold mb-4">{{ isEdit ? 'Modifier' : 'Ajouter' }} l'Agence</h2>
+      <form (ngSubmit)="submit()">
+        <div class="mb-4">
+          <label class="block font-semibold mb-1">Nom</label>
+          <input formControlName="name" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block font-semibold mb-1">Photo</label>
+          <input type="file" (change)="onPhotoChange($event)" class="w-full" [required]="!isEdit" />
+        </div>
+        <div class="mb-4">
+          <label class="block font-semibold mb-1">Adresse</label>
+          <input formControlName="address" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block font-semibold mb-1">Téléphone</label>
+          <input formControlName="phone" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block font-semibold mb-1">Ville</label>
+          <input formControlName="cityName" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block font-semibold mb-1">Email</label>
+          <input formControlName="email" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <div class="flex gap-2">
+          <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Enregistrer</button>
+          <button type="button" (click)="showForm = false" class="bg-gray-200 px-4 py-2 rounded">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

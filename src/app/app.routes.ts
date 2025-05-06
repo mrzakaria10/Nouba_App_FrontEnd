@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { adminGuard } from './core/guards/admin.guard';
 import { agencyGuard } from './core/guards/agency.guard';
 import { userGuard } from './core/guards/user.guard';
+import { AgenciesListComponent } from './features/public/agencies/agencies-list/agencies-list.component';
+import { AdminAgenciesComponent } from './features/public/admin-agencies/admin-agencies.component';
 
 export const routes: Routes = [
   {
@@ -10,14 +12,9 @@ export const routes: Routes = [
   },
   {
     path: 'agencies',
-    loadComponent: () => import('./features/public/agencies/agencies-list/agencies-list.component').then(m => m.AgenciesListComponent),
-    canActivate: [userGuard]
+    component: AgenciesListComponent
   },
-  {
-    path: 'dashboard',
-    loadComponent: () => import('./features/agency/dashboard/dashboard.component').then(m => m.DashboardComponent),
-    canActivate: [agencyGuard]
-  },
+ 
   {
     path: 'agencies/manage',
     loadComponent: () => import('./features/admin/agencies-manage/agencies-manage.component').then(m => m.AgenciesManageComponent),
@@ -31,7 +28,28 @@ export const routes: Routes = [
     path: 'verifier',
     loadComponent: () => import('./features/public/verifier-ticket/verifier-ticket.component').then(m => m.VerifierTicketComponent)
   },
-  
+  {
+    path: 'contact',
+    loadComponent: () => import('./features/public/contact/contact.component').then(m => m.ContactComponent)
+  },
+  {
+    path: 'ticket-wizard',
+    loadComponent: () => import('./features/public/ticket-wizard/ticket-wizard.component').then(m => m.TicketWizardComponent)
+  },
+
+  {
+    path: 'admin-agencies',
+    loadComponent: () => import('./features/public/admin-agencies/admin-agencies.component').then(m => m.AdminAgenciesComponent),
+    
+  },
+  {
+    path: 'admin/agencies',
+    component: AdminAgenciesComponent
+  },
+  {
+    path: 'faq',
+    loadComponent: () => import('./features/public/faq/faq.component').then(m => m.FaqComponent)
+  },
   {
     path: '**',
     redirectTo: ''

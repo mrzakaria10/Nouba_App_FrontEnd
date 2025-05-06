@@ -38,9 +38,14 @@ export class AuthService {
   login(payload: { email: string; password: string }): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/login`, payload).pipe(
       tap(response => {
-        // Stocke le token JWT dans le localStorage après une connexion réussie
         if (response?.data) {
           localStorage.setItem('token', response.data);
+          const userInfo = this.parseJwt(response.data);
+          this.setCurrentUser({
+            email: userInfo.email,
+            name: userInfo.name,
+            role: userInfo.role
+          });
         }
       })
     );
@@ -52,6 +57,7 @@ export class AuthService {
    * @returns Observable avec la réponse du serveur
    */
   register(payload: RegisterPayload): Observable<any> {
+    console.log(`${this.baseUrl}/register-client`);
     return this.http.post<any>(`${this.baseUrl}/register-client`, payload);
   }
 
@@ -105,7 +111,9 @@ export class AuthService {
    * @returns boolean - true si connecté et token valide
    */
   isLoggedIn(): boolean {
-    return !!this.currentUserSubject.value;
+    const token = this.getToken();
+    const user = this.currentUserSubject.value;
+    return !!(token && user);
   }
 
   /**
@@ -190,5 +198,35 @@ export class AuthService {
 
   getUserName(): string {
     return this.currentUserSubject.value?.name || '';
+  }
+
+  getAgencyName(): string {
+    if (this.isAgency()) {
+      return this.currentUserSubject.value?.name || 'Agence';
+    }
+    return 'Agence';
+  }
+
+  getAdminName(): string {
+    if (this.isAdmin()) {
+      return this.currentUserSubject.value?.name || 'Administrateur';
+    }
+    return 'Administrateur';
+  }
+
+  getAgencyRole(): string {
+    return 'agency';
+  }
+
+  getAdminRole(): string {
+    return 'admin';
+  }
+
+  /**
+   * Renvoie l'email d'activation
+   * @param email Email de l'utilisateur
+   */
+  resendActivationEmail(email: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/resend-activation`, { email });
   }
 }

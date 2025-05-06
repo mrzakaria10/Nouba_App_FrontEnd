@@ -1,5 +1,5 @@
 <!-- Conteneur principal de la landing page -->
-<div class="bg-white min-h-screen flex flex-col">
+<div [ngClass]="getRoleBgClass()" class="min-h-screen flex flex-col">
   <!-- Navbar (à inclure avec <app-navbar> si tu as un composant dédié) -->
   <app-navbar></app-navbar>
 
@@ -15,9 +15,9 @@
           Optimisez l'expérience client et réduisez les temps d'attente dans vos agences.
         </p>
         <div class="flex flex-col sm:flex-row gap-2 justify-center md:justify-start">
-          <button class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">
+          <a routerLink="/ticket-wizard" class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">
             Obtenir un ticket en 2 clics
-          </button>
+          </a>
           <button type="button"  routerLink="/verifier" class="bg-white border border-blue-600 text-blue-600 px-6 py-2 rounded font-semibold hover:bg-blue-50 transition">
             Vérifier votre ticket
           </button>

@@ -5,6 +5,8 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FooterComponent } from "../../../../shared/footer/footer.component";
+import { NavbarComponent } from '../../../../shared/navbar/navbar.component';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +14,10 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
-  ],
+    RouterModule,
+    FooterComponent,
+    NavbarComponent
+],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

@@ -1,0 +1,108 @@
+<!-- Navbar -->
+<app-navbar></app-navbar>
+
+<!-- Contenu principal -->
+<div class="min-h-screen flex flex-col items-center justify-center bg-white py-8">
+  <!-- Titre et sous-titre -->
+  <h1 class="text-4xl font-bold text-center mb-2">Obtenir votre ticket</h1>
+  <p class="text-gray-600 text-center mb-8">
+    Suivez les étapes simples pour obtenir votre ticket et éviter l'attente dans nos agences.
+  </p>
+
+  <!-- Barre de progression -->
+  <div class="flex items-center justify-center mb-8 space-x-4">
+    <ng-container *ngFor="let s of [1,2,3,4]">
+      <div class="flex items-center">
+        <div [ngClass]="{
+          'bg-blue-500 text-white': step >= s,
+          'bg-gray-200 text-gray-500': step < s
+        }"
+        class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg">
+          {{s}}
+        </div>
+        <div *ngIf="s < 4" class="w-12 h-1"
+          [ngClass]="{'bg-blue-500': step > s, 'bg-gray-200': step <= s}"></div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Étape 1 : Nom -->
+  <div *ngIf="step === 1" class="bg-white rounded-xl shadow p-8 w-full max-w-md">
+    <h2 class="text-xl font-bold mb-2">Étape 1: Vos informations</h2>
+    <p class="text-gray-600 mb-4">Entrez votre nom complet pour commencer</p>
+    <label class="block font-semibold mb-1">Nom complet</label>
+    <input type="text" [(ngModel)]="fullName"
+      class="w-full border rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      placeholder="Entrez votre nom et prénom">
+    <button (click)="nextStep()" [disabled]="!fullName"
+      class="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 transition">
+      Continuer
+    </button>
+  </div>
+
+  <!-- Étape 2 : Ville -->
+  <div *ngIf="step === 2" class="bg-white rounded-xl shadow p-8 w-full max-w-md">
+    <h2 class="text-xl font-bold mb-2">Étape 2: Sélection de la ville</h2>
+    <p class="text-gray-600 mb-4">Choisissez votre ville</p>
+    <label class="block font-semibold mb-1">Ville</label>
+    <select [(ngModel)]="selectedCity"
+      class="w-full border rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <option value="" disabled selected>Sélectionnez une ville</option>
+      <option *ngFor="let city of cities" [value]="city">{{city}}</option>
+    </select>
+    <div class="flex justify-between">
+      <button (click)="prevStep()" class="bg-white border px-4 py-2 rounded hover:bg-gray-100">Retour</button>
+      <button (click)="nextStep()" [disabled]="!selectedCity"
+        class="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 transition">
+        Continuer
+      </button>
+    </div>
+  </div>
+
+  <!-- Étape 3 : Agence -->
+  <div *ngIf="step === 3" class="bg-white rounded-xl shadow p-8 w-full max-w-md">
+    <h2 class="text-xl font-bold mb-2">Étape 3: Sélection de l'agence</h2>
+    <p class="text-gray-600 mb-4">Choisissez l'agence à {{selectedCity}}</p>
+    <label class="block font-semibold mb-1">Agence</label>
+    <select [(ngModel)]="selectedAgency"
+      class="w-full border rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <option value="" disabled selected>Sélectionnez une agence</option>
+      <option *ngFor="let agency of getAgencies()" [value]="agency">{{agency}}</option>
+    </select>
+    <div class="flex justify-between">
+      <button (click)="prevStep()" class="bg-white border px-4 py-2 rounded hover:bg-gray-100">Retour</button>
+      <button (click)="nextStep()" [disabled]="!selectedAgency"
+        class="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 transition">
+        Générer un ticket
+      </button>
+    </div>
+  </div>
+
+  <!-- Étape 4 : Ticket généré -->
+  <div *ngIf="step === 4" class="bg-white rounded-xl shadow p-8 w-full max-w-md flex flex-col items-center">
+    <svg class="w-12 h-12 text-blue-500 mb-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 21V7a2 2 0 012-2h2a2 2 0 012 2v14"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10"></path>
+    </svg>
+    <h2 class="text-xl font-bold mb-2">Votre ticket est prêt!</h2>
+    <div class="border-2 border-dashed border-blue-400 rounded p-4 mb-4 w-full text-center">
+      <div class="text-gray-500 text-sm mb-1">Numéro de ticket</div>
+      <div class="text-2xl font-bold text-blue-600 mb-2">{{ticketNumber}}</div>
+      <div class="text-gray-700 text-sm">Agence: {{selectedAgency}}</div>
+      <div class="text-gray-700 text-sm">Ville: {{selectedCity}}</div>
+      <div class="text-gray-700 text-sm">Nom: {{fullName}}</div>
+      <div class="text-gray-700 text-sm">Temps d'attente estimé: ~20 minutes</div>
+    </div>
+    <div class="bg-blue-50 text-blue-800 rounded p-2 text-sm mb-4">
+      Important: Présentez-vous à l'agence avec votre numéro de ticket.<br>
+      Vous recevrez une notification quand votre tour approche.
+    </div>
+    <div class="flex gap-2 w-full">
+      <button (click)="reset()" class="bg-white border px-4 py-2 rounded hover:bg-gray-100 w-1/2">Nouveau ticket</button>
+      <a routerLink="/" class="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 transition w-1/2 text-center">Retour à l'accueil</a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>

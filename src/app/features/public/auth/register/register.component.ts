@@ -5,6 +5,10 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NavbarComponent } from '../../../../shared/navbar/navbar.component';
+import { FooterComponent } from "../../../../shared/footer/footer.component";
+
+
 
 interface Register {
   name: string;
@@ -23,7 +27,9 @@ interface Register {
   imports: [
     CommonModule,
     ReactiveFormsModule, // Nécessaire pour les formulaires réactifs
-    RouterModule // Pour les directives routerLink
+    RouterModule,
+    FooterComponent,
+    NavbarComponent // Pour les directives routerLink
   ]
 })
 export class RegisterComponent implements OnInit {
@@ -50,6 +56,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // alert("hhhh")
     if (this.registerForm.invalid) {
       console.log('Form is invalid', this.registerForm.errors);
       return;

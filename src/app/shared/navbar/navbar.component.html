@@ -1,32 +1,33 @@
 <!-- Navbar sticky en haut de la page -->
-<nav class="sticky top-0 z-50 bg-white border-b px-4 py-2 shadow">
+<nav [ngClass]="getNavbarClass()" class="sticky top-0 z-50 bg-white border-b px-4 py-2">
   <div class="max-w-7xl mx-auto flex items-center justify-between">
     <!-- Logo et slogan -->
     <div class="flex flex-col">
-      <span class="text-xl font-bold text-blue-600">Nouba</span>
+      <a routerLink="/" class="text-xl font-bold text-blue-600"> <span>Nouba</span></a>
       <span class="text-xs text-gray-500">Gestion intelligente des files</span>
     </div>
     <!-- Menu desktop -->
     <ul class="hidden md:flex space-x-8 items-center">
       <!-- Lien Accueil (toujours visible) -->
       <li>
-        <a routerLink="/" class="flex items-center text-gray-700 hover:text-blue-600">
-          <svg class="w-5 h-5 mr-1"  fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <a routerLink="/" routerLinkActive="text-blue-600 font-bold" [routerLinkActiveOptions]="{ exact: true }"
+           class="flex items-center text-gray-700 hover:text-blue-600">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v10a1 1 0 01-1 1h-3m-6 0h6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg> Accueil
         </a>
       </li>
-      <!-- Lien Nos Agences (admin et client) -->
-      <li *ngIf="isAdmin() || isUser()">
-        <a routerLink="/agencies" class="flex items-center text-gray-700 hover:text-blue-600">
+      <!-- Lien Nos Agences (admin et client) *ngIf="isAdmin() || isUser()" -->
+      <li *ngIf="isLoggedIn()">
+        <a routerLink="/agencies" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round"/>
           </svg> Nos agences
         </a>
       </li>
-      <!-- Lien Espace Agence (agence uniquement) -->
+      <!-- Lien Espace Agence (agence uniquement)  *ngIf="isAgency()"-->
       <li *ngIf="isAgency()">
-        <a routerLink="/dashboard" class="flex items-center text-gray-700 hover:text-blue-600">
+        <a routerLink="/dashboard" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/>
           </svg> Espace Agence
@@ -34,28 +35,33 @@
       </li>
       <!-- Lien Vérifier votre ticket -->
       <li>
-        <a routerLink="/verifier" class="flex items-center text-gray-700 hover:text-blue-600">
+        <a routerLink="/verifier" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M5 13l4 4L19 7"></path>
           </svg>
           Vérifier votre ticket
         </a>
       </li>
+      <!-- Lien FAQ (toujours visible) -->
+      <li>
+        <a routerLink="/faq" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
+          FAQ
+        </a>
+      </li>
       <!-- Lien Contact (toujours visible) -->
       <li>
-        <a routerLink="/contact" class="flex items-center text-gray-700 hover:text-blue-600">
+        <a routerLink="/contact" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/>
           </svg> Contact
         </a>
       </li>
-      <!-- Lien Ajouter/Modifier/Supprimer Agence (admin uniquement) -->
-      <li *ngIf="isAdmin()">
-        <a routerLink="/agencies/manage" class="flex items-center text-gray-700 hover:text-blue-600">
+      <!-- Lien Gérer les agences (admin uniquement) *ngIf="isAdmin()" -->
+      <li *ngIf="isLoggedIn()">
+        <a routerLink="/admin/agencies" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           Gérer les agences
         </a>
       </li>
-    
     </ul>
     <!-- Actions utilisateur -->
     <div class="hidden md:flex space-x-2 items-center">
@@ -70,12 +76,14 @@
       </ng-container>
       <!-- Si non connecté, affiche Connexion/S'inscrire -->
       <ng-template #guestLinks>
-        <a routerLink="/auth/login" class="flex items-center border px-4 py-2 rounded text-gray-700 hover:bg-gray-100">
-          Connexion
-        </a>
-        <a routerLink="/auth/register" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-          S'inscrire
-        </a>
+        <ng-container *ngIf="!isAuthPage()">
+          <a routerLink="/auth/login" class="flex items-center border px-4 py-2 rounded text-gray-700 hover:bg-gray-100">
+            Connexion
+          </a>
+          <a routerLink="/auth/register" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            S'inscrire
+          </a>
+        </ng-container>
       </ng-template>
     </div>
     <!-- Bouton menu mobile -->
@@ -89,27 +97,36 @@
   <div *ngIf="isMenuOpen" class="md:hidden mt-2">
     <ul class="flex flex-col space-y-2">
       <li>
-        <a routerLink="/" (click)="closeMenu()" class="flex items-center text-gray-700 hover:text-blue-600">
+        <a routerLink="/" (click)="closeMenu()" routerLinkActive="text-blue-600 font-bold" [routerLinkActiveOptions]="{ exact: true }" class="flex items-center text-gray-700 hover:text-blue-600">
           Accueil
         </a>
       </li>
-      <li *ngIf="isAdmin() || isUser()">
-        <a routerLink="/agencies" (click)="closeMenu()" class="flex items-center text-gray-700 hover:text-blue-600">
+      <!-- Lien Nos Agences (admin et client) -->
+      <li *ngIf="isLoggedIn()">
+        <a routerLink="/agencies" (click)="closeMenu()" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           Nos agences
         </a>
       </li>
-      <li *ngIf="isAgency()">
-        <a routerLink="/dashboard" (click)="closeMenu()" class="flex items-center text-gray-700 hover:text-blue-600">
+      <!-- Lien Espace Agence (agence uniquement) *ngIf="isAgency()" -->
+      <li >
+        <a routerLink="/dashboard" (click)="closeMenu()" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           Espace Agence
         </a>
       </li>
       <li>
-        <a routerLink="/contact" (click)="closeMenu()" class="flex items-center text-gray-700 hover:text-blue-600">
+        <a routerLink="/contact" (click)="closeMenu()" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           Contact
         </a>
       </li>
-      <li *ngIf="isAdmin()">
-        <a routerLink="/agencies/manage" (click)="closeMenu()" class="flex items-center text-gray-700 hover:text-blue-600">
+      <!-- Lien FAQ (toujours visible) -->
+      <li>
+        <a routerLink="/faq" (click)="closeMenu()" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
+          <img src="assets/faq.svg" alt="FAQ" class="w-5 h-5 mr-1" /> FAQ
+        </a>
+      </li>
+      <!-- Lien Gérer les agences (admin uniquement) *ngIf="isAdmin()" -->  
+      <li *ngIf="isLoggedIn()">
+        <a routerLink="/admin/agencies" (click)="closeMenu()" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           Gérer les agences
         </a>
       </li>
