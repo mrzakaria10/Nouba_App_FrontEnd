@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +17,7 @@ import { NavbarComponent } from '../../../../shared/navbar/navbar.component';
     RouterModule,
     FooterComponent,
     NavbarComponent
-],
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -29,11 +29,13 @@ export class LoginComponent implements OnInit {
   errorMessage: string | null = null;
   forgotPasswordError: string | null = null;
   forgotPasswordSuccess = false;
+  redirectTo: string = '/dashboard';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -47,9 +49,17 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // Check if user is already logged in
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/dashboard']);
+    if (this.authService.isAuthenticated()) {
+      this.redirectBasedOnRole();
+      return;
     }
+
+    // Get redirect path from query params
+    this.route.queryParams.subscribe(params => {
+      if (params['redirectTo']) {
+        this.redirectTo = params['redirectTo'];
+      }
+    });
 
     // Check if we came from registration
     const navigation = this.router.getCurrentNavigation();
@@ -61,27 +71,48 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
-    if (this.loginForm.invalid) {
-      return;
+  redirectBasedOnRole(): void {
+    if (this.redirectTo === '/ticket-wizard' && this.authService.hasRole('CLIENT')) {
+      this.router.navigate(['/ticket-wizard']);
+    } else if (this.authService.hasRole('ADMIN')) {
+      this.router.navigate(['/admin/dashboard']);
+    } else if (this.authService.hasRole('AGENCY')) {
+      this.router.navigate(['/agency/dashboard']);
+    } else {
+      this.router.navigate(['/dashboard']);
     }
-
-    this.isLoading = true;
-    this.errorMessage = null;
-
-    const credentials = this.loginForm.value;
-
-    this.authService.login(credentials).subscribe({
-      next: (response) => {
-        this.isLoading = false;
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        this.isLoading = false;
-        this.errorMessage = err.error?.message || 'Email ou mot de passe incorrect';
-      }
-    });
   }
+
+  onSubmit(): void {
+  if (this.loginForm.invalid) {
+    return;
+  }
+
+  this.isLoading = true;
+  this.errorMessage = null;
+
+  const credentials = this.loginForm.value;
+
+  this.authService.login(credentials).subscribe({
+    next: () => {
+      this.isLoading = true;
+      if (this.authService.hasRole('ROLE_ADMIN')) {
+        this.router.navigate(['/admin/dashboard']);
+      } else if (this.authService.hasRole('ROLE_AGENCY')) {
+        this.router.navigate(['/agency/dashboard']);
+      } else if (this.authService.hasRole('ROLE_CLIENT')) {
+        this.router.navigate(['/client/dashboard']);
+      } else {
+        this.router.navigate(['/public/landing-page']);
+      }
+    },
+    error: (err) => {
+      this.isLoading = false;
+      this.errorMessage = err.error?.message || 'Email ou mot de passe incorrect';
+    }
+  });
+}
+
 
   onForgotPassword(): void {
     if (this.forgotPasswordForm.invalid) {

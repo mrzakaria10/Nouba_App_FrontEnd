@@ -1,49 +1,39 @@
 <app-navbar></app-navbar>
-<div class="max-w-4xl mx-auto py-8 px-4">
-  <h1 class="text-3xl font-bold text-blue-600 mb-4">Foire Aux Questions</h1>
-  <p class="mb-8 text-gray-600">Trouvez des réponses aux questions fréquemment posées sur Nouba au Maroc.</p>
 
-  <div class="space-y-8">
-    <div>
-      <h2 class="font-semibold text-lg mb-1">Comment fonctionne le système Nouba?</h2>
-      <p class="text-gray-700">Nouba est un système de gestion de file d'attente intelligent. Les clients prennent un ticket virtuel, suivent leur position en temps réel et reçoivent une notification lorsque c'est leur tour.</p>
-    </div>
-    <hr>
-    <div>
-      <h2 class="font-semibold text-lg mb-1">Comment puis-je intégrer Nouba dans mon agence au Maroc?</h2>
-      <p class="text-gray-700">Notre équipe vous accompagne dans l'installation et la configuration du système. La mise en place est rapide et simple, généralement en moins de 48 heures dans tout le Maroc.</p>
-    </div>
-    <hr>
-    <div>
-      <h2 class="font-semibold text-lg mb-1">Est-ce que les clients ont besoin d'une application?</h2>
-      <p class="text-gray-700">Non, aucune application n'est nécessaire. Les clients peuvent accéder au service via un simple navigateur web ou par SMS, ce qui est particulièrement adapté au marché marocain.</p>
-    </div>
-    <hr>
-    <div>
-      <h2 class="font-semibold text-lg mb-1">Quels sont les avantages pour mon agence marocaine?</h2>
-      <p class="text-gray-700">Réduction des temps d'attente, meilleure expérience client, statistiques détaillées sur l'affluence et la performance, et optimisation de l'utilisation de vos ressources, tout en respectant les spécificités du marché marocain.</p>
-    </div>
-    <hr>
-    <div>
-      <h2 class="font-semibold text-lg mb-1">Comment les clients sont-ils notifiés de leur tour?</h2>
-      <p class="text-gray-700">Les clients peuvent choisir d'être notifiés par SMS, email ou directement sur leur navigateur web. Ils peuvent également suivre leur position dans la file d'attente en temps réel.</p>
-    </div>
-    <hr>
-    <div>
-      <h2 class="font-semibold text-lg mb-1">Le système fonctionne-t-il hors ligne?</h2>
-      <p class="text-gray-700">Le système Nouba nécessite une connexion Internet pour fonctionner. Cependant, nous avons optimisé notre solution pour qu'elle consomme très peu de données et fonctionne même avec une connexion lente, ce qui est idéal pour certaines régions du Maroc.</p>
-    </div>
-    <hr>
-    <div>
-      <h2 class="font-semibold text-lg mb-1">Proposez-vous une formation pour utiliser le système?</h2>
-      <p class="text-gray-700">Oui, nous offrons une formation complète à votre équipe ainsi qu'un support technique continu pour vous accompagner dans l'utilisation quotidienne du système.</p>
+<div class="faq-container">
+  <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Questions Fréquemment Posées</h1>
+  
+  <div class="space-y-4">
+    <div *ngFor="let item of faqItems; let i = index" class="faq-item">
+      <div class="faq-question" (click)="toggleFaq(i)">
+        <span>{{ item.question }}</span>
+        <svg 
+          class="faq-icon" 
+          [class.open]="item.isOpen"
+          width="24" 
+          height="24" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+      <div class="faq-answer" *ngIf="item.isOpen">
+        {{ item.answer }}
+      </div>
     </div>
   </div>
 
-  <div class="mt-12 bg-gray-50 rounded-lg p-8 text-center">
-    <h2 class="text-xl font-semibold mb-2">Vous avez d'autres questions?</h2>
-    <p class="mb-4">Notre équipe est disponible pour répondre à toutes vos questions</p>
-    <a routerLink="/contact" class="inline-block bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-700 transition">Contactez-nous</a>
+  <div class="mt-8 text-center">
+    <p class="text-gray-600 mb-4">Vous n'avez pas trouvé votre réponse ?</p>
+    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+      Contactez-nous
+    </button>
   </div>
 </div>
+
 <app-footer></app-footer>

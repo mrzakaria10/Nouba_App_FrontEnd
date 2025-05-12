@@ -1,7 +1,6 @@
-<div class="flex h-screen overflow-hidden">
-    <app-sidebar class="w-64 bg-white shadow-md"></app-sidebar>
-      <div class="flex-1 overflow-auto bg-gray-100 p-4">
-      <router-outlet></router-outlet>
-    </div>
+<div class="flex min-h-screen bg-gray-50">
+  <app-admin-sidebar class="w-64 hidden md:block"></app-admin-sidebar>
+  <div class="flex-1 p-4">
+    <router-outlet></router-outlet>
   </div>
-  
+</div>

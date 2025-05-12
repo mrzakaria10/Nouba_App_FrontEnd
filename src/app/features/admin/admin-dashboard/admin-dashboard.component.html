@@ -1,1 +1,41 @@
-<p>admin-dashboard works!</p>
+<div>
+  <h1 class="text-2xl font-bold mb-6">Tableau de bord Admin</h1>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white p-4 rounded shadow border border-blue-200">
+      <div class="text-gray-500">Agences</div>
+      <div class="text-3xl font-bold">3</div>
+      <div class="text-xs text-gray-400">Agences actives</div>
+    </div>
+    <div class="bg-white p-4 rounded shadow border border-green-200">
+      <div class="text-gray-500">Clients</div>
+      <div class="text-3xl font-bold">157</div>
+      <div class="text-xs text-gray-400">Clients servis aujourd'hui</div>
+    </div>
+    <div class="bg-white p-4 rounded shadow border border-purple-200">
+      <div class="text-gray-500">Tickets</div>
+      <div class="text-3xl font-bold">24</div>
+      <div class="text-xs text-gray-400">Tickets en attente</div>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="font-semibold mb-2">Performance des Agences</h2>
+      <div class="h-40 flex items-center justify-center text-gray-400">Graphique de performance</div>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+      <div class="flex justify-between items-center mb-2">
+        <h2 class="font-semibold">Activité Récente</h2>
+        <a href="#" class="text-blue-500 text-sm">Voir tout</a>
+      </div>
+      <ul class="space-y-2">
+        <li *ngFor="let activity of [1,2,3,4]; let i = index" class="flex items-center">
+          <span class="w-6 h-6 flex items-center justify-center bg-gray-100 rounded-full mr-2">{{i+1}}</span>
+          <div>
+            <div class="font-medium">Nouvelle réservation</div>
+            <div class="text-xs text-gray-400">Il y a {{(i+1)*5}} minutes</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,14 +1,20 @@
-import { inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-export const adminGuard = () => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+@Injectable({
+  providedIn: 'root'
+})
+export class AdminGuard {
+  constructor(private authService: AuthService, private router: Router) {}
 
-  if (authService.isAdmin()) {
-    return true;
+  canActivate(): boolean {
+    if (this.authService.isAdmin()) {
+      return true;
+    }
+    
+    // Redirect to home page if not admin
+    this.router.navigate(['/']);
+    return false;
   }
-
-  return router.parseUrl('/');
-}; 
+} 

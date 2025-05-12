@@ -1,5 +1,34 @@
 <!-- Conteneur principal de la landing page -->
 <div [ngClass]="getRoleBgClass()" class="min-h-screen flex flex-col">
+  <!-- Modal Popup -->
+  <div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-auto transform transition-all">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-900">
+          {{ modalType === 'login' ? 'Connexion requise' : 'Accès restreint' }}
+        </h3>
+      </div>
+      
+      <!-- Modal Body -->
+      <div class="px-6 py-4">
+        <p class="text-gray-600">{{ modalMessage }}</p>
+      </div>
+      
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 bg-gray-50 rounded-b-lg flex justify-end space-x-3">
+        <button (click)="closeModal()" 
+                class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+          Annuler
+        </button>
+        <button (click)="navigateToLogin()" 
+                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
+          Se connecter
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Navbar (à inclure avec <app-navbar> si tu as un composant dédié) -->
   <app-navbar></app-navbar>
 
@@ -15,12 +44,12 @@
           Optimisez l'expérience client et réduisez les temps d'attente dans vos agences.
         </p>
         <div class="flex flex-col sm:flex-row gap-2 justify-center md:justify-start">
-          <a routerLink="/ticket-wizard" class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">
+          <button (click)="handleTicketClick()" class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">
             Obtenir un ticket en 2 clics
-          </a>
-          <button type="button"  routerLink="/verifier" class="bg-white border border-blue-600 text-blue-600 px-6 py-2 rounded font-semibold hover:bg-blue-50 transition">
-            Vérifier votre ticket
           </button>
+          <a routerLink="/verifier" class="bg-white border border-blue-600 text-blue-600 px-6 py-2 rounded font-semibold hover:bg-blue-50 transition">
+            Vérifier votre ticket
+          </a>
         </div>
         <ul class="mt-6 text-gray-500 space-y-1 text-sm text-center md:text-left">
           <li>• Réduction du temps d'attente de 40%</li>
@@ -35,7 +64,7 @@
           muted
           playsinline
         controls>
-        <source src="assets/Nouba_video.mp4" type="video/mp4">
+        <source src="assets/Noub_video.mp4" type="video/mp4">
          
           Votre navigateur ne supporte pas la lecture vidéo.
         </video>
@@ -62,7 +91,7 @@
           <p class="text-gray-500 text-center mb-6">
             Permettez à vos clients de prendre des tickets à distance et de suivre leur position en temps réel.
           </p>
-          <button class="bg-blue-600 text-white px-5 py-2 rounded font-semibold hover:bg-blue-700 transition text-sm w-full">
+          <button (click)="handleTicketClick()" class="bg-blue-600 text-white px-5 py-2 rounded font-semibold hover:bg-blue-700 transition text-sm w-full">
             Obtenir un ticket en 2 clics
           </button>
         </div>
@@ -73,7 +102,7 @@
           <p class="text-gray-500 text-center mb-6">
             Alertes automatiques lorsque le tour du client approche, réduisant les temps d'attente sur place.
           </p>
-          <button class="bg-blue-600 text-white px-5 py-2 rounded font-semibold hover:bg-blue-700 transition text-sm w-full">
+          <button (click)="handleTicketClick()" class="bg-blue-600 text-white px-5 py-2 rounded font-semibold hover:bg-blue-700 transition text-sm w-full">
             Obtenir un ticket en 2 clics
           </button>
         </div>
@@ -84,7 +113,7 @@
           <p class="text-gray-500 text-center mb-6">
             Suivez les statistiques de fréquentation et optimisez vos ressources en temps réel.
           </p>
-          <button class="bg-blue-600 text-white px-5 py-2 rounded font-semibold hover:bg-blue-700 transition text-sm w-full">
+          <button (click)="handleTicketClick()" class="bg-blue-600 text-white px-5 py-2 rounded font-semibold hover:bg-blue-700 transition text-sm w-full">
             Obtenir un ticket en 2 clics
           </button>
         </div>
@@ -135,7 +164,7 @@
         </div>
       </div>
       <div class="flex justify-center">
-        <button class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">
+        <button (click)="handleTicketClick()" class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">
           Obtenir un ticket en 2 clics
         </button>
       </div>

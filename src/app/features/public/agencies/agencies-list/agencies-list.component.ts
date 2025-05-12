@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { AuthService } from '../../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { AgencyService } from '../../../../core/services/agency.service';
 import { NavbarComponent } from '../../../../shared/navbar/navbar.component';
@@ -29,7 +29,11 @@ export interface Agency {
 export class AgenciesListComponent implements OnInit {
   agencies: any[] = [];
 
-  constructor(private agencyService: AgencyService) {}
+  constructor(
+    private agencyService: AgencyService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.loadAgencies();

@@ -1,0 +1,23 @@
+<div *ngIf="authService.isAdmin()">
+  <div class="sidebar-title">Menu Principal</div>
+  <nav class="bg-white h-full border-r p-4">
+    <ul class="space-y-2">
+      <li>
+        <a routerLink="/admin/dashboard" routerLinkActive="font-bold text-blue-600" class="block py-2 px-4 rounded hover:bg-blue-50">Tableau de bord</a>
+      </li>
+      <li>
+        <a routerLink="/admin/agencies" routerLinkActive="font-bold text-blue-600" class="block py-2 px-4 rounded hover:bg-blue-50">Gérer les agences</a>
+      </li>
+      <li>
+        <a routerLink="/admin/users" routerLinkActive="font-bold text-blue-600" class="block py-2 px-4 rounded hover:bg-blue-50">Utilisateurs</a>
+      </li>
+      <li>
+        <a routerLink="/admin/settings" routerLinkActive="font-bold text-blue-600" class="block py-2 px-4 rounded hover:bg-blue-50">Paramètres</a>
+      </li>
+      <li>
+        <a routerLink="/admin/performance" routerLinkActive="font-bold text-blue-600" class="block py-2 px-4 rounded hover:bg-blue-50">Graphique de performance</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar-version">Version 1.0.0</div>
+</div>

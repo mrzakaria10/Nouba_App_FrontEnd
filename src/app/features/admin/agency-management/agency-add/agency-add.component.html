@@ -1,1 +1,85 @@
-<p>agency-add works!</p>
+<!-- Barre de navigation -->
+<app-navbar></app-navbar>
+
+<!-- Conteneur principal du formulaire -->
+<div class="max-w-2xl mx-auto py-8 px-4">
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h1 class="text-2xl font-bold mb-6">Ajouter une Agence</h1>
+    
+    <!-- Formulaire d'ajout d'agence -->
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+      <!-- Champ Nom de l'agence -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Nom de l'agence</label>
+        <input type="text" formControlName="name" 
+               class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+               [class.border-red-500]="form.get('name')?.invalid && form.get('name')?.touched">
+      </div>
+
+      <!-- Champ Photo -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Photo</label>
+        <input type="file" (change)="onPhotoChange($event)" accept="image/*"
+               class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+               [class.border-red-500]="form.get('photo')?.invalid && form.get('photo')?.touched">
+      </div>
+
+      <!-- Champ Adresse -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
+        <input type="text" formControlName="address"
+               class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+               [class.border-red-500]="form.get('address')?.invalid && form.get('address')?.touched">
+      </div>
+
+      <!-- Champ Téléphone -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+        <input type="tel" formControlName="phone"
+               class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+               [class.border-red-500]="form.get('phone')?.invalid && form.get('phone')?.touched">
+      </div>
+
+      <!-- Champ Ville -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Ville</label>
+        <input type="text" formControlName="cityName"
+               class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+               [class.border-red-500]="form.get('cityName')?.invalid && form.get('cityName')?.touched">
+      </div>
+
+      <!-- Champ Email -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input type="email" formControlName="email"
+               class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+               [class.border-red-500]="form.get('email')?.invalid && form.get('email')?.touched">
+      </div>
+
+      <!-- Champ Mot de passe -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+        <input type="password" formControlName="password"
+               class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+               [class.border-red-500]="form.get('password')?.invalid && form.get('password')?.touched">
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="flex gap-4 pt-4">
+        <button type="submit" 
+                class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [disabled]="form.invalid">
+          Enregistrer
+        </button>
+        <button type="button" 
+                (click)="router.navigate(['/admin/agency-management'])"
+                class="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+          Annuler
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Pied de page -->
+<app-footer></app-footer>
