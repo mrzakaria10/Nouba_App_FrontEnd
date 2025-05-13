@@ -76,6 +76,7 @@ export class AuthService {
             console.log('User role:', userInfo.role);
             console.log('User email:', userInfo.email);
             console.log('User name:', userInfo.name);
+            console.log('User ID:', userInfo.id);
             console.log('================================');
             
             if (userInfo) {
@@ -86,7 +87,7 @@ export class AuthService {
                 roles: userInfo.roles || []
               });
               // Show alert with user role
-              alert(`Connexion réussie!\nRôle: ${userInfo.role}\nNom: ${userInfo.name}`);
+              alert(`Connexion réussie!\nRôle: ${userInfo.role}\nNom: ${userInfo.name}\nID: ${userInfo.id}`);
             }
           } catch (error) {
             console.error('Error processing login response:', error);
@@ -341,7 +342,30 @@ export class AuthService {
     
   }
 
-  getCurrentUser(): User | null {
-    return this.currentUserValue;
+  getCurrentUser(): { id: number; name: string; email: string; roles: string[] } | null {
+    const tokenPayload = this.getDecodedTokenPayload();
+    if (tokenPayload) {
+      return {
+        id: tokenPayload.id, // Ensure the backend includes the client ID in the token
+        name: tokenPayload.name,
+        email: tokenPayload.email,
+        roles: tokenPayload.roles,
+      };
+    }
+    return null;
   }
+
+  /**
+   * Retrieves the full decoded payload of the JWT token.
+   * @returns Decoded token payload or null if no token/error.
+   */
+  public getDecodedTokenPayload(): any | null {
+    const token = this.getToken();
+    if (token) {
+      return this.parseJwt(token);
+    }
+    return null;
+  }
+
+  
 }

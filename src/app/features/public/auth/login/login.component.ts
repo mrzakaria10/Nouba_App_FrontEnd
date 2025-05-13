@@ -71,53 +71,81 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  redirectBasedOnRole(): void {
-    if (this.redirectTo === '/ticket-wizard' && this.authService.hasRole('CLIENT')) {
+    redirectBasedOnRole(): void {
+    // Standardize role checks to use 'ROLE_' prefix, assuming this is the correct format for authService.hasRole()
+    // And fix syntax error for the default navigation
+    if (this.redirectTo === '/ticket-wizard' && this.authService.hasRole('ROLE_CLIENT')) {
       this.router.navigate(['/ticket-wizard']);
-    } else if (this.authService.hasRole('ADMIN')) {
+    } else if (this.authService.hasRole('ROLE_ADMIN')) {
       this.router.navigate(['/admin/dashboard']);
-    } else if (this.authService.hasRole('AGENCY')) {
+    } else if (this.authService.hasRole('ROLE_AGENCY')) {
       this.router.navigate(['/agency/dashboard']);
+    } else if (this.authService.hasRole('ROLE_CLIENT')) {
+      // If redirectTo was not '/ticket-wizard', navigate to a default client dashboard or redirectTo
+      this.router.navigate([this.redirectTo !== '/dashboard' && this.redirectTo !== '/' ? this.redirectTo : '/client/dashboard']);
     } else {
-      this.router.navigate(['/dashboard']);
+      // Fallback to redirectTo if set, otherwise a general dashboard or landing page
+      this.router.navigate([this.redirectTo && this.redirectTo !== '/' ? this.redirectTo : '/public/landing-page']);
     }
   }
 
   onSubmit(): void {
-  if (this.loginForm.invalid) {
-    return;
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.isLoading = true;
+    this.errorMessage = null;
+
+    const credentials = this.loginForm.value;
+
+    this.authService.login(credentials).subscribe({
+      next: () => {
+        this.isLoading = false; // Corrected: Set to false after successful login
+
+        // Prioritize redirectTo if it's specific and user has the right role for it
+        if (this.redirectTo && this.redirectTo !== '/dashboard' && this.redirectTo !== '/') {
+          if (this.redirectTo === '/ticket-wizard') {
+            if (this.authService.hasRole('ROLE_CLIENT')) {
+              this.router.navigate([this.redirectTo]);
+            } else {
+              // User wants ticket-wizard but isn't client, fallback to role dashboard
+              this.navigateToRoleDashboardOrDefault();
+            }
+          } else {
+            // For other specific redirectTo values, navigate directly.
+            // Consider adding role checks if other redirectTo paths are role-specific.
+            this.router.navigate([this.redirectTo]);
+          }
+        } else {
+          // No specific redirectTo, or it's a generic one, so navigate based on role
+          this.navigateToRoleDashboardOrDefault();
+        }
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = err.error?.message || 'Email ou mot de passe incorrect';
+      }
+    });
   }
 
-  this.isLoading = true;
-  this.errorMessage = null;
-
-  const credentials = this.loginForm.value;
-
-  this.authService.login(credentials).subscribe({
-    next: () => {
-      this.isLoading = true;
-      if (this.authService.hasRole('ROLE_ADMIN')) {
-        this.router.navigate(['/admin/dashboard']);
-      } else if (this.authService.hasRole('ROLE_AGENCY')) {
-        this.router.navigate(['/agency/dashboard']);
-      } else if (this.authService.hasRole('ROLE_CLIENT')) {
-        this.router.navigate(['/client/dashboard']);
-      } else {
-        this.router.navigate(['/public/landing-page']);
-      }
-    },
-    error: (err) => {
-      this.isLoading = false;
-      this.errorMessage = err.error?.message || 'Email ou mot de passe incorrect';
+  private navigateToRoleDashboardOrDefault(): void {
+    if (this.authService.hasRole('ROLE_ADMIN')) {
+      this.router.navigate(['/admin/dashboard']);
+    } else if (this.authService.hasRole('ROLE_AGENCY')) {
+      this.router.navigate(['/agency/dashboard']);
+    } else if (this.authService.hasRole('ROLE_CLIENT')) {
+      this.router.navigate(['/client/dashboard']); // Default for client
+    } else {
+      this.router.navigate(['/public/landing-page']); // General fallback
     }
-  });
-}
-
+  }
 
   onForgotPassword(): void {
     if (this.forgotPasswordForm.invalid) {
       return;
     }
+  
 
     this.isForgotPasswordLoading = true;
     this.forgotPasswordError = null;

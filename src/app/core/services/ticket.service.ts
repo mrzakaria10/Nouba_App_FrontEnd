@@ -19,6 +19,7 @@ export class TicketService {
   // Récupérer toutes les villes
   getAllCities(): Observable<any> {
     return this.http.get(`${this.baseUrl}/cities`, { headers: this.getHeaders() });
+    // Uncomment the line below if you want to log the request  
     console.log(this.http.get(`${this.baseUrl}/cities`, { headers: this.getHeaders() }));
   }
 
@@ -28,17 +29,8 @@ export class TicketService {
   }
 
   // Créer un nouveau ticket
-  createTicket(agencyId: number, clientId: number): Observable<any> {
-    return this.http.post(
-      `${this.baseUrl}/tickets/agency/${agencyId}/${clientId}`,
-      {},
-      { headers: this.getHeaders() }
-    );
-    console.log(this.http.post(
-      `${this.baseUrl}/tickets/agency/${agencyId}/${clientId}`,
-      {},
-      { headers: this.getHeaders() }
-    ));
+  createTicket(payload: { agencyId: number; clientId: number }): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/tickets`, payload);
   }
 
   // Récupérer le statut d'un ticket
