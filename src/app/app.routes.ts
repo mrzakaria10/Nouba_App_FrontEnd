@@ -18,7 +18,8 @@ export const routes: Routes = [
   // Liste publique des agences
   {
     path: 'agencies',
-    component: AgenciesListComponent
+    loadComponent: () => import('./features/public/agencies/agencies-list/agencies-list.component').then(m => m.AgenciesListComponent),
+    
   },
  
   // Routes d'administration

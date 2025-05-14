@@ -1,23 +1,84 @@
 <div *ngIf="authService.isAdmin()">
-  <div class="sidebar-title">Menu Principal</div>
-  <nav class="bg-white h-full border-r p-4">
-    <ul class="space-y-2">
-      <li>
-        <a routerLink="/admin/dashboard" routerLinkActive="font-bold text-blue-600" class="block py-2 px-4 rounded hover:bg-blue-50">Tableau de bord</a>
-      </li>
-      <li>
-        <a routerLink="/admin/agencies" routerLinkActive="font-bold text-blue-600" class="block py-2 px-4 rounded hover:bg-blue-50">Gérer les agences</a>
-      </li>
-      <li>
-        <a routerLink="/admin/users" routerLinkActive="font-bold text-blue-600" class="block py-2 px-4 rounded hover:bg-blue-50">Utilisateurs</a>
-      </li>
-      <li>
-        <a routerLink="/admin/settings" routerLinkActive="font-bold text-blue-600" class="block py-2 px-4 rounded hover:bg-blue-50">Paramètres</a>
-      </li>
-      <li>
-        <a routerLink="/admin/performance" routerLinkActive="font-bold text-blue-600" class="block py-2 px-4 rounded hover:bg-blue-50">Graphique de performance</a>
-      </li>
-    </ul>
-  </nav>
-  <div class="sidebar-version">Version 1.0.0</div>
+  <div [ngClass]="{
+        'w-64': !isCollapsed,
+        'w-20': isCollapsed,
+        'fixed md:static': true,
+        'h-full': true,
+        'bg-white': true,
+        'border-r': true,
+        'flex flex-col': true,
+        'transition-all duration-300': true
+      }">
+    <!-- Logo and Collapse Button -->
+    <div class="flex items-center justify-between p-4 border-b">
+      <div class="flex items-center space-x-2">
+        <!-- SVG Logo -->
+        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v10a1 1 0 01-1 1h-3m-6 0h6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span *ngIf="!isCollapsed" class="text-lg font-bold text-blue-600">Admin Nouba</span>
+      </div>
+      <!-- Collapse/Expand Icon -->
+      <button (click)="toggleSidebar()" class="text-gray-600 hover:text-gray-800 focus:outline-none">
+        <svg *ngIf="!isCollapsed" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M19 12H5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg *ngIf="isCollapsed" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Admin Name -->
+    <div *ngIf="!isCollapsed" class="p-4 text-gray-700 border-b">
+      <span class="block text-sm">Bienvenue,</span>
+      <span class="block font-medium text-blue-600">{{ adminName }}</span>
+    </div>
+
+    <!-- Menu -->
+    <nav class="flex-1 p-4 space-y-2">
+      <ul>
+        <li>
+          <a routerLink="/admin/dashboard" routerLinkActive="font-bold text-blue-600"
+             class="flex items-center gap-2 py-2 px-4 rounded hover:bg-blue-50">
+            <!-- Dashboard Icon -->
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8v-10h-8v10zm0-18v6h8V3h-8z"/>
+            </svg>
+            <span *ngIf="!isCollapsed">Tableau de bord</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/agencies" routerLinkActive="font-bold text-blue-600"
+             class="flex items-center gap-2 py-2 px-4 rounded hover:bg-blue-50">
+            <!-- Agencies Icon -->
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M16 11V5a1 1 0 00-1-1H5a1 1 0 00-1 1v6m16 0V5a1 1 0 00-1-1h-6a1 1 0 00-1 1v6m0 0v6a1 1 0 001 1h6a1 1 0 001-1v-6m-8 0v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6"/>
+            </svg>
+            <span *ngIf="!isCollapsed">Gérer les agences</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/users" routerLinkActive="font-bold text-blue-600"
+             class="flex items-center gap-2 py-2 px-4 rounded hover:bg-blue-50">
+            <!-- Users Icon -->
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-2a4 4 0 10-8 0 4 4 0 008 0zm6-2a4 4 0 10-8 0 4 4 0 008 0z"/>
+            </svg>
+            <span *ngIf="!isCollapsed">Utilisateurs</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Logout Button -->
+    <div class="p-4 border-t mt-auto">
+      <button (click)="logout()" class="w-full text-red-600 border border-red-600 px-4 py-2 rounded hover:bg-red-50 flex items-center justify-center">
+        <svg *ngIf="isCollapsed" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1"/>
+        </svg>
+        <span *ngIf="!isCollapsed">-&gt; Déconnexion</span>
+      </button>
+    </div>
+  </div>
 </div>

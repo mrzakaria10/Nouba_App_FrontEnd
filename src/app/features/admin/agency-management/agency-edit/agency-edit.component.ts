@@ -3,13 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AgencyService } from '../../../../core/services/agency.service';
-import { NavbarComponent } from '../../../../shared/navbar/navbar.component';
-import { FooterComponent } from '../../../../shared/footer/footer.component';
 
 @Component({
   selector: 'app-agency-edit',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NavbarComponent, FooterComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './agency-edit.component.html',
   styleUrl: './agency-edit.component.css'
 })

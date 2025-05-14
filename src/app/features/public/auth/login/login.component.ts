@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-    redirectBasedOnRole(): void {
+  redirectBasedOnRole(): void {
     // Standardize role checks to use 'ROLE_' prefix, assuming this is the correct format for authService.hasRole()
     // And fix syntax error for the default navigation
     if (this.redirectTo === '/ticket-wizard' && this.authService.hasRole('ROLE_CLIENT')) {

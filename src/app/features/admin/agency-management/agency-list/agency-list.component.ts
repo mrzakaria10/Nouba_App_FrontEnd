@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AgencyService } from '../../../../core/services/agency.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NavbarComponent } from '../../../../shared/navbar/navbar.component';
-import { FooterComponent } from '../../../../shared/footer/footer.component';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-agency-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavbarComponent, FooterComponent, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './agency-list.component.html',
   styleUrl: './agency-list.component.css'
 })
