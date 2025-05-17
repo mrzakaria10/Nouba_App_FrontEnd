@@ -1,111 +1,93 @@
 import { Component, OnInit } from '@angular/core';
-import { AgencyService } from '../../../../core/services/agency.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AgenciesAdminService } from '../../../../core/services/agencies-admin.service';
+import { ToastrService } from 'ngx-toastr';
+import { Agency } from '../../../../models/agency';
 
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+// interface Agency {
+//   id: number;
+//   name: string;
+//   address: string;
+//   phone: string;
+//   email: string;
+//   city: {
+//     id: number;
+//     name: string;
+//   };
+//   photoUrl: string;
+
+// }
 
 @Component({
   selector: 'app-agency-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './agency-list.component.html',
-  styleUrl: './agency-list.component.css'
+  styleUrl: './agency-list.component.css',
+  providers: [AgenciesAdminService]
 })
 export class AgencyListComponent implements OnInit {
-  agencies: any[] = [];
-  showForm = false;
-  isEdit = false;
-  form: FormGroup;
-  photoFile: File | null = null;
+  agencies: Agency[] = [];
+  selectedAgency: Agency | null = null;
+  // isLoading = false;
+  
 
   constructor(
-    private agencyService: AgencyService,
-    private fb: FormBuilder
-  ) {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      address: ['', Validators.required],
-      phone: ['', Validators.required],
-      cityName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      photo: [null]
-    });
-  }
+    private agenciesAdminService: AgenciesAdminService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAgencies();
   }
 
   loadAgencies() {
-    this.agencyService.getAllAgencies().subscribe({
-      next: (data) => {
-        console.log('Agencies loaded:', data);
+      this.agenciesAdminService.getAllAgencies().subscribe((data: Agency[]) => {
         this.agencies = data;
+      });
+    }
+  // loadAgencies() {
+  //   this.isLoading = true;
+  //   this.agenciesAdminService.getAllAgencies().subscribe({
+  //     next: (response) => {
+  //       console.log('Agencies loaded:', response);
+  //       this.agencies = response;
+  //       this.isLoading = false;
+  //     },
+  //     error: (error) => {
+  //       console.error('Error loading agencies:', error);
+  //       this.toastr.error('Error loading agencies', 'Error');
+  //       this.isLoading = false;
+  //     }
+  //   });
+  // }
+
+  edit(id: number): void {
+    // Navigate to the edit page with the agency ID
+    this.router.navigate(['/admin/agencies/edit', id]);
+  }
+
+  openConfirmModal(agency: Agency) {
+    this.selectedAgency = agency;
+  }
+
+
+  deleteAgency() {
+    if (!this.selectedAgency || this.selectedAgency.id === undefined) {
+      console.log('No agency selected or ID is undefined');
+       return; }
+    this.agenciesAdminService.deleteAgency(this.selectedAgency.id).subscribe({
+      next: res => {
+        this.toastr.success(res.message, 'Succès');
+        this.loadAgencies();
+        this.selectedAgency = null;
+        this.router.navigate(['/admin/agencies']);
       },
-      error: (error) => {
-        console.error('Error loading agencies:', error);
+      error: err => {
+        this.toastr.error(err.error.message, 'Erreur');
       }
     });
-  }
-
-  deleteAgency(id: number) {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette agence ?')) {
-      this.agencyService.deleteAgency(id).subscribe({
-        next: () => {
-          console.log('Agency deleted successfully');
-          this.loadAgencies();
-        },
-        error: (error) => {
-          console.error('Error deleting agency:', error);
-        }
-      });
-    }
-  }
-
-  onPhotoChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.photoFile = file;
-      this.form.patchValue({ photo: file });
-    }
-  }
-
-  submit() {
-    if (this.form.valid) {
-      const formData = new FormData();
-      Object.keys(this.form.value).forEach(key => {
-        if (this.form.value[key] !== null) {
-          formData.append(key, this.form.value[key]);
-        }
-      });
-
-      if (this.isEdit) {
-        // Handle edit case
-        const agencyId = this.form.get('id')?.value;
-        this.agencyService.updateAgency(agencyId, formData).subscribe({
-          next: () => {
-            console.log('Agency updated successfully');
-            this.showForm = false;
-            this.loadAgencies();
-          },
-          error: (error) => {
-            console.error('Error updating agency:', error);
-          }
-        });
-      } else {
-        // Handle add case
-        this.agencyService.createAgency(formData).subscribe({
-          next: () => {
-            console.log('Agency created successfully');
-            this.showForm = false;
-            this.loadAgencies();
-          },
-          error: (error) => {
-            console.error('Error creating agency:', error);
-          }
-        });
-      }
-    }
   }
 }

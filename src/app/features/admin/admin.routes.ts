@@ -21,7 +21,7 @@ export const ADMIN_ROUTES: Routes = [
       { 
         path: 'agencies',
         children: [
-          { path: '', component: AgencyListComponent },
+          { path: 'list', component: AgencyListComponent },
           { path: 'add', component: AgencyAddComponent },
           { path: 'edit/:id', component: AgencyEditComponent }
         ]

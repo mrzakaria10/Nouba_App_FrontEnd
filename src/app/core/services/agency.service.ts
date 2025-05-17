@@ -2,38 +2,52 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+
+interface AgencyResponse {
+  id: number;
+  name: string;
+  address: string;
+  phone: string;
+  email: string;
+  city: {
+    id: number;
+    name: string;
+  };
+  photoUrl: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AgencyService {
-  private resourceUrl = environment.apiUrl + '/agencies';
-  private adminUrl = environment.apiUrl + '/admin/agencies';
+  private apiUrl = `${environment.apiUrl}/agencies`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getAllAgencies() {
+  private getHeaders(): HttpHeaders {
     const token = this.authService.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any[]>(this.resourceUrl, { headers });
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
-  createAgency(agency: any) {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  getAllAgencies(): Observable<AgencyResponse[]> {
+    return this.http.get<AgencyResponse[]>(this.apiUrl, { headers: this.getHeaders() });
+  }
+
+  getAgencyById(id: number): Observable<AgencyResponse> {
+    return this.http.get<AgencyResponse>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  }
+
+  createAgency(agency: any): Observable<any> {
     const formData = this.buildFormDataForCreate(agency);
-    return this.http.post(this.adminUrl, formData, { headers });
+    return this.http.post(this.apiUrl, formData, { headers: this.getHeaders() });
   }
 
-  updateAgency(id: number, agency: any) {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  updateAgency(id: number, agency: any): Observable<any> {
     const formData = this.buildFormDataForUpdate(agency);
-    return this.http.put(`${this.adminUrl}/${id}`, formData, { headers });
+    return this.http.put(`${this.apiUrl}/${id}`, formData, { headers: this.getHeaders() });
   }
 
-  deleteAgency(id: number) {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.delete(`${this.adminUrl}/${id}`, { headers });
+  deleteAgency(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 
   private buildFormDataForCreate(agency: any): FormData {

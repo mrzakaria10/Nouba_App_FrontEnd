@@ -1,12 +1,10 @@
-
-
 <!-- Conteneur principal -->
 <div class="max-w-5xl mx-auto py-8">
   <!-- En-tête avec titre et bouton d'ajout -->
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-3xl font-bold">Gérer les Agences</h1>
     <!-- Bouton d'ajout d'agence - Correction du lien -->
-    <a [routerLink]="['/admin/agency-management/add']" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+    <a [routerLink]="['/admin/agencies/add']" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
       + Ajouter une Agence
     </a>
   </div>
@@ -26,64 +24,41 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Boucle sur les agences -->
+        <tr *ngIf="agencies.length === 0">
+          <td colspan="7" class="text-center">Aucune agence trouvée.</td>
+        </tr>
         <tr *ngFor="let agency of agencies" class="border-t">
           <td class="px-2 py-2">
-            <img [src]="'/uploads/' + agency.photoUrl" class="w-12 h-12 object-cover rounded" alt="Photo de l'agence" />
+            <img [src]="'http://localhost:8080/api/uploads/' + agency.posterFile" class="w-12 h-12 object-cover rounded" alt="Photo de l'agence" />
           </td>
           <td class="px-2 py-2">{{ agency.name }}</td>
           <td class="px-2 py-2">{{ agency.address }}</td>
           <td class="px-2 py-2">{{ agency.phone }}</td>
-          <td class="px-2 py-2">{{ agency.city?.name }}</td>
+          <td class="px-2 py-2">{{ agency.city.name }}</td>
           <td class="px-2 py-2">{{ agency.email }}</td>
           <td class="px-2 py-2 flex gap-2">
             <!-- Boutons d'action -->
-            <a [routerLink]="['edit', agency.id]" 
-               class="text-blue-600 hover:underline">Modifier</a>
-            <button (click)="deleteAgency(agency.id)" 
-                    class="text-red-600 hover:underline">Supprimer</button>
+            <button (click)="edit(agency.id)" class="text-blue-600 hover:underline">Modifier</button>
+            <button (click)="openConfirmModal(agency)" class="text-red-600 hover:underline">Supprimer</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+</div>
 
-  <!-- Modal de formulaire d'agence -->
-  <div *ngIf="showForm" class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg">
-      <h2 class="text-xl font-bold mb-4">{{ isEdit ? 'Modifier' : 'Ajouter' }} l'Agence</h2>
-      <form (ngSubmit)="submit()">
-        <!-- Champs du formulaire -->
-        <div class="mb-4">
-          <label class="block font-semibold mb-1">Nom</label>
-          <input formControlName="name" class="w-full border rounded px-3 py-2" required />
-        </div>
-        <div class="mb-4">
-          <label class="block font-semibold mb-1">Photo</label>
-          <input type="file" (change)="onPhotoChange($event)" class="w-full" [required]="!isEdit" />
-        </div>
-        <div class="mb-4">
-          <label class="block font-semibold mb-1">Adresse</label>
-          <input formControlName="address" class="w-full border rounded px-3 py-2" required />
-        </div>
-        <div class="mb-4">
-          <label class="block font-semibold mb-1">Téléphone</label>
-          <input formControlName="phone" class="w-full border rounded px-3 py-2" required />
-        </div>
-        <div class="mb-4">
-          <label class="block font-semibold mb-1">Ville</label>
-          <input formControlName="cityName" class="w-full border rounded px-3 py-2" required />
-        </div>
-        <div class="mb-4">
-          <label class="block font-semibold mb-1">Email</label>
-          <input formControlName="email" class="w-full border rounded px-3 py-2" required />
-        </div>
-        <!-- Boutons d'action du formulaire -->
-        <div class="flex gap-2">
-          <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Enregistrer</button>
-          <button type="button" (click)="showForm = false" class="bg-gray-200 px-4 py-2 rounded">Annuler</button>
-        </div>
-      </form>
+<!-- Modal de confirmation -->
+<div *ngIf="selectedAgency" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white p-6 rounded-lg shadow-xl">
+    <h3 class="text-lg font-bold mb-4">Confirmer la suppression</h3>
+    <p class="mb-4">Êtes-vous sûr de vouloir supprimer l'agence "{{ selectedAgency.name }}" ?</p>
+    <div class="flex justify-end gap-2">
+      <button (click)="selectedAgency = null" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+        Annuler
+      </button>
+      <button (click)="deleteAgency()" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+        Supprimer
+      </button>
     </div>
   </div>
 </div>

@@ -1,10 +1,16 @@
 export interface Agency {
-  id?: number;
+  id: number;
   name: string;
   address: string;
   phone: string;
   email: string;
-  cityId: number;
+  poster?: string;
+  posterFile?: File;
+  password?: string;
+ city: {
+    id: number;
+    name: string;
+  };
   enabled?: boolean;
   createdAt?: Date;
   updatedAt?: Date;

@@ -13,7 +13,10 @@ export interface Agency {
   name: string;
   address: string;
   phone: string;
-  cityName: string;
+   city: {
+    id: number;
+    name: string;
+  };
   photoUrl: string;
   // Le backend doit renvoyer le nom de la ville, pas l'ID
   // Ajoute d'autres champs si besoin (ex: photoUrl)
