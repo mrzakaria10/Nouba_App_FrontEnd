@@ -128,20 +128,22 @@ export class TicketWizardComponent implements OnInit {
   createTicket() {
     const currentUser = this.authService.getCurrentUser();
     if (!currentUser || !currentUser.id) {
-      console.log(!currentUser || !currentUser.id);
       console.log('Erreur: Utilisateur non connecté');
       alert('Erreur: Utilisateur non connecté');
       return;
     }
-      console.log('Client ID:', currentUser.id); // Log the client ID
-  alert('Client ID: ' + currentUser.id); // Show the client ID in an alert
-  
-    const ticketPayload = {
-      agencyId: this.selectedAgency.id, // Assuming `selectedAgency` contains the agency ID
-      clientId: currentUser.id, // Include the client ID
-    };
-  
-    this.ticketService.createTicket(ticketPayload).subscribe({
+    if (!this.selectedAgency || !this.selectedAgency.id) {
+            console.log('Selected agency:', this.selectedAgency);
+            
+
+      alert('Veuillez sélectionner une agence.',);
+      return;
+    }
+
+    const agencyId = this.selectedAgency.id;
+    const clientId = currentUser.id;
+
+    this.ticketService.createTicket(agencyId, clientId).subscribe({
       next: (response) => {
         this.ticketNumber = response.data.number;
         this.peopleAhead = response.data.peopleAhead || 0;

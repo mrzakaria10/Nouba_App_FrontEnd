@@ -1,1 +1,40 @@
-<p>agency-dashboard works!</p>
+<div class="p-6">
+     <!-- Agency Info Card -->
+  <div class="bg-white rounded-lg shadow flex flex-col md:flex-row items-center p-6 mb-6">
+    <img
+      *ngIf="agency.photoUrl"
+      [src]="'http://localhost:8080/api/uploads/' + agency.photoUrl"
+      alt="Logo agence"
+      class="w-20 h-20 rounded-full object-cover mr-6 mb-4 md:mb-0"
+    />
+    <div class="flex-1">
+      <div class="font-bold text-xl md:text-2xl mb-1">{{ agency.name }}</div>
+      <div class="text-gray-500 text-sm mb-1">{{ agency.address }}</div>
+      <div class="text-gray-500 text-sm">{{ agency.phone }}</div>
+    </div>
+    <!-- <div class="flex flex-col items-center bg-blue-50 rounded px-4 py-2 ml-0 md:ml-6 mt-4 md:mt-0">
+    <span class="text-blue-600 font-bold text-2xl">{{ waitingTickets ?? '-' }}</span>
+    <span class="text-xs text-gray-500">En attente</span>
+  </div> -->
+  </div>
+  <!-- ggg -->
+  <h1 class="text-2xl font-bold mb-4">Tableau de bord de l'agence</h1>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+      <span class="material-icons text-blue-500 text-4xl mb-2">confirmation_number</span>
+      <div class="text-lg font-semibold">Tickets en attente</div>
+      <div class="text-2xl font-bold text-blue-600">5</div>
+    </div>
+    <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+      <span class="material-icons text-green-500 text-4xl mb-2">check_circle</span>
+      <div class="text-lg font-semibold">Tickets traités</div>
+      <div class="text-2xl font-bold text-green-600">12</div>
+    </div>
+    <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+      <span class="material-icons text-yellow-500 text-4xl mb-2">people</span>
+      <div class="text-lg font-semibold">Clients servis</div>
+      <div class="text-2xl font-bold text-yellow-600">8</div>
+    </div>
+  </div>
+
+</div>

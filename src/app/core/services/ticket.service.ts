@@ -7,7 +7,10 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class TicketService {
-  private readonly baseUrl = `${environment.apiUrl}`;
+  private readonly baseUrl = `${environment.apiUrl}/tickets`;
+  private readonly baseUrl2 = `${environment.apiUrl}`;
+  // private readonly baseUrl = 'http://localhost:8080/api/tickets';
+
 
   constructor(private http: HttpClient) {}
 
@@ -18,19 +21,23 @@ export class TicketService {
 
   // Récupérer toutes les villes
   getAllCities(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/cities`, { headers: this.getHeaders() });
+    return this.http.get(`${this.baseUrl2}/cities`, { headers: this.getHeaders() });
     // Uncomment the line below if you want to log the request  
-    console.log(this.http.get(`${this.baseUrl}/cities`, { headers: this.getHeaders() }));
+    console.log(this.http.get(`${this.baseUrl2}/cities`, { headers: this.getHeaders() }));
   }
 
   // Récupérer les agences d'une ville
   getAgenciesByCity(cityId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/cities/${cityId}/agencies`, { headers: this.getHeaders() });
+    return this.http.get(`${this.baseUrl2}/cities/${cityId}/agencies`, { headers: this.getHeaders() });
   }
 
-  // Créer un nouveau ticket
-  createTicket(payload: { agencyId: number; clientId: number }): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/tickets`, payload);
+  // Créer un nouveau ticket avec agencyId et clientId dans l'URL
+  createTicket(agencyId: number, clientId: number): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/agency/${agencyId}/${clientId}`,
+      {}, // empty body, unless your backend expects more
+      { headers: this.getHeaders() }
+    );
   }
 
   // Récupérer le statut d'un ticket

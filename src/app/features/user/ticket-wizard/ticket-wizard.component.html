@@ -49,11 +49,11 @@
     <div *ngIf="currentStep === 3" class="space-y-6">
       <h3 class="text-lg font-medium text-gray-900">Sélectionnez votre agence</h3>
       <select 
-        [(ngModel)]="selectedAgency" 
+        [(ngModel)]="selectedAgency" name="agency" required
         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        <option value="">Choisir une agence</option>
-        <option *ngFor="let agency of agencies" [value]="agency.id">
-          {{agency.name}}
+        <option [ngValue]="null" disabled selected>Choisir une agence</option>
+        <option *ngFor="let agency of agencies" [ngValue]="agency">
+          {{ agency.name }}
         </option>
       </select>
       <div class="flex justify-between">

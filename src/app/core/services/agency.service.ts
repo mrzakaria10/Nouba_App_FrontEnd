@@ -49,6 +49,14 @@ export class AgencyService {
   deleteAgency(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
+  //role agencu
+
+  getDashboardStats(agencyId: number): Observable<{ waitingTickets: number, processedTickets: number, servedClients: number }> {
+    return this.http.get<{ waitingTickets: number, processedTickets: number, servedClients: number }>(
+      `${this.apiUrl}/${agencyId}/dashboard-stats`,
+      { headers: this.getHeaders() }
+    );
+  }
 
   private buildFormDataForCreate(agency: any): FormData {
     const formData = new FormData();

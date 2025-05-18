@@ -198,7 +198,7 @@ export class AuthService {
    */
   isAgency(): boolean {
     const roles = this.currentUserSubject.value?.roles || [];
-    return roles.includes('AGENCY');
+    return roles.includes('ROLE_AGENCY');
   }
 
   /**
@@ -207,7 +207,7 @@ export class AuthService {
    */
   isClient(): boolean {
     const roles = this.currentUserSubject.value?.roles || [];
-    return roles.includes('CLIENT');
+    return roles.includes('ROLE_CLIENT');
   }
 
   /**

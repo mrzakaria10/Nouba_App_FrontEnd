@@ -17,11 +17,17 @@ export const routes: Routes = [
 
   // Liste publique des agences
   {
-    path: 'agencies',
+    path: 'ListAgencies',
     loadComponent: () => import('./features/public/agencies/agencies-list/agencies-list.component').then(m => m.AgenciesListComponent),
     
   },
  
+  {
+    path: 'agency',
+    loadChildren: () => import('./features/agency/agency.routes').then(m => m.AGENCY_ROUTES),
+    canActivate: [agencyGuard]
+
+  },
   // Routes d'administration
   {
     path: 'admin',
