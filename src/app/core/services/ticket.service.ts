@@ -31,6 +31,8 @@ export class TicketService {
     return this.http.get(`${this.baseUrl2}/cities/${cityId}/agencies`, { headers: this.getHeaders() });
   }
 
+  
+
   // Créer un nouveau ticket avec agencyId et clientId dans l'URL
   createTicket(agencyId: number, clientId: number): Observable<any> {
     return this.http.post(
@@ -48,5 +50,13 @@ export class TicketService {
   // Récupérer le nombre de personnes devant dans la file
   getPeopleAhead(ticketId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/tickets/${ticketId}/ahead`, { headers: this.getHeaders() });
+  }
+// Récupérer le nombre de tickets d'une agence
+  verifyTicket(cityId: number, agencyId: number, ticketNumber: string): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl2}/public/tickets/${cityId}/${agencyId}/verify`,
+      ticketNumber,
+      { headers: this.getHeaders() }
+    );
   }
 }

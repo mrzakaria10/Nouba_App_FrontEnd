@@ -1,32 +1,80 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from "../../../shared/navbar/navbar.component";
 import { FooterComponent } from "../../../shared/footer/footer.component";
-// Si tu veux utiliser ReactiveForms plus tard, tu peux l'importer ici
+import { TicketService } from '../../../core/services/ticket.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-verifier-ticket',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavbarComponent, FooterComponent],
+  imports: [CommonModule, RouterModule, NavbarComponent, FooterComponent, FormsModule],
   templateUrl: 'verifier-ticket.component.html',
   styles: []
 })
-export class VerifierTicketComponent {
-  // ===========================
-  // Composant pour la page "Vérifier votre ticket"
-  // ===========================
+export class VerifierTicketComponent implements OnInit {
+  cities: any[] = [];
+  agencies: any[] = [];
+  selectedCity: any = null;
+  selectedAgency: any = null;
+  ticketNumber: string = '';
+  isLoading = false;
+  result: any = null;
+  errorMessage: string | null = null;
+  showPopup = false;
 
-  // Ici tu peux déclarer des variables pour stocker le numéro de ticket saisi par l'utilisateur
-  // Exemple :
-  // ticketNumber: string = '';
+  constructor(private ticketService: TicketService) {}
 
-  // Si tu veux gérer la soumission du formulaire :
-  // onSubmit() {
-  //   // Appeler un service pour vérifier le ticket via une API
-  //   // Afficher le résultat à l'utilisateur
-  // }
+  ngOnInit() {
+    this.ticketService.getAllCities().subscribe({
+      next: (response) => {
+        this.cities = response.data;
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des villes:', error);
+        alert('Erreur lors du chargement des villes. Veuillez réessayer.');
+      }
+    });
+  }
 
-  // Pour l'instant, ce composant affiche juste le formulaire de vérification
-  // La logique métier peut être ajoutée ici plus tard
+  onCityChange() {
+    this.selectedAgency = null;
+    if (this.selectedCity) {
+      this.ticketService.getAgenciesByCity(this.selectedCity.id).subscribe((res: any) => {
+        this.agencies = res.data ? res.data : res;
+      });
+    } else {
+      this.agencies = [];
+    }
+  }
+
+  onSubmit() {
+    this.errorMessage = null;
+    this.result = null;
+    if (!this.selectedCity || !this.selectedAgency || !this.ticketNumber) {
+      this.errorMessage = "Veuillez remplir tous les champs.";
+      this.showPopup = true;
+      return;
+    }
+    this.isLoading = true;
+    this.ticketService.verifyTicket(this.selectedCity.id, this.selectedAgency.id, this.ticketNumber).subscribe({
+      next: (res: any) => {
+        this.result = res.data;
+        this.errorMessage = null;
+        this.showPopup = true;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.result = null;
+        this.errorMessage = err.error?.message || "Votre ticket n'est pas valide.";
+        this.showPopup = true;
+        this.isLoading = false;
+      }
+    });
+  }
+
+  closePopup() {
+    this.showPopup = false;
+  }
 }

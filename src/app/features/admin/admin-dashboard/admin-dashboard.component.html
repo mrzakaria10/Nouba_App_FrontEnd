@@ -1,41 +1,72 @@
-<div>
+<div class="p-6">
   <h1 class="text-2xl font-bold mb-6">Tableau de bord Admin</h1>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-    <div class="bg-white p-4 rounded shadow border border-blue-200">
-      <div class="text-gray-500">Agences</div>
-      <div class="text-3xl font-bold">3</div>
-      <div class="text-xs text-gray-400">Agences actives</div>
+
+
+  <!-- Content -->
+  <div *ngIf="!isLoading && !errorMessage" class="space-y-6">
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Agencies Card -->
+      <div class="bg-white p-4 rounded-lg shadow border border-blue-200 hover:shadow-md transition-shadow">
+        <div class="text-gray-500 font-medium">Agences</div>
+        <div class="text-3xl font-bold text-blue-600">{{ summary.totalAgencies | number }}</div>
+        <div class="text-xs text-gray-400 mt-1">Total des agences</div>
+      </div>
+      
+      <!-- Clients Card -->
+      <div class="bg-white p-4 rounded-lg shadow border border-green-200 hover:shadow-md transition-shadow">
+        <div class="text-gray-500 font-medium">Clients</div>
+        <div class="text-3xl font-bold text-green-600">{{ summary.totalClients | number }}</div>
+        <div class="text-xs text-gray-400 mt-1">Total des clients</div>
+      </div>
+      
+      <!-- Tickets Card -->
+      <div class="bg-white p-4 rounded-lg shadow border border-purple-200 hover:shadow-md transition-shadow">
+        <div class="text-gray-500 font-medium">Tickets</div>
+        <div class="text-3xl font-bold text-purple-600">{{ summary.totalPendingTickets | number }}</div>
+        <div class="text-xs text-gray-400 mt-1">Tickets en attente</div>
+      </div>
     </div>
-    <div class="bg-white p-4 rounded shadow border border-green-200">
-      <div class="text-gray-500">Clients</div>
-      <div class="text-3xl font-bold">157</div>
-      <div class="text-xs text-gray-400">Clients servis aujourd'hui</div>
-    </div>
-    <div class="bg-white p-4 rounded shadow border border-purple-200">
-      <div class="text-gray-500">Tickets</div>
-      <div class="text-3xl font-bold">24</div>
-      <div class="text-xs text-gray-400">Tickets en attente</div>
+
+    <!-- Additional Dashboard Sections -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Performance Chart -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h2 class="font-semibold mb-3 text-lg">Performance des Agences</h2>
+        <div class="h-64 flex items-center justify-center text-gray-400">
+          <p>Graphique de performance (à implémenter)</p>
+        </div>
+      </div>
+      
+      <!-- Recent Activity -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <div class="flex justify-between items-center mb-3">
+          <h2 class="font-semibold text-lg">Activité Récente</h2>
+          <a routerLink="/admin/activities" class="text-blue-500 text-sm hover:underline">Voir tout</a>
+        </div>
+        <ul class="space-y-3">
+          <li *ngFor="let activity of [1,2,3]; let i = index" class="flex items-start p-2 hover:bg-gray-50 rounded">
+            <span class="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-gray-100 rounded-full mr-3 mt-1">
+              {{i+1}}
+            </span>
+            <div>
+              <div class="font-medium">Nouvelle réservation</div>
+              <div class="text-xs text-gray-400">Il y a {{(i+1)*15}} minutes</div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div class="bg-white p-4 rounded shadow">
-      <h2 class="font-semibold mb-2">Performance des Agences</h2>
-      <div class="h-40 flex items-center justify-center text-gray-400">Graphique de performance</div>
-    </div>
-    <div class="bg-white p-4 rounded shadow">
-      <div class="flex justify-between items-center mb-2">
-        <h2 class="font-semibold">Activité Récente</h2>
-        <a href="#" class="text-blue-500 text-sm">Voir tout</a>
-      </div>
-      <ul class="space-y-2">
-        <li *ngFor="let activity of [1,2,3,4]; let i = index" class="flex items-center">
-          <span class="w-6 h-6 flex items-center justify-center bg-gray-100 rounded-full mr-2">{{i+1}}</span>
-          <div>
-            <div class="font-medium">Nouvelle réservation</div>
-            <div class="text-xs text-gray-400">Il y a {{(i+1)*5}} minutes</div>
-          </div>
-        </li>
-      </ul>
-    </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="flex justify-center items-center h-64">
+    <span class="text-blue-500 text-lg">Chargement...</span>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="flex flex-col items-center h-64 justify-center">
+    <span class="text-red-500 text-lg mb-2">{{ errorMessage }}</span>
+    <button (click)="onRetry()" class="bg-blue-500 text-white px-4 py-2 rounded">Réessayer</button>
   </div>
 </div>

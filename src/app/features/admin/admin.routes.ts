@@ -5,6 +5,7 @@ import { AgencyListComponent } from './agency-management/agency-list/agency-list
 import { AgencyAddComponent } from './agency-management/agency-add/agency-add.component';
 import { AgencyEditComponent } from './agency-management/agency-edit/agency-edit.component';
 import { AdminGuard } from '../../core/guards/admin.guard';
+import { AdminUsersComponent } from './admin-users/admin-users.component';
 
 /**
  * Routes pour la section administration
@@ -25,6 +26,10 @@ export const ADMIN_ROUTES: Routes = [
           { path: 'add', component: AgencyAddComponent },
           { path: 'edit/:id', component: AgencyEditComponent }
         ]
+      },
+      {
+        path: 'users',
+        component: AdminUsersComponent
       }
     ]
   }
