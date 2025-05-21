@@ -28,4 +28,13 @@ export class AdminService {
       map(response => response.data) // Only return the summary data object
     );
   }
+
+  getActiveClientsThisWeek(): Observable<any[]> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>(`${environment.apiUrl}/users/active-this-week`, { headers })
+      .pipe(
+        map(res => res.data ? res.data : res)
+      );
+  }
 }

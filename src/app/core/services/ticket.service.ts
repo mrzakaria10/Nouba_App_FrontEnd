@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { AdminService } from './admin.service'; // Adjust the import path as necessary
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class TicketService {
   // private readonly baseUrl = 'http://localhost:8080/api/tickets';
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private adminService: AdminService) {}
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
@@ -56,6 +57,14 @@ export class TicketService {
     return this.http.post<any>(
       `${this.baseUrl2}/public/tickets/${cityId}/${agencyId}/verify`,
       ticketNumber,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // Récupérer les réservations d'aujourd'hui
+  getTodayReservations(): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/admin/reservations/today`,
       { headers: this.getHeaders() }
     );
   }
