@@ -84,4 +84,35 @@ export class AgencyService {
     }
     return formData;
   }
+
+  getEnAttenteCountToday(agencyId: number) {
+    return this.http.get<any>(
+      `${this.apiUrl}/agency/${agencyId}/today/en-attente/count`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  getEnCoursCountToday(agencyId: number) {
+    return this.http.get<any>(
+      `${this.apiUrl}/agency/${agencyId}/today/en-cours/count`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+
+
+  // Add similar methods for "annule" and "termine" if you have those endpoints
+  getAnnuleCountToday(agencyId: number) {
+    return this.http.get<any>(
+      `${this.apiUrl}/agency/${agencyId}/today/annule/count`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  getTermineCountToday(agencyId: number) {
+    return this.http.get<any>(
+      `${this.apiUrl}/agency/${agencyId}/today/termine/count`,
+      { headers: this.getHeaders() }
+    );
+  }
 }

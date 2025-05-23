@@ -12,7 +12,11 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./agency-dashboard.component.css']
 })
 export class AgencyDashboardComponent implements OnInit {
-  agency: any = null;
+  agency: any = {};
+  enAttenteCount = 0;
+  enCoursCount = 0;
+  annuleCount = 0;
+  termineCount = 0;
 
   constructor(
     private agencyService: AgencyService,
@@ -22,11 +26,13 @@ export class AgencyDashboardComponent implements OnInit {
   ngOnInit() {
     const user = this.authService.getCurrentUser();
     if (user) {
-      this.agencyService.getAgencyById(user.id).subscribe({
-        next: (agency) => {
-          this.agency = agency;
-        }
-      });
+      const agencyId = user.id;
+      this.agencyService.getAgencyById(agencyId).subscribe(res => this.agency = res);
+
+      this.agencyService.getEnAttenteCountToday(agencyId).subscribe(res => this.enAttenteCount = res.data ?? res);
+      this.agencyService.getEnCoursCountToday(agencyId).subscribe(res => this.enCoursCount = res.data ?? res);
+      this.agencyService.getAnnuleCountToday(agencyId).subscribe(res => this.annuleCount = res.data ?? res);
+      this.agencyService.getTermineCountToday(agencyId).subscribe(res => this.termineCount = res.data ?? res);
     }
   }
 }

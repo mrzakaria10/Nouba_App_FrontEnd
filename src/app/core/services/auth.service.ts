@@ -122,9 +122,10 @@ export class AuthService {
    * @param payload - Object containing reset token and new password
    * @returns Observable with server response
    */
-  resetPassword(payload: { token: string; newPassword: string }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/reset-password`, payload);
-  }
+  
+resetPassword(payload: { token: string; newPassword: string }) {
+  return this.http.post<any>(`${this.baseUrl}/reset-password`, payload);
+}
 
   /**
    * Activates a user account using the activation token

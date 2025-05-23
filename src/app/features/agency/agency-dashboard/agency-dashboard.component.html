@@ -12,10 +12,30 @@
       <div class="text-gray-500 text-sm mb-1">{{ agency.address }}</div>
       <div class="text-gray-500 text-sm">{{ agency.phone }}</div>
     </div>
-    <!-- <div class="flex flex-col items-center bg-blue-50 rounded px-4 py-2 ml-0 md:ml-6 mt-4 md:mt-0">
-    <span class="text-blue-600 font-bold text-2xl">{{ waitingTickets ?? '-' }}</span>
-    <span class="text-xs text-gray-500">En attente</span>
-  </div> -->
+    
+      <!-- Ticket Status Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+  <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+    <span class="material-icons text-blue-500 text-4xl mb-2">hourglass_empty</span>
+    <div class="text-lg font-semibold">En attente</div>
+    <div class="text-2xl font-bold text-blue-600">{{ enAttenteCount }}</div>
+  </div>
+  <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+    <span class="material-icons text-yellow-500 text-4xl mb-2">autorenew</span>
+    <div class="text-lg font-semibold">En cours</div>
+    <div class="text-2xl font-bold text-yellow-600">{{ enCoursCount }}</div>
+  </div>
+  <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+    <span class="material-icons text-green-500 text-4xl mb-2">check_circle</span>
+    <div class="text-lg font-semibold">Terminé</div>
+    <div class="text-2xl font-bold text-green-600">{{ termineCount }}</div>
+  </div>
+  <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+    <span class="material-icons text-red-500 text-4xl mb-2">cancel</span>
+    <div class="text-lg font-semibold">Annulé</div>
+    <div class="text-2xl font-bold text-red-600">{{ annuleCount }}</div>
+  </div>
+</div>
   </div>
   <!-- ggg -->
   <h1 class="text-2xl font-bold mb-4">Tableau de bord de l'agence</h1>
