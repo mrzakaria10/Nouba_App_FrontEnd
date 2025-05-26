@@ -368,5 +368,15 @@ resetPassword(payload: { token: string; newPassword: string }) {
     return null;
   }
 
-  
+  /**
+   * Retrieves the agency ID from the JWT token payload.
+   * @returns Agency ID (number) or null if not found.
+   */
+  getAgencyIdFromToken(): number | null {
+    const payload = this.getDecodedTokenPayload();
+    if (payload && payload.agencyId) {
+      return payload.agencyId;
+    }
+    return null;
+  }
 }

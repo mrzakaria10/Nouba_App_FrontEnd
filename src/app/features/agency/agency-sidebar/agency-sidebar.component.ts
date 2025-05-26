@@ -4,6 +4,12 @@ import { RouterModule, Router } from '@angular/router';
 import { AgencyService } from '../../../core/services/agency.service';
 import { AuthService } from '../../../core/services/auth.service';
 
+
+interface Agency {
+  id: number;
+  name: string;
+}
+
 @Component({
   selector: 'app-agency-sidebar',
   standalone: true,
@@ -12,22 +18,28 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './agency-sidebar.component.css'
 })
 export class AgencySidebarComponent implements OnInit {
+  agency: Agency | null = null;
   isCollapsed = false;
   agencyName = 'Agence';
-  agencyAddress = '';
+  isSidebarOpen = false; // <-- Added property
 
   constructor(
     private agencyService: AgencyService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
-    // Get agency name from token (adjust the property name if needed)
-    const user = this.authService.getCurrentUser();
-    this.agencyName =  user?.name || 'Agence';
-  }
+    const agencyId = this.authService.getAgencyIdFromToken(); // <-- Use your method to get agencyId from JWT
+    if (!agencyId) {
+      this.router.navigate(['/auth/login']);
+      return;
+    }
 
+    this.agencyService.getAgencyById(agencyId).subscribe(agency => {
+      this.agency = agency;
+    });
+  }
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;

@@ -20,11 +20,16 @@ export class TicketWizardComponent implements OnInit {
   // accountName: string = ''; // <-- Add this new property
   cities: any[] = [];
   agencies: any[] = [];
+  services: any[] = [];
   selectedCity: any = null;
   selectedAgency: any = null;
+  selectedService: any = null;
   ticketNumber: string = '';
   peopleAhead: number = 0;
   ticketForm: FormGroup;
+
+  // Add a property to hold the created ticket details
+  createdTicket: any = null;
 
   constructor(
     private router: Router,
@@ -89,6 +94,8 @@ export class TicketWizardComponent implements OnInit {
         this.loadCities(); // Load cities for the city selection step
       } else if (this.currentStep === 2) { // Moving from City Selection to Agency Selection (if selectedCity is valid)
         // This case is handled by onCitySelect directly setting currentStep = 3
+      } else if (this.currentStep === 3) { // Moving from Agency Selection to Service Selection (if selectedAgency is valid)
+        // This case is handled by onAgencySelect directly setting currentStep = 4
       }
     } else {
       alert('Vos informations (Nom et Nom du compte) semblent incomplètes. Veuillez vérifier.');
@@ -110,6 +117,21 @@ export class TicketWizardComponent implements OnInit {
     }
   }
 
+  onAgencySelect() {
+    if (this.selectedAgency) {
+      this.ticketService.getServicesByAgency(this.selectedAgency.id).subscribe({
+        next: (response) => {
+          this.services = response.data;
+          this.currentStep = 4; // Move to Step 4: Service Selection
+        },
+        error: (error) => {
+          console.error('Erreur lors du chargement des services:', error);
+          alert('Erreur lors du chargement des services. Veuillez réessayer.');
+        }
+      });
+    }
+  }
+
   previousStep() {
     if (this.currentStep > 1) {
       this.currentStep--;
@@ -118,9 +140,14 @@ export class TicketWizardComponent implements OnInit {
         this.cities = [];
         this.selectedAgency = null;
         this.agencies = [];
+        this.selectedService = null;
+        this.services = [];
       } else if (this.currentStep === 2) { // Returned to City Selection
         this.selectedAgency = null;
         this.agencies = [];
+      } else if (this.currentStep === 3) { // Returned to Agency Selection
+        this.selectedService = null;
+        this.services = [];
       }
     }
   }
@@ -128,30 +155,30 @@ export class TicketWizardComponent implements OnInit {
   createTicket() {
     const currentUser = this.authService.getCurrentUser();
     if (!currentUser || !currentUser.id) {
-      console.log('Erreur: Utilisateur non connecté');
       alert('Erreur: Utilisateur non connecté');
       return;
     }
     if (!this.selectedAgency || !this.selectedAgency.id) {
-            console.log('Selected agency:', this.selectedAgency);
-            
-
-      alert('Veuillez sélectionner une agence.',);
+      alert('Veuillez sélectionner une agence.');
+      return;
+    }
+    if (!this.selectedService || !this.selectedService.id) {
+      alert('Veuillez sélectionner un service.');
       return;
     }
 
     const agencyId = this.selectedAgency.id;
     const clientId = currentUser.id;
+    const serviceId = this.selectedService.id;
 
-    this.ticketService.createTicket(agencyId, clientId).subscribe({
+    this.ticketService.createTicket(agencyId, clientId, serviceId).subscribe({
       next: (response) => {
+        this.createdTicket = response.data; // Store all ticket data
         this.ticketNumber = response.data.number;
         this.peopleAhead = response.data.peopleAhead || 0;
-        this.currentStep = 4; // Move to Step 4: Confirmation
-        console.log('Ticket created successfully:', response.data);
+        this.currentStep = 5; // Move to Step 5: Confirmation
       },
       error: (error) => {
-        console.error('Erreur lors de la création du ticket:', error);
         alert('Erreur lors de la création du ticket. Veuillez réessayer.');
       },
     });

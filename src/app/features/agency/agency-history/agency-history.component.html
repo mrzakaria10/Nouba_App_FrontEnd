@@ -1,0 +1,30 @@
+<div class="overflow-x-auto w-full max-w-5xl mx-auto mt-8">
+  <table class="min-w-full text-sm text-left border-collapse">
+    <thead>
+      <tr class="bg-blue-50 text-blue-700">
+        <th class="py-2 px-3 font-semibold">N° Ticket</th>
+        <th class="py-2 px-3 font-semibold">Service</th>
+        <th class="py-2 px-3 font-semibold">Créé le</th>
+        <th class="py-2 px-3 font-semibold">Position</th>
+        <th class="py-2 px-3 font-semibold">Temps estimé</th>
+        <th class="py-2 px-3 font-semibold">Statut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets" class="border-b hover:bg-blue-50 transition">
+        <td class="py-2 px-3 font-mono font-bold text-gray-700">{{ ticket.ticketNumber }}</td>
+        <td class="py-2 px-3">{{ ticket.service }}</td>
+        <div class="text-gray-500 text-xs mb-2">Créé le {{ ticket.startedAt | date:'dd/MM/yyyy HH:mm' }}</div>
+        <td class="py-2 px-3">{{ ticket.position ?? '-' }}</td>
+        <td class="py-2 px-3">{{ ticket.estimatedTime ?? '0 minutes' }}</td>
+        <td class="py-2 px-3">
+          <span *ngIf="ticket.status === 'ANNULE'" class="px-2 py-1 rounded-full bg-red-100 text-red-600 text-xs font-semibold">Annulé</span>
+          <span *ngIf="ticket.status === 'TERMINE'" class="px-2 py-1 rounded-full bg-green-100 text-green-600 text-xs font-semibold">Terminé</span>
+        </td>
+      </tr>
+      <tr *ngIf="tickets.length === 0 && !loading">
+        <td colspan="6" class="text-center text-gray-400 py-8">Aucun ticket historique</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

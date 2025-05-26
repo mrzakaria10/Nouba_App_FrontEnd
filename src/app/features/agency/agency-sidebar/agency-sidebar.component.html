@@ -1,68 +1,125 @@
-<nav class="bg-white border-r h-screen md:w-64 w-full flex flex-col justify-between fixed md:relative z-30">
-  <div>
+<nav class="bg-white border-r border-gray-200 h-screen md:w-64 w-full flex flex-col justify-between fixed md:relative z-30 transition-all duration-300 transform -translate-x-full md:translate-x-0" id="sidebar">
+  <!-- Mobile toggle button (visible only on small screens) -->
+  <button class="md:hidden absolute right-0 top-4 mr-4 text-gray-500 hover:text-gray-700 focus:outline-none" id="sidebarToggle">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+
+  <div class="overflow-y-auto custom-scrollbar">
     <!-- Logo & Agency Name (dynamic) -->
-    <div class="flex items-center gap-3 px-6 py-5 border-b">
-      <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v10a1 1 0 01-1 1h-3m-6 0h6"/>
-      </svg>
+    <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-200 hover:bg-gray-50 transition-colors duration-200">
+      <div class="p-2 bg-blue-100 rounded-lg">
+        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v10a1 1 0 01-1 1h-3m-6 0h6"/>
+        </svg>
+      </div>
       <div>
-        <div class="font-bold text-base md:text-lg">Espace Agence</div>
-        <div class="text-xs text-gray-500">{{ agencyName }}</div>
+        <div class="font-bold text-base md:text-lg text-gray-800">Espace Agence</div>
+        <div class="text-xs text-gray-500 truncate max-w-[150px]">{{ agency?.name }}</div>
       </div>
     </div>
+    
     <!-- Navigation -->
-    <ul class="mt-4 space-y-1">
+    <ul class="mt-4 space-y-1 px-2">
       <li>
-        <a routerLink="/agency/dashboard" routerLinkActive="bg-blue-50 text-blue-700"
-           class="flex items-center gap-2 px-6 py-2 rounded transition hover:bg-blue-50">
-          <!-- Dashboard SVG -->
-          <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8v-10h-8v10zm0-18v6h8V3h-8z"/>
-          </svg>
-          <span>Tableau de bord</span>
+        <a routerLink="/agency/dashboard" routerLinkActive="bg-blue-100 text-blue-700 border-blue-200"
+           class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-gray-100 border-l-4 border-transparent group">
+          <div class="p-1.5 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8v-10h-8v10zm0-18v6h8V3h-8z"/>
+            </svg>
+          </div>
+          <span class="font-medium text-gray-700 group-hover:text-gray-900">Tableau de bord</span>
         </a>
       </li>
       <li>
-        <a routerLink="/agency/tickets" routerLinkActive="bg-blue-50 text-blue-700"
-           class="flex items-center gap-2 px-6 py-2 rounded transition hover:bg-blue-50">
-          <!-- Ticket SVG -->
-          <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7V5a2 2 0 012-2h12a2 2 0 012 2v2M4 7v10a2 2 0 002 2h12a2 2 0 002-2V7M4 7h16"/>
-          </svg>
-          <span>Tickets actifs</span>
+        <a routerLink="/agency/tickets" routerLinkActive="bg-blue-100 text-blue-700 border-blue-200"
+           class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-gray-100 border-l-4 border-transparent group">
+          <div class="p-1.5 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 7V5a2 2 0 012-2h12a2 2 0 012 2v2M4 7v10a2 2 0 002 2h12a2 2 0 002-2V7M4 7h16"/>
+            </svg>
+          </div>
+          <span class="font-medium text-gray-700 group-hover:text-gray-900">Tickets actifs</span>
+          <span class="ml-auto bg-red-100 text-red-800 text-xs font-semibold px-2 py-0.5 rounded-full">3</span>
         </a>
       </li>
       <li>
-        <a routerLink="/agency/history" routerLinkActive="bg-blue-50 text-blue-700"
-           class="flex items-center gap-2 px-6 py-2 rounded transition hover:bg-blue-50">
-          <!-- History SVG -->
-          <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <span>Historique</span>
+        <a routerLink="/agency/history" routerLinkActive="bg-blue-100 text-blue-700 border-blue-200"
+           class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-gray-100 border-l-4 border-transparent group">
+          <div class="p-1.5 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <span class="font-medium text-gray-700 group-hover:text-gray-900">Historique</span>
         </a>
       </li>
       <li>
-        <a routerLink="/agency/clients" routerLinkActive="bg-blue-50 text-blue-700"
-           class="flex items-center gap-2 px-6 py-2 rounded transition hover:bg-blue-50">
-          <!-- Clients SVG -->
-          <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-4a4 4 0 11-8 0 4 4 0 018 0z"/>
-          </svg>
-          <span>Clients</span>
+        <a routerLink="/agency/clients" routerLinkActive="bg-blue-100 text-blue-700 border-blue-200"
+           class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-gray-100 border-l-4 border-transparent group">
+          <div class="p-1.5 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-4a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+          </div>
+          <span class="font-medium text-gray-700 group-hover:text-gray-900">Clients</span>
+          <span class="ml-auto bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded-full">24</span>
         </a>
       </li>
     </ul>
   </div>
+  
   <!-- Logout -->
-  <div class="px-6 py-4 border-t">
+  <div class="px-4 py-3 border-t border-gray-200 bg-gray-50">
     <button (click)="logout()"
-      class="w-full flex items-center justify-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded hover:bg-red-100 transition">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-white text-red-600 rounded-lg hover:bg-red-50 transition-all border border-red-100 hover:border-red-200 shadow-sm hover:shadow-red-100">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1"/>
       </svg>
-      <span>Déconnexion</span>
+      <span class="font-medium">Déconnexion</span>
     </button>
   </div>
 </nav>
+
+<!-- Overlay for mobile -->
+<div class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden" id="sidebarOverlay"></div>
+
+<script>
+  // Mobile sidebar toggle functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    
+    sidebarToggle.addEventListener('click', function() {
+      sidebar.classList.toggle('-translate-x-full');
+      sidebarOverlay.classList.toggle('hidden');
+    });
+    
+    sidebarOverlay.addEventListener('click', function() {
+      sidebar.classList.add('-translate-x-full');
+      sidebarOverlay.classList.add('hidden');
+    });
+  });
+</script>
+
+<style>
+  /* Custom scrollbar for sidebar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+  }
+</style>

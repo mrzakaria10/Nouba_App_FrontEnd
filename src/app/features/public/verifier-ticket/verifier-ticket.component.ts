@@ -60,7 +60,7 @@ export class VerifierTicketComponent implements OnInit {
     this.isLoading = true;
     this.ticketService.verifyTicket(this.selectedCity.id, this.selectedAgency.id, this.ticketNumber).subscribe({
       next: (res: any) => {
-        this.result = res.data;
+        this.result = res.data; // res.data now contains id
         this.errorMessage = null;
         this.showPopup = true;
         this.isLoading = false;
@@ -76,5 +76,28 @@ export class VerifierTicketComponent implements OnInit {
 
   closePopup() {
     this.showPopup = false;
+  }
+
+  // Cancel ticket if status is EN_ATTENTE
+  cancelTicket() {
+    console.log('Ticket to cancel:', this.result); // Add this line
+    if (!this.result || !this.result.id) return;
+    this.isLoading = true;
+    this.ticketService.cancelTicket(this.result.id).subscribe({
+      next: () => {
+        this.result.status = 'ANNULE';
+        this.isLoading = false;
+        this.errorMessage = null;
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || "Erreur lors de l'annulation du ticket.";
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // Return to landing page
+  returnToLanding() {
+    window.location.href = '/';
   }
 }

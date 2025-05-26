@@ -1,60 +1,188 @@
-<div class="p-6">
-     <!-- Agency Info Card -->
-  <div class="bg-white rounded-lg shadow flex flex-col md:flex-row items-center p-6 mb-6">
-    <img
-      *ngIf="agency.photoUrl"
-      [src]="'http://localhost:8080/api/uploads/' + agency.photoUrl"
-      alt="Logo agence"
-      class="w-20 h-20 rounded-full object-cover mr-6 mb-4 md:mb-0"
-    />
-    <div class="flex-1">
-      <div class="font-bold text-xl md:text-2xl mb-1">{{ agency.name }}</div>
-      <div class="text-gray-500 text-sm mb-1">{{ agency.address }}</div>
-      <div class="text-gray-500 text-sm">{{ agency.phone }}</div>
+<div *ngIf="agency" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row items-center p-6 gap-6">
+  <!-- Agency photo -->
+  <img [src]="'http://localhost:8080/api/uploads/' + agency.photoUrl"
+       alt="{{ agency.name }}"
+       class="w-24 h-24 rounded-full object-cover flex-shrink-0 border border-gray-200 shadow-sm" />
+
+  <!-- Agency info -->
+  <div class="flex-1 min-w-0">
+    <div class="font-bold text-xl text-gray-900 mb-1">{{ agency.name }}</div>
+    <div class="text-gray-500 text-sm mb-1">{{ agency.city?.name }}</div>
+    <div class="text-gray-500 text-sm">{{ agency.address }}</div>
+    <div class="text-gray-500 text-sm">{{ agency.phone }}</div>
+  </div>
+
+  <div class="flex flex-row gap-4">
+    <div class="bg-blue-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-blue-500 font-bold text-2xl">{{ enAttenteCount }}</div>
+      <div class="text-sm text-blue-600">En attente</div>
     </div>
-    
-      <!-- Ticket Status Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-  <div class="bg-white rounded shadow p-4 flex flex-col items-center">
-    <span class="material-icons text-blue-500 text-4xl mb-2">hourglass_empty</span>
-    <div class="text-lg font-semibold">En attente</div>
-    <div class="text-2xl font-bold text-blue-600">{{ enAttenteCount }}</div>
-  </div>
-  <div class="bg-white rounded shadow p-4 flex flex-col items-center">
-    <span class="material-icons text-yellow-500 text-4xl mb-2">autorenew</span>
-    <div class="text-lg font-semibold">En cours</div>
-    <div class="text-2xl font-bold text-yellow-600">{{ enCoursCount }}</div>
-  </div>
-  <div class="bg-white rounded shadow p-4 flex flex-col items-center">
-    <span class="material-icons text-green-500 text-4xl mb-2">check_circle</span>
-    <div class="text-lg font-semibold">Terminé</div>
-    <div class="text-2xl font-bold text-green-600">{{ termineCount }}</div>
-  </div>
-  <div class="bg-white rounded shadow p-4 flex flex-col items-center">
-    <span class="material-icons text-red-500 text-4xl mb-2">cancel</span>
-    <div class="text-lg font-semibold">Annulé</div>
-    <div class="text-2xl font-bold text-red-600">{{ annuleCount }}</div>
-  </div>
-</div>
-  </div>
-  <!-- ggg -->
-  <h1 class="text-2xl font-bold mb-4">Tableau de bord de l'agence</h1>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="bg-white rounded shadow p-4 flex flex-col items-center">
-      <span class="material-icons text-blue-500 text-4xl mb-2">confirmation_number</span>
-      <div class="text-lg font-semibold">Tickets en attente</div>
-      <div class="text-2xl font-bold text-blue-600">5</div>
+    <div class="bg-yellow-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-yellow-500 font-bold text-2xl">{{ enCoursCount }}</div>
+      <div class="text-sm text-yellow-600">Encours</div>
     </div>
-    <div class="bg-white rounded shadow p-4 flex flex-col items-center">
-      <span class="material-icons text-green-500 text-4xl mb-2">check_circle</span>
-      <div class="text-lg font-semibold">Tickets traités</div>
-      <div class="text-2xl font-bold text-green-600">12</div>
+    <div class="bg-red-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-red-500 font-bold text-2xl">{{ annuleCount }}</div>
+      <div class="text-sm text-red-600">Annulé</div>
     </div>
-    <div class="bg-white rounded shadow p-4 flex flex-col items-center">
-      <span class="material-icons text-yellow-500 text-4xl mb-2">people</span>
-      <div class="text-lg font-semibold">Clients servis</div>
-      <div class="text-2xl font-bold text-yellow-600">8</div>
+    <div class="bg-green-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-green-500 font-bold text-2xl">{{ termineCount }}</div>
+      <div class="text-sm text-green-600">Terminé</div>
     </div>
   </div>
 
+</div>
+
+<!-- Responsive Dashboard Layout -->
+<div class="flex flex-col md:flex-row gap-6 w-full max-w-7xl mx-auto p-4">
+
+  <!-- Left Panel -->
+  <div class="flex flex-col gap-4 md:w-1/4 w-full">
+    <!-- Aucun ticket sélectionné -->
+    <div class="bg-white rounded-xl shadow p-5 flex flex-col items-center text-center">
+      <ng-container *ngIf="!currentTicket; else ticketPanel">
+        <div class="text-blue-500 mb-2">
+          <!-- icon -->
+          <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <div class="font-bold text-lg mb-1">Aucun ticket sélectionné</div>
+        <div class="text-gray-500 text-sm mb-4">Sélectionnez un ticket à traiter ou appelez le prochain client</div>
+        <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded transition w-full"
+          (click)="callNextClient()">
+          Appeler le prochain client
+        </button>
+      </ng-container>
+      <ng-template #ticketPanel>
+        <div class="font-bold text-blue-600 text-xl mb-1">{{ currentTicket.ticketNumber }}</div>
+        <div class="text-gray-700">{{ currentTicket.service }}</div>
+        <div class="text-gray-500 text-xs mb-2">Créé le {{ currentTicket.startedAt | date:'dd/MM/yyyy HH:mm' }}</div>
+        <div class="flex gap-2 mt-2">
+          <button class="bg-green-100 hover:bg-green-200 text-green-700 font-semibold px-4 py-2 rounded flex items-center gap-1"
+            (click)="validateCurrentTicket()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Valider
+          </button>
+          <button class="bg-red-100 hover:bg-red-200 text-red-700 font-semibold px-4 py-2 rounded flex items-center gap-1"
+            (click)="cancelCurrentTicket()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            Annuler
+          </button>
+          <button class="ml-2 text-gray-400 hover:text-gray-600" (click)="resetCurrentTicket()" title="Fermer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </ng-template>
+    </div>
+    <!-- Actions rapides -->
+    <div class="bg-white rounded-xl shadow p-5 flex flex-col gap-3">
+      <div class="font-semibold text-gray-700 mb-2">Actions rapides</div>
+      <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded transition w-full">
+        Appeler le prochain client
+      </button>
+      <div class="flex gap-2">
+        <button class="flex-1 bg-green-100 hover:bg-green-200 text-green-700 font-semibold px-2 py-2 rounded transition flex items-center justify-center gap-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          Traiter
+        </button>
+        <button class="flex-1 bg-red-100 hover:bg-red-200 text-red-700 font-semibold px-2 py-2 rounded transition flex items-center justify-center gap-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel: Liste d'attente -->
+  <div class="flex-1 w-full">
+    <div class="bg-white rounded-xl shadow p-6">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+        <div class="flex items-center gap-2">
+          <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a4 4 0 014-4h4M7 7h.01"/>
+          </svg>
+          <span class="font-bold text-lg text-gray-800">Liste d'attente</span>
+        </div>
+        <!-- Filters -->
+        <div class="flex gap-2">
+          <select class="border rounded px-2 py-1 text-sm focus:ring-blue-500 focus:border-blue-500"
+                  [(ngModel)]="statusFilter">
+            <option value="ALL" selected>Tous les statuts</option>
+            <option value="EN_ATTENTE">En attente</option>
+            <option value="EN_COURS">En cours</option>
+            <option value="TERMINE">Terminé</option>
+            <option value="ANNULE">Annulé</option>
+          </select>
+
+          <!-- Refresh Button -->
+          <button
+            (click)="refreshDashboard()"
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+          >
+            Vérifier les mises à jour
+          </button>
+        </div>
+
+      </div>
+      <!-- Table -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm text-left">
+          <thead>
+            <tr class="bg-blue-50 text-blue-700">
+              <th class="py-2 px-3 font-semibold">N° Ticket</th>
+              <th class="py-2 px-3 font-semibold">Service</th>
+              <th class="py-2 px-3 font-semibold">Créé le</th>
+              <th class="py-2 px-3 font-semibold">Position</th>
+              <th class="py-2 px-3 font-semibold">Temps estimé</th>
+              <th class="py-2 px-3 font-semibold">Statut</th>
+              <th class="py-2 px-3 font-semibold">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Example row, repeat with *ngFor="let ticket of tickets" -->
+            <tr *ngFor="let ticket of filteredTickets" class="border-b hover:bg-blue-50 transition">
+              <td class="py-2 px-3 font-mono font-bold text-gray-700">{{ ticket.ticketNumber }}</td>
+              <td class="py-2 px-3">{{ ticket.service }}</td>
+              <td class="py-2 px-3">{{ ticket.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td class="py-2 px-3">{{ ticket.position ?? '-' }}</td>
+              <td class="py-2 px-3">{{ ticket.estimatedTime ?? '0 min' }}</td>
+              <td class="py-2 px-3">
+                <span
+                  [ngClass]="{
+                    'bg-yellow-100 text-yellow-700': ticket.status === 'EN_ATTENTE',
+                    'bg-blue-100 text-blue-700': ticket.status === 'EN_COURS',
+                    'bg-green-100 text-green-700': ticket.status === 'TERMINE',
+                    'bg-red-100 text-red-700': ticket.status === 'ANNULE'
+                  }"
+                  class="px-2 py-1 rounded-full text-xs font-semibold"
+                >
+                  {{ ticket.status === 'EN_ATTENTE' ? 'En attente' :
+                     ticket.status === 'EN_COURS' ? 'En cours' :
+                     ticket.status === 'TERMINE' ? 'Terminé' :
+                     ticket.status === 'ANNULE' ? 'Annulé' : ticket.status }}
+                </span>
+              </td>
+              <td class="py-2 px-3 flex gap-2">
+                <!-- Actions: Traiter, Annuler, etc. -->
+                <button *ngIf="ticket.status === 'EN_ATTENTE'" (click)="startTicket(ticket)" class="bg-green-100 hover:bg-green-200 text-green-700 rounded p-1" title="Traiter">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </button>
+                <button *ngIf="ticket.status === 'EN_ATTENTE'" (click)="cancelTicket(ticket)" class="bg-red-100 hover:bg-red-200 text-red-700 rounded p-1" title="Annuler">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+                <button *ngIf="ticket.status === 'EN_COURS'" (click)="completeTicket(ticket)" class="bg-blue-100 hover:bg-blue-200 text-blue-700 rounded p-1" title="Terminer">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2l4-4"/></svg>
+                </button>
+                <!-- Add more actions as needed -->
+              </td>
+            </tr>
+            <tr *ngIf="filteredTickets.length === 0">
+              <td colspan="7" class="text-center text-gray-400 py-8">Aucun ticket actif</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

@@ -32,12 +32,15 @@ export class TicketService {
     return this.http.get(`${this.baseUrl2}/cities/${cityId}/agencies`, { headers: this.getHeaders() });
   }
 
-  
+  // Récupérer les services d'une agence
+  getServicesByAgency(agencyId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/agency/${agencyId}/services`, { headers: this.getHeaders() });
+  }
 
   // Créer un nouveau ticket avec agencyId et clientId dans l'URL
-  createTicket(agencyId: number, clientId: number): Observable<any> {
+  createTicket(agencyId: number, clientId: number, serviceId: number): Observable<any> {
     return this.http.post(
-      `${this.baseUrl}/agency/${agencyId}/${clientId}`,
+      `${this.baseUrl}/agency/${agencyId}/${clientId}/${serviceId}`,
       {}, // empty body, unless your backend expects more
       { headers: this.getHeaders() }
     );
@@ -68,4 +71,14 @@ export class TicketService {
       { headers: this.getHeaders() }
     );
   }
+
+  // Add this method to your TicketService
+
+cancelTicket(ticketId: number): Observable<any> {
+  return this.http.put(
+    `${this.baseUrl}/` + ticketId + '/cancel',
+    {},
+    { headers: this.getHeaders() }
+  );
+}
 }
