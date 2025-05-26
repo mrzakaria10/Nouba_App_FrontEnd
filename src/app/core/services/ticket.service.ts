@@ -81,4 +81,22 @@ cancelTicket(ticketId: number): Observable<any> {
     { headers: this.getHeaders() }
   );
 }
+
+// 1. Get next available ticket number for an agency
+getNextTicketNumber(agencyId: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/agency/${agencyId}/next-number`, { headers: this.getHeaders() });
+}
+
+// 2. Create ticket with specific number (if available)
+createTicketWithNumber(agencyId: number, clientId: number, serviceId: number, ticketNumber: string): Observable<any> {
+  return this.http.post(
+    `${this.baseUrl}/agency/${agencyId}/${clientId}/${serviceId}/${ticketNumber}`, {},
+    { headers: this.getHeaders() }
+  );
+}
+
+// 3. Get last ticket in EN_ATTENTE status for an agency
+getLastPendingTicket(agencyId: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/agency/${agencyId}/last-pending`, { headers: this.getHeaders() });
+}
 }

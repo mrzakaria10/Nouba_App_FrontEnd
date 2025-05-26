@@ -1,8 +1,57 @@
 <!-- Navbar -->
 <app-navbar></app-navbar>
 
-<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
+<div class="min-h-screen bg-gray-50 py-12 px-4 flex flex-col items-center">
+  <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">
+    Choisissez comment obtenir votre ticket
+  </h2>
+  <div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
+
+    <!-- Card 1: Génération automatique -->
+    <div class="bg-white border rounded-xl shadow p-6 flex flex-col gap-2 hover:shadow-lg transition cursor-pointer"
+         (click)="showAutoTicketSteps = true">
+      <div class="flex items-center gap-3 mb-2">
+        <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        <div>
+          <div class="text-xl font-semibold text-blue-700">Génération automatique</div>
+          <div class="text-xs text-gray-500">Laissez-nous générer votre numéro de ticket</div>
+        </div>
+      </div>
+      <div class="text-gray-600 mb-2">
+        Le système génère automatiquement un numéro de ticket unique pour vous. Rapide et simple !
+      </div>
+    </div>
+
+    <!-- Card 2: Choisir mon numéro -->
+    <div class="bg-white border rounded-xl shadow p-6 flex flex-col gap-2 hover:shadow-lg transition"
+         (click)="openCustomTicketModal()">
+      <div class="flex items-center gap-3 mb-2">
+        <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+        </svg>
+        <div>
+          <div class="text-xl font-semibold text-blue-700">Choisir mon numéro</div>
+          <div class="text-xs text-gray-500">Sélectionnez votre propre numéro de ticket</div>
+        </div>
+      </div>
+      <div class="text-gray-600 mb-2">
+        Choisissez votre propre numéro de ticket personnalisé selon vos préférences.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Génération automatique - MODAL POPUP -->
+<div *ngIf="showAutoTicketSteps" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+  <div class="relative w-full max-w-lg mx-auto bg-white rounded-2xl shadow-2xl p-6 md:p-8 animate-fade-in">
+    <!-- Close button -->
+    <button (click)="showAutoTicketSteps = false"
+      class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold focus:outline-none"
+      aria-label="Fermer">
+      &times;
+    </button>
     <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">
       Obtenir un ticket
     </h2>
@@ -11,19 +60,11 @@
     <div *ngIf="currentStep === 1" class="space-y-6">
       <h3 class="text-lg font-medium text-gray-900">Étape 1: Vos informations</h3>
       <p class="text-sm text-gray-600">Vos informations sont automatiquement remplies.</p>
-
       <div>
         <label for="fullName" class="block text-sm font-medium text-gray-700">Nom complet</label>
         <input type="text" id="fullName" name="fullName" [(ngModel)]="fullName" readonly
                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
       </div>
-
-      <!-- <div>
-        <label for="accountName" class="block text-sm font-medium text-gray-700">Nom du compte</label>
-        <input type="text" id="accountName" name="accountName" [(ngModel)]="accountName" readonly
-               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-      </div> -->
-
       <button (click)="nextStep()"
               [disabled]="!fullName"
               class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50">
@@ -31,7 +72,7 @@
       </button>
     </div>
 
-    <!-- : Sélection de la ville -->
+    <!-- Sélection de la ville -->
     <div *ngIf="currentStep === 2" class="space-y-6">
       <h3 class="text-lg font-medium text-gray-900">Sélectionnez votre ville</h3>
       <select 
@@ -45,7 +86,7 @@
       </select>
     </div>
 
-    <!-- Étape 2: Sélection de l'agence -->
+    <!-- Sélection de l'agence -->
     <div *ngIf="currentStep === 3" class="space-y-6">
       <h3 class="text-lg font-medium text-gray-900">Sélectionnez votre agence</h3>
       <select
@@ -74,7 +115,7 @@
       </div>
     </div>
 
-    <!-- After agency selection step -->
+    <!-- Sélection du service -->
     <div *ngIf="currentStep === 4" class="space-y-6">
       <h3 class="text-lg font-medium text-gray-900">Sélectionnez un service</h3>
       <select
@@ -87,7 +128,6 @@
           {{ service.name }}
         </option>
       </select>
-      <!-- Show description of selected service -->
       <div *ngIf="selectedService && selectedService.description" class="mt-2 p-3 bg-gray-50 border rounded text-gray-700">
         <strong>Description:</strong> {{ selectedService.description }}
       </div>
@@ -102,7 +142,7 @@
       </div>
     </div>
 
-    <!-- Étape 3: Confirmation du ticket -->
+    <!-- Confirmation du ticket -->
     <div *ngIf="currentStep === 5 && createdTicket" class="confirmation-step flex flex-col items-center">
       <div class="bg-blue-50 border border-blue-200 rounded-xl shadow-lg p-6 w-full max-w-md text-center">
         <div class="text-2xl font-bold text-blue-700 mb-2">
@@ -138,5 +178,172 @@
     </div>
   </div>
 </div>
+
+<!-- MODAL/POPUP for Choisir mon numéro -->
+<div *ngIf="showCustomTicketSteps" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+  <div class="relative w-full max-w-lg mx-auto bg-white rounded-2xl shadow-2xl p-6 md:p-8 animate-fade-in">
+    <!-- Close button -->
+    <button (click)="showCustomTicketSteps = false"
+      class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold focus:outline-none"
+      aria-label="Fermer">
+      &times;
+    </button>
+    <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">
+      Obtenir un ticket
+    </h2>
+
+    <!-- Étape 1 : Nom -->
+    <div *ngIf="currentStep === 1" class="space-y-6">
+      <h3 class="text-lg font-medium text-gray-900">Étape 1: Vos informations</h3>
+      <p class="text-sm text-gray-600">Vos informations sont automatiquement remplies.</p>
+      <div>
+        <label for="fullName" class="block text-sm font-medium text-gray-700">Nom complet</label>
+        <input type="text" id="fullName" name="fullName" [(ngModel)]="fullName" readonly
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+      </div>
+      <button (click)="nextStep()" [disabled]="!fullName"
+              class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50">
+        Continuer
+      </button>
+    </div>
+
+    <!-- Sélection de la ville -->
+    <div *ngIf="currentStep === 2" class="space-y-6">
+      <h3 class="text-lg font-medium text-gray-900">Sélectionnez votre ville</h3>
+      <select 
+        [(ngModel)]="selectedCity" 
+        (change)="onCitySelect()"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        <option value="">Choisir une ville</option>
+        <option *ngFor="let city of cities" [value]="city.id">
+          {{city.name}}
+        </option>
+      </select>
+    </div>
+
+    <!-- Sélection de l'agence -->
+    <div *ngIf="currentStep === 3" class="space-y-6">
+      <h3 class="text-lg font-medium text-gray-900">Sélectionnez votre agence</h3>
+      <select
+        [(ngModel)]="selectedAgency"
+        (change)="onAgencySelect()"
+        name="agency"
+        required
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        <option [ngValue]="null" disabled selected>Choisir une agence</option>
+        <option *ngFor="let agency of agencies" [ngValue]="agency">
+          {{ agency.name }}
+        </option>
+      </select>
+      <div class="flex justify-between">
+        <button 
+          (click)="previousStep()"
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
+          Retour
+        </button>
+        <button 
+          (click)="nextStep()"
+          [disabled]="!selectedAgency"
+          class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md disabled:opacity-50">
+          Continuer
+        </button>
+      </div>
+    </div>
+
+    <!-- Sélection du service -->
+    <div *ngIf="currentStep === 4" class="space-y-6">
+      <h3 class="text-lg font-medium text-gray-900">Sélectionnez un service</h3>
+      <select
+        [(ngModel)]="selectedService"
+        name="service"
+        required
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        <option [ngValue]="null" disabled selected>Choisir un service</option>
+        <option *ngFor="let service of services" [ngValue]="service">
+          {{ service.name }}
+        </option>
+      </select>
+      <div *ngIf="selectedService && selectedService.description" class="mt-2 p-3 bg-gray-50 border rounded text-gray-700">
+        <strong>Description:</strong> {{ selectedService.description }}
+      </div>
+      <div class="flex justify-between">
+        <button (click)="previousStep()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
+          Retour
+        </button>
+        <button (click)="nextStep()" [disabled]="!selectedService"
+          class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md disabled:opacity-50">
+          Continuer
+        </button>
+      </div>
+    </div>
+
+    <!-- Step: Custom ticket number choice (after service selection) -->
+    <div *ngIf="currentStep === 5" class="space-y-6">
+      <h3 class="text-lg font-medium text-gray-900">Choisissez votre numéro de ticket</h3>
+      <div class="mb-2">
+        <span class="text-sm text-gray-500">Prochain numéro disponible :</span>
+        <span class="font-mono font-bold text-blue-600 text-lg">{{ nextTicketNumberCustom || '...' }}</span>
+      </div>
+      <div class="mb-2">
+        <span class="text-sm text-gray-500">Dernier ticket en attente :</span>
+        <span class="font-mono font-bold text-blue-600 text-lg">{{ lastPendingTicketCustom?.number || 'Aucun' }}</span>
+      </div>
+      <input
+        type="text"
+        [(ngModel)]="customTicketNumber"
+        name="customTicketNumber"
+        maxlength="9"
+        placeholder="Ex: NOUBA010"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-lg"
+        required
+      />
+      <div *ngIf="customTicketNumber && !isCustomTicketNumberValid" class="text-xs text-red-600">
+        Format invalide. Exemple: NOUBA010
+      </div>
+      <button
+        (click)="createTicketWithNumber()"
+        [disabled]="!isCustomTicketNumberValid"
+        class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition disabled:opacity-50">
+        Générer le ticket
+      </button>
+    </div>
+
+    <!-- Confirmation du ticket -->
+    <div *ngIf="currentStep === 6 && createdTicket" class="confirmation-step flex flex-col items-center">
+      <div class="bg-blue-50 border border-blue-200 rounded-xl shadow-lg p-6 w-full max-w-md text-center">
+        <div class="text-2xl font-bold text-blue-700 mb-2">
+          Ticket Créé avec Succès
+        </div>
+        <div class="bg-white rounded-lg shadow p-4 mb-4">
+          <div class="text-3xl font-mono font-bold text-blue-600 mb-2">{{ createdTicket.number }}</div>
+          <div class="text-gray-700 mb-1"><strong>Service:</strong> {{ createdTicket.serviceName }}</div>
+          <div class="text-gray-700 mb-1"><strong>Agence:</strong> {{ createdTicket.agencyName }}</div>
+          <div class="text-gray-700 mb-1"><strong>Client:</strong> {{ createdTicket.clientName }}</div>
+          <div class="text-gray-700 mb-1"><strong>Statut:</strong>
+            <span [ngClass]="{
+              'bg-yellow-100 text-yellow-700': createdTicket.status === 'EN_ATTENTE',
+              'bg-green-100 text-green-700': createdTicket.status === 'TERMINE',
+              'bg-red-100 text-red-700': createdTicket.status === 'ANNULE'
+            }" class="px-2 py-1 rounded-full text-xs font-semibold">
+              {{ createdTicket.status }}
+            </span>
+          </div>
+          <div class="text-gray-500 text-sm mb-1">
+            <strong>Date d'émission:</strong>
+            {{ createdTicket.issuedAt | date:'dd/MM/yyyy HH:mm' }}
+          </div>
+          <div class="text-gray-500 text-sm">
+            <strong>Personnes en attente:</strong> {{ peopleAhead }}
+          </div>
+        </div>
+        <button (click)="finish()"
+          class="mt-2 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition">
+          Terminer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Footer -->
 <app-footer></app-footer>

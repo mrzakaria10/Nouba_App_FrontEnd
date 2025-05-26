@@ -28,8 +28,34 @@ export class TicketWizardComponent implements OnInit {
   peopleAhead: number = 0;
   ticketForm: FormGroup;
 
+  // For the two cards
+  nextTicketNumberCustom: string | null = null;
+  lastPendingTicketCustom: any = null;
+  customTicketNumber: string = '';
+  isLoadingCustom = false;
+
+  nextTicketNumberAuto: string | null = null;
+  lastPendingTicketAuto: any = null;
+  isLoadingAuto = false;
+
   // Add a property to hold the created ticket details
   createdTicket: any = null;
+
+  // IDs (set these from previous steps)
+  agencyId!: number;
+  clientId!: number;
+  serviceId!: number;
+
+  // Validation for custom ticket number
+  get isCustomTicketNumberInvalid(): boolean {
+    return !!this.customTicketNumber && !/^NOUBA\d{3}$/.test(this.customTicketNumber);
+  }
+  get isCustomTicketNumberValid(): boolean {
+    return /^NOUBA\d{3}$/.test(this.customTicketNumber || '');
+  }
+
+  showAutoTicketSteps = false; // Ajoutez cette ligne
+  showCustomTicketSteps = false; // Add this property
 
   constructor(
     private router: Router,
@@ -48,6 +74,7 @@ export class TicketWizardComponent implements OnInit {
   ngOnInit() {
     this.loadUserInformation();
     // loadCities() will be called when navigating to the city selection step.
+    this.showAutoTicketSteps = false; // Toujours initialiser à false au chargement
   }
 
   loadUserInformation(): void {
@@ -96,6 +123,15 @@ export class TicketWizardComponent implements OnInit {
         // This case is handled by onCitySelect directly setting currentStep = 3
       } else if (this.currentStep === 3) { // Moving from Agency Selection to Service Selection (if selectedAgency is valid)
         // This case is handled by onAgencySelect directly setting currentStep = 4
+      } else if (this.currentStep === 4 && this.selectedService) {
+        // Load next and last ticket numbers for the agency
+        this.ticketService.getNextTicketNumber(this.selectedAgency.id).subscribe({
+          next: (res) => this.nextTicketNumberCustom = res.data
+        });
+        this.ticketService.getLastPendingTicket(this.selectedAgency.id).subscribe({
+          next: (res) => this.lastPendingTicketCustom = res.data
+        });
+        this.currentStep = 5;
       }
     } else {
       alert('Vos informations (Nom et Nom du compte) semblent incomplètes. Veuillez vérifier.');
@@ -184,7 +220,141 @@ export class TicketWizardComponent implements OnInit {
     });
   }
 
+  // Load next available ticket number for both cards
+  loadNextTicketNumber() {
+    if (!this.agencyId) return;
+    this.ticketService.getNextTicketNumber(this.agencyId).subscribe({
+      next: (res) => {
+        this.nextTicketNumberAuto = res.data;
+        this.nextTicketNumberCustom = res.data;
+      }
+    });
+  }
+
+  // Load last pending ticket for both cards
+  loadLastPendingTicket() {
+    if (!this.agencyId) return;
+    this.ticketService.getLastPendingTicket(this.agencyId).subscribe({
+      next: (res) => {
+        this.lastPendingTicketAuto = res.data;
+        this.lastPendingTicketCustom = res.data;
+      }
+    });
+  }
+
+  // Card 1: Générer automatiquement
+  generateAutoTicket() {
+    if (!this.agencyId || !this.clientId || !this.serviceId) return;
+    this.isLoadingAuto = true;
+    this.ticketService.createTicket(this.agencyId, this.clientId, this.serviceId).subscribe({
+      next: (res) => {
+        // Handle ticket creation success (show confirmation, etc.)
+        this.isLoadingAuto = false;
+        // Optionally reload last pending ticket
+        this.loadLastPendingTicket();
+      },
+      error: () => {
+        this.isLoadingAuto = false;
+      }
+    });
+  }
+
+  // Card 2: Générer avec numéro choisi
+  generateCustomTicket() {
+    if (!this.isCustomTicketNumberValid || !this.agencyId || !this.clientId || !this.serviceId) return;
+    this.isLoadingCustom = true;
+    this.ticketService.createTicketWithNumber(
+      this.agencyId,
+      this.clientId,
+      this.serviceId,
+      this.customTicketNumber
+    ).subscribe({
+      next: (res) => {
+        this.createdTicket = res.data;
+        this.isLoadingCustom = false;
+        this.currentStep = 6; // Show confirmation
+      },
+      error: () => {
+        this.isLoadingCustom = false;
+      }
+    });
+  }
+
   finish() {
     this.router.navigate(['/']);
+  }
+
+  // Add this method to check authentication
+  checkAuthentication() {
+    // Replace with your real auth check logic
+    if (!this.authService.isLoggedIn()) {
+      // Redirect to login or show login modal
+      this.router.navigate(['/login']);
+      return false;
+    }
+    return true;
+  }
+
+  // Call this when user clicks "Obtenir un ticket"
+  onObtenirUnTicketClick() {
+    if (this.checkAuthentication()) {
+      this.currentStep = 5; // Show the two cards step
+      this.loadLeftCardData();
+      this.loadRightCardData();
+    }
+  }
+
+  // LEFT CARD: load next number and last pending ticket
+  loadLeftCardData() {
+    if (!this.agencyId) return;
+    this.ticketService.getNextTicketNumber(this.agencyId).subscribe({
+      next: (res) => this.nextTicketNumberCustom = res.data
+    });
+    this.ticketService.getLastPendingTicket(this.agencyId).subscribe({
+      next: (res) => this.lastPendingTicketCustom = res.data
+    });
+  }
+
+  // RIGHT CARD: load next number and last pending ticket (can be same as left)
+  loadRightCardData() {
+    if (!this.agencyId) return;
+    this.ticketService.getNextTicketNumber(this.agencyId).subscribe({
+      next: (res) => this.nextTicketNumberAuto = res.data
+    });
+    this.ticketService.getLastPendingTicket(this.agencyId).subscribe({
+      next: (res) => this.lastPendingTicketAuto = res.data
+    });
+  }
+
+  openCustomTicketModal() {
+    this.showCustomTicketSteps = true;
+    this.currentStep = 1;
+    // Optionally reset fields or load data here
+  }
+
+  createTicketWithNumber() {
+    if (!this.isCustomTicketNumberValid || !this.selectedAgency || !this.selectedService) {
+      alert('Veuillez remplir tous les champs correctement.');
+      return;
+    }
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser || !currentUser.id) {
+      alert('Erreur: Utilisateur non connecté');
+      return;
+    }
+    const agencyId = this.selectedAgency.id;
+    const clientId = currentUser.id;
+    const serviceId = this.selectedService.id;
+    const ticketNumber = this.customTicketNumber;
+
+    this.ticketService.createTicketWithNumber(agencyId, clientId, serviceId, ticketNumber).subscribe({
+      next: (res) => {
+        this.createdTicket = res.data;
+        this.currentStep = 6; // Go to confirmation step in the modal
+      },
+      error: (err) => {
+        alert('Erreur lors de la création du ticket personnalisé. Veuillez réessayer.');
+      }
+    });
   }
 }
