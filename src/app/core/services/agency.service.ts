@@ -158,6 +158,24 @@ export class AgencyService {
     );
   }
 
+  // Cancel a ticket in EN_COURS (new API)
+  cancelActiveTicket(ticketId: number) {
+    return this.http.put(
+      `${this.apiTickets}/${ticketId}/cancel-active`,
+      {},
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // Complete a ticket in EN_COURS (new API)
+  completeTicketService(ticketId: number) {
+    return this.http.put(
+      `${this.apiTickets}/${ticketId}/complete-service`,
+      {},
+      { headers: this.getHeaders() }
+    );
+  }
+
   // Notify components about updates
   notifyTicketUpdate() {
     this.ticketUpdates.next();
@@ -178,5 +196,13 @@ export class AgencyService {
 
   getAgencyTicketHistory(agencyId: number) {
     return this.http.get<any>(`${this.apiTickets}/agency/${agencyId}/history`, { headers: this.getHeaders() });
+  }
+
+  startFirstPendingTicket(agencyId: number): Observable<any> {
+    return this.http.put(
+      `${environment.apiUrl}/tickets/agency/${agencyId}/start-first-pending`,
+      {},
+      { headers: this.getHeaders() }
+    );
   }
 }

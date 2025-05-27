@@ -191,9 +191,10 @@ export class AgencyDashboardComponent implements OnInit, OnDestroy {
   callNextClient() {
     const agencyId = this.authService.getAgencyIdFromToken();
     if (!agencyId) return;
-    this.agencyService.serveNextClient(agencyId).subscribe(res => {
+    this.agencyService.startFirstPendingTicket(agencyId).subscribe(res => {
       if (res.data) {
-        this.currentTicket = res.data;
+        this.currentTicket = res.data; // res.data should have id, ticketNumber, etc.
+        // Optionally show a notification or modal here
       } else {
         this.currentTicket = null;
         this.showUpdateNotification('Info', 'Aucun client en attente.', 'info');
@@ -204,7 +205,7 @@ export class AgencyDashboardComponent implements OnInit, OnDestroy {
   // Validate (start service)
   validateCurrentTicket() {
     if (!this.currentTicket) return;
-    this.agencyService.startTicketService(this.currentTicket.ticketId).subscribe(() => {
+    this.agencyService.completeTicketService(this.currentTicket.ticketId).subscribe(() => {
       this.currentTicket = null;
       this.refreshCounts();
     });
@@ -213,7 +214,7 @@ export class AgencyDashboardComponent implements OnInit, OnDestroy {
   // Cancel (pending)
   cancelCurrentTicket() {
     if (!this.currentTicket) return;
-    this.agencyService.cancelPendingTicket(this.currentTicket.ticketId).subscribe(() => {
+    this.agencyService.cancelActiveTicket(this.currentTicket.ticketId).subscribe(() => {
       this.currentTicket = null;
       this.refreshCounts();
     });

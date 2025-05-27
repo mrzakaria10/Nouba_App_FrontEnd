@@ -343,18 +343,19 @@ resetPassword(payload: { token: string; newPassword: string }) {
     
   }
 
-  getCurrentUser(): { id: number; name: string; email: string; roles: string[] } | null {
-    const tokenPayload = this.getDecodedTokenPayload();
-    if (tokenPayload) {
-      return {
-        id: tokenPayload.id, // Ensure the backend includes the client ID in the token
-        name: tokenPayload.name,
-        email: tokenPayload.email,
-        roles: tokenPayload.roles,
-      };
-    }
-    return null;
+getCurrentUser(): { id: number; clientId?: number; name: string; email: string; roles: string[] } | null {
+  const tokenPayload = this.getDecodedTokenPayload();
+  if (tokenPayload) {
+    return {
+      id: tokenPayload.id,
+      clientId: tokenPayload.clientId, // <-- Add this line
+      name: tokenPayload.name,
+      email: tokenPayload.email,
+      roles: tokenPayload.roles,
+    };
   }
+  return null;
+}
 
   /**
    * Retrieves the full decoded payload of the JWT token.

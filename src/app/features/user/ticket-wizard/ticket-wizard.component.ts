@@ -78,27 +78,14 @@ export class TicketWizardComponent implements OnInit {
   }
 
   loadUserInformation(): void {
-    // 1. Set fullName from the general user name stored by AuthService
     this.fullName = this.authService.getUserName();
-
-    // // 2. Set accountName by decoding the token and looking for a specific claim
-    // const tokenPayload = this.authService.getDecodedTokenPayload();
-    // if (tokenPayload) {
-    //   // IMPORTANT: Replace 'your_account_name_claim' with the actual claim name
-    //   // used in your JWT token for the account name.
-    //   // Examples: 'account_name', 'nom_compte', 'client_reference', etc.
-    //   if (tokenPayload.your_account_name_claim) {
-    //     this.accountName = tokenPayload.your_account_name_claim;
-    //   } else {
-    //     this.accountName = 'N/A'; // Or default to fullName, or an empty string
-    //     console.warn('Specific account name claim ("your_account_name_claim") not found in token. Defaulting accountName.');
-    //   }
-    // } else {
-    //   this.accountName = 'N/A'; // Or ''
-    //   console.error('Could not decode token to retrieve account name. User might not be authenticated.');
-    //   // Consider redirecting to login if critical information is missing
-    //   // this.router.navigate(['/auth/login']);
-    // }
+    const currentUser = this.authService.getCurrentUser();
+    // Use clientId from token if it exists, otherwise fallback to id
+    if (currentUser && currentUser.clientId) {
+      this.clientId = currentUser.clientId;
+    } else if (currentUser && currentUser.id) {
+      this.clientId = currentUser.id;
+    }
   }
 
   loadCities() {
@@ -189,11 +176,6 @@ export class TicketWizardComponent implements OnInit {
   }
 
   createTicket() {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser || !currentUser.id) {
-      alert('Erreur: Utilisateur non connecté');
-      return;
-    }
     if (!this.selectedAgency || !this.selectedAgency.id) {
       alert('Veuillez sélectionner une agence.');
       return;
@@ -202,17 +184,21 @@ export class TicketWizardComponent implements OnInit {
       alert('Veuillez sélectionner un service.');
       return;
     }
+    if (!this.clientId) {
+      alert('Erreur: Utilisateur non connecté');
+      return;
+    }
 
     const agencyId = this.selectedAgency.id;
-    const clientId = currentUser.id;
+    const clientId = this.clientId;
     const serviceId = this.selectedService.id;
 
     this.ticketService.createTicket(agencyId, clientId, serviceId).subscribe({
       next: (response) => {
-        this.createdTicket = response.data; // Store all ticket data
+        this.createdTicket = response.data;
         this.ticketNumber = response.data.number;
         this.peopleAhead = response.data.peopleAhead || 0;
-        this.currentStep = 5; // Move to Step 5: Confirmation
+        this.currentStep = 5;
       },
       error: (error) => {
         alert('Erreur lors de la création du ticket. Veuillez réessayer.');
@@ -337,20 +323,19 @@ export class TicketWizardComponent implements OnInit {
       alert('Veuillez remplir tous les champs correctement.');
       return;
     }
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser || !currentUser.id) {
+    if (!this.clientId) {
       alert('Erreur: Utilisateur non connecté');
       return;
     }
     const agencyId = this.selectedAgency.id;
-    const clientId = currentUser.id;
+    const clientId = this.clientId;
     const serviceId = this.selectedService.id;
     const ticketNumber = this.customTicketNumber;
 
     this.ticketService.createTicketWithNumber(agencyId, clientId, serviceId, ticketNumber).subscribe({
       next: (res) => {
         this.createdTicket = res.data;
-        this.currentStep = 6; // Go to confirmation step in the modal
+        this.currentStep = 6;
       },
       error: (err) => {
         alert('Erreur lors de la création du ticket personnalisé. Veuillez réessayer.');

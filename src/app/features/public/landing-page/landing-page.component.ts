@@ -97,4 +97,9 @@ export class LandingPageComponent {
     this.closeModal();
     this.router.navigate(['/auth/login'], { queryParams: { redirectTo: '/ticket-wizard' } });
   }
+
+  replayVideo(video: HTMLVideoElement) {
+    video.currentTime = 0;
+    video.play();
+  }
 }

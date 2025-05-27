@@ -58,14 +58,15 @@
       </div>
       <!-- Vidéo illustrative responsive -->
       <div class="w-full md:w-1/2 flex justify-center">
-        <video 
-        class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg rounded shadow object-cover aspect-video"
+        <video #heroVideo
+          class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg rounded shadow object-cover aspect-video"
           autoplay
           muted
           playsinline
-        controls>
-        <source src="assets/Noub_video.mp4" type="video/mp4">
-         
+          loop
+          controls
+          (ended)="replayVideo(heroVideo)">
+          <source src="assets/Nouba_video.mp4" type="video/mp4">
           Votre navigateur ne supporte pas la lecture vidéo.
         </video>
       </div>
