@@ -19,6 +19,12 @@ interface AgencyResponse {
   photoUrl: string;
 }
 
+interface Client {
+  name: string;
+  email: string;
+  phone: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AgencyService {
   private apiUrl = `${environment.apiUrl}/agencies`;
@@ -203,6 +209,12 @@ export class AgencyService {
       `${environment.apiUrl}/tickets/agency/${agencyId}/start-first-pending`,
       {},
       { headers: this.getHeaders() }
+    );
+  }
+
+  getAgencyClients(agencyId: number): Observable<Client[]> {
+    return this.http.get<{ data: Client[] }>(`${environment.apiUrl}/tickets/agency/${agencyId}/clients`, { headers: this.getHeaders() }).pipe(
+      map(response => response.data) // Extract the `data` property
     );
   }
 }

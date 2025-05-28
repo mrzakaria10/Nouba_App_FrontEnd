@@ -28,6 +28,8 @@ interface Ticket {
   position: number;
   estimatedTime: string;
   status: 'EN_ATTENTE' | 'EN_COURS' | 'TERMINE' | 'ANNULE';
+    hidden?: boolean; // Add this property
+
 }
 
 @Component({
@@ -44,10 +46,13 @@ export class AgencyDashboardComponent implements OnInit, OnDestroy {
   annuleCount = 0;
   termineCount = 0;
   tickets: Ticket[] = [];
-  statusFilter: string = 'ALL'; // Add this line
+  statusFilter: string = 'ALL'; // Default to "ALL"
   private ticketUpdateSubscription!: Subscription;
 
   currentTicket: any = null; // For left panel display
+  activeTab: string = 'actifs'; // Default tab
+  historiqueTickets: Ticket[] = []; // Placeholder for historical tickets
+  historiqueFilter: string = 'ALL'; // Default filter for historique
 
   constructor(
     private agencyService: AgencyService,
@@ -182,9 +187,17 @@ export class AgencyDashboardComponent implements OnInit, OnDestroy {
 
   get filteredTickets(): Ticket[] {
     if (this.statusFilter === 'ALL') {
-      return this.tickets;
+      return this.tickets; // Show all tickets if "ALL" is selected
     }
-    return this.tickets.filter(ticket => ticket.status === this.statusFilter);
+    return this.tickets.filter(ticket => ticket.status === this.statusFilter); // Filter by status
+  }
+
+  // NEW: Filtered historique tickets
+  get filteredHistoriqueTickets(): Ticket[] {
+    if (this.historiqueFilter === 'ALL') {
+      return this.historiqueTickets;
+    }
+    return this.historiqueTickets.filter(ticket => ticket.status === this.historiqueFilter);
   }
 
   // Call this when "Appeler le prochain client" is clicked
@@ -224,4 +237,24 @@ export class AgencyDashboardComponent implements OnInit, OnDestroy {
   resetCurrentTicket() {
     this.currentTicket = null;
   }
+
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
+
+    if (tab === 'historique') {
+      this.loadHistoriqueTickets(); // Load historical tickets when switching to Historique tab
+    }
+  }
+
+  loadHistoriqueTickets() {
+    const agencyId = this.authService.getAgencyIdFromToken();
+    if (!agencyId) return;
+
+    // Fetch historical tickets from the backend
+    this.agencyService.getAgencyTicketHistory(agencyId).subscribe(res => {
+      this.historiqueTickets = res.data ?? res;
+    });
+  }
+
+  
 }

@@ -6,4 +6,8 @@ export interface Ticket {
   position: number;
   estimatedTime: string;
   status: 'EN_ATTENTE' | 'EN_COURS' | 'TERMINE' | 'ANNULE';
+  filteredTickets: Ticket[];
+    hidden?: boolean; // Add this property
+
 }
+
