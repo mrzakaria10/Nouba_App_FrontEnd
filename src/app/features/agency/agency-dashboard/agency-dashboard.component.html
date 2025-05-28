@@ -270,9 +270,9 @@
               </thead>
               <tbody>
                 <tr *ngFor="let ticket of filteredHistoriqueTickets" class="border-b hover:bg-blue-50 transition">
-                  <td class="py-2 px-3 font-mono font-bold text-gray-700">{{ ticket.ticketNumber }}</td>
-                  <td class="py-2 px-3">{{ ticket.service }}</td>
-                  <td class="py-2 px-3">{{ ticket.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                  <td class="py-2 px-3 font-mono font-bold text-gray-700">{{ ticket.number }}</td>
+                  <td class="py-2 px-3">{{ ticket.serviceName }}</td>
+                  <td class="py-2 px-3">{{ ticket.issuedAt | date:'dd/MM/yyyy HH:mm' }}</td>
                   <td class="py-2 px-3">
                     <span
                       [ngClass]="{

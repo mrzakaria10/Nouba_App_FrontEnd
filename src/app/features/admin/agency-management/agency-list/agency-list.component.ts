@@ -2,22 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AgenciesAdminService } from '../../../../core/services/agencies-admin.service';
+import { AdminService, AdminSummary } from '../../../../core/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { Agency } from '../../../../models/agency';
-
-// interface Agency {
-//   id: number;
-//   name: string;
-//   address: string;
-//   phone: string;
-//   email: string;
-//   city: {
-//     id: number;
-//     name: string;
-//   };
-//   photoUrl: string;
-
-// }
 
 @Component({
   selector: 'app-agency-list',
@@ -30,39 +17,48 @@ import { Agency } from '../../../../models/agency';
 export class AgencyListComponent implements OnInit {
   agencies: Agency[] = [];
   selectedAgency: Agency | null = null;
-  // isLoading = false;
-  
+  summary: AdminSummary = {
+    totalAgencies: 0,
+    totalClients: 0,
+    totalPendingTickets: 0
+  };
+  isLoading = true;
+  errorMessage: string | null = null;
 
   constructor(
     private agenciesAdminService: AgenciesAdminService,
+    private adminService: AdminService,
     private router: Router,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.loadAgencies();
+    this.loadSummaryData();
   }
 
   loadAgencies() {
-      this.agenciesAdminService.getAllAgencies().subscribe((data: Agency[]) => {
-        this.agencies = data;
-      });
-    }
-  // loadAgencies() {
-  //   this.isLoading = true;
-  //   this.agenciesAdminService.getAllAgencies().subscribe({
-  //     next: (response) => {
-  //       console.log('Agencies loaded:', response);
-  //       this.agencies = response;
-  //       this.isLoading = false;
-  //     },
-  //     error: (error) => {
-  //       console.error('Error loading agencies:', error);
-  //       this.toastr.error('Error loading agencies', 'Error');
-  //       this.isLoading = false;
-  //     }
-  //   });
-  // }
+    this.agenciesAdminService.getAllAgencies().subscribe((data: Agency[]) => {
+      this.agencies = data;
+    });
+  }
+
+  loadSummaryData(): void {
+    this.isLoading = true;
+    this.errorMessage = null;
+
+    this.adminService.getSummary().subscribe({
+      next: (data: AdminSummary) => {
+        this.summary = data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading agency summary:', err);
+        this.errorMessage = 'Failed to load summary data. Please try again later.';
+        this.isLoading = false;
+      }
+    });
+  }
 
   edit(id: number): void {
     // Navigate to the edit page with the agency ID
@@ -72,7 +68,6 @@ export class AgencyListComponent implements OnInit {
   openConfirmModal(agency: Agency) {
     this.selectedAgency = agency;
   }
-
 
   deleteAgency() {
     if (!this.selectedAgency || this.selectedAgency.id === undefined) {

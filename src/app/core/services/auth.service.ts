@@ -87,11 +87,11 @@ export class AuthService {
                 roles: userInfo.roles || []
               });
               // Show alert with user role
-              alert(`Connexion réussie!\nRôle: ${userInfo.role}\nNom: ${userInfo.name}\nID: ${userInfo.id}`);
+              //alert(`Connexion réussie!\nRôle: ${userInfo.role}\nNom: ${userInfo.name}\nID: ${userInfo.id}`);
             }
           } catch (error) {
             console.error('Error processing login response:', error);
-            alert('Erreur lors de la connexion. Veuillez réessayer.');
+           // alert('Erreur lors de la connexion. Veuillez réessayer.');
           }
         }
       })

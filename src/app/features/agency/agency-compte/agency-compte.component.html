@@ -1,0 +1,116 @@
+<div *ngIf="agency" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row items-center p-6 gap-6">
+  <!-- Agency photo -->
+  <img [src]="'http://localhost:8080/api/uploads/' + agency.photoUrl"
+       alt="{{ agency.name }}"
+       class="w-24 h-24 rounded-full object-cover flex-shrink-0 border border-gray-200 shadow-sm" />
+
+  <!-- Agency info -->
+  <div class="flex-1 min-w-0">
+    <div class="font-bold text-xl text-gray-900 mb-1">{{ agency.name }}</div>
+    <div class="text-gray-500 text-sm mb-1">{{ agency.city?.name }}</div>
+    <div class="text-gray-500 text-sm">{{ agency.address }}</div>
+    <div class="text-gray-500 text-sm">{{ agency.phone }}</div>
+  </div>
+
+  <div class="flex flex-row gap-4">
+    <div class="bg-blue-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-blue-500 font-bold text-2xl">{{ enAttenteCount }}</div>
+      <div class="text-sm text-blue-600">En attente</div>
+    </div>
+    <div class="bg-yellow-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-yellow-500 font-bold text-2xl">{{ enCoursCount }}</div>
+      <div class="text-sm text-yellow-600">Encours</div>
+    </div>
+    <div class="bg-red-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-red-500 font-bold text-2xl">{{ annuleCount }}</div>
+      <div class="text-sm text-red-600">Annulé</div>
+    </div>
+    <div class="bg-green-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-green-500 font-bold text-2xl">{{ termineCount }}</div>
+      <div class="text-sm text-green-600">Terminé</div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+
+<div class="bg-white rounded-xl shadow p-6">
+  <div class="flex items-center justify-between mb-6">
+    <a routerLink="/agency/dashboard" class="flex items-center gap-2 text-blue-600 hover:text-blue-800">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      <span class="font-medium">Retour au tableau de bord</span>
+    </a>
+    <h2 class="text-xl font-bold text-gray-800">Informations du compte</h2>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center text-gray-500">Chargement...</div>
+  <div *ngIf="errorMessage" class="text-center text-red-500">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && agency" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Agency Info -->
+    <div class="bg-gray-50 rounded-lg p-6 shadow">
+      <h3 class="text-lg font-semibold text-gray-700 mb-4">Informations de l'agence</h3>
+      <div class="flex items-center gap-4 mb-4">
+        <img [src]="'http://localhost:8080/api/uploads/' + agency?.photoUrl" alt="{{ agency?.name }}"
+             class="w-20 h-20 rounded-full object-cover border border-gray-200 shadow-sm" />
+        <div>
+          <p class="text-gray-800 font-bold text-lg">{{ agency?.name }}</p>
+          <p class="text-gray-500 text-sm">{{ agency?.city?.name }}</p>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <!-- Address -->
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V10z" />
+          </svg>
+          <p class="text-gray-600 text-sm">{{ agency?.address }}</p>
+        </div>
+        <!-- Phone -->
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10c2 4 5 7 9 9 4-2 7-5 9-9-2-4-5-7-9-9-4 2-7 5-9 9z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h.01M15 12h.01" />
+          </svg>
+          <p class="text-gray-600 text-sm">{{ agency?.phone }}</p>
+        </div>
+        <!-- Email -->
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 12H8m0 0l4-4m-4 4l4 4" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M3 8v8a2 2 0 002 2h14a2 2 0 002-2V8" />
+          </svg>
+          <p class="text-gray-600 text-sm">{{ agency?.email }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account Actions -->
+    <div class="bg-gray-50 rounded-lg p-6 shadow">
+      <h3 class="text-lg font-semibold text-gray-700 mb-4">Actions du compte</h3>
+      <div class="bg-blue-50 rounded-lg p-4 mb-4">
+        <p class="text-sm text-gray-600">
+          Vous êtes connecté en tant qu'administrateur de l'agence <span class="font-semibold text-gray-800">{{ agency?.name }}</span>.
+        </p>
+        <p class="text-sm text-gray-600 mt-2">Ville: <span class="font-semibold text-gray-800">{{ agency?.city?.name }}</span></p>
+        <p class="text-sm text-gray-600 mt-2">Connecté depuis: <span class="font-semibold text-gray-800">{{ '28/05/2025' }}</span></p>
+      </div>
+      <button routerLink="/agency/dashboard"
+              class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition-all border border-gray-200 shadow-sm mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h11M9 21V3m0 0l-6 6m6-6l6 6" />
+        </svg>
+        <span class="font-medium">Retour au tableau de bord</span>
+      </button>
+      <button (click)="logout()"
+              class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-all border border-red-100 shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1" />
+        </svg>
+        <span class="font-medium">Se déconnecter</span>
+      </button>
+    </div>
+  </div>
+</div>

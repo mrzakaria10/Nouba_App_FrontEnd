@@ -22,7 +22,11 @@ interface Agency {
 
 interface Ticket {
   id: number;
-  ticketNumber: string; // Mapped from ticketNumber
+  ticketNumber: string;
+  serviceName: string;
+  number: string;
+  issuedAt: string;
+  // Mapped from ticketNumber
   service: string;
   createdAt: string; // Mapped from createdAt
   position: number;

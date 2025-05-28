@@ -1,3 +1,40 @@
+<div *ngIf="agency" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row items-center p-6 gap-6">
+  <!-- Agency photo -->
+  <img [src]="'http://localhost:8080/api/uploads/' + agency.photoUrl"
+       alt="{{ agency.name }}"
+       class="w-24 h-24 rounded-full object-cover flex-shrink-0 border border-gray-200 shadow-sm" />
+
+  <!-- Agency info -->
+  <div class="flex-1 min-w-0">
+    <div class="font-bold text-xl text-gray-900 mb-1">{{ agency.name }}</div>
+    <div class="text-gray-500 text-sm mb-1">{{ agency.city?.name }}</div>
+    <div class="text-gray-500 text-sm">{{ agency.address }}</div>
+    <div class="text-gray-500 text-sm">{{ agency.phone }}</div>
+  </div>
+
+  <div class="flex flex-row gap-4">
+    <div class="bg-blue-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-blue-500 font-bold text-2xl">{{ enAttenteCount }}</div>
+      <div class="text-sm text-blue-600">En attente</div>
+    </div>
+    <div class="bg-yellow-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-yellow-500 font-bold text-2xl">{{ enCoursCount }}</div>
+      <div class="text-sm text-yellow-600">Encours</div>
+    </div>
+    <div class="bg-red-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-red-500 font-bold text-2xl">{{ annuleCount }}</div>
+      <div class="text-sm text-red-600">Annulé</div>
+    </div>
+    <div class="bg-green-50 rounded-lg px-6 py-4 text-center min-w-[80px]">
+      <div class="text-green-500 font-bold text-2xl">{{ termineCount }}</div>
+      <div class="text-sm text-green-600">Terminé</div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+
+
 <div class="bg-white rounded-xl shadow p-6">
   <h2 class="text-lg font-bold mb-4">Clients de l'agence</h2>
 

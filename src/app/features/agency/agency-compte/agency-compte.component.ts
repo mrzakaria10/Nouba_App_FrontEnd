@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AgencyService } from '../../../core/services/agency.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 interface Agency {
@@ -12,22 +13,15 @@ interface Agency {
   photoUrl: string;
 }
 
-interface Client {
-  name: string;
-  email: string;
-  phone: string;
-}
-
 @Component({
-  selector: 'app-agency-clients',
+  selector: 'app-agency-compte',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './agency-clients.component.html',
-  styleUrls: ['./agency-clients.component.css']
+  templateUrl: './agency-compte.component.html',
+  styleUrls: ['./agency-compte.component.css']
 })
-export class AgencyClientsComponent implements OnInit {
+export class AgencyCompteComponent implements OnInit {
   agency: Agency | null = null;
-  clients: Client[] = [];
   isLoading = true;
   errorMessage: string | null = null;
 
@@ -37,16 +31,19 @@ export class AgencyClientsComponent implements OnInit {
   annuleCount = 0;
   termineCount = 0;
 
-  constructor(private agencyService: AgencyService, private authService: AuthService) {}
+  constructor(
+    private agencyService: AgencyService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fetchAgencyInfo();
-    this.fetchClients();
     this.refreshCounts();
   }
 
   fetchAgencyInfo(): void {
-    const agencyId = this.authService.getAgencyIdFromToken();
+    const agencyId = this.authService.getAgencyIdFromToken(); // Replace with dynamic ID if needed
     if (!agencyId) {
       this.errorMessage = 'Agency ID not found.';
       this.isLoading = false;
@@ -65,26 +62,6 @@ export class AgencyClientsComponent implements OnInit {
     });
   }
 
-  fetchClients(): void {
-    const agencyId = this.authService.getAgencyIdFromToken();
-    if (!agencyId) {
-      this.errorMessage = 'Agency ID not found.';
-      this.isLoading = false;
-      return;
-    }
-
-    this.agencyService.getAgencyClients(agencyId).subscribe({
-      next: (clients) => {
-        this.clients = clients;
-        this.isLoading = false;
-      },
-      error: () => {
-        this.errorMessage = 'Failed to load clients.';
-        this.isLoading = false;
-      }
-    });
-  }
-
   refreshCounts(): void {
     const agencyId = this.authService.getAgencyIdFromToken();
     if (!agencyId) return;
@@ -93,5 +70,10 @@ export class AgencyClientsComponent implements OnInit {
     this.agencyService.getEnCoursCountToday(agencyId).subscribe((res) => (this.enCoursCount = res.data ?? res));
     this.agencyService.getAnnuleCountToday(agencyId).subscribe((res) => (this.annuleCount = res.data ?? res));
     this.agencyService.getTermineCountToday(agencyId).subscribe((res) => (this.termineCount = res.data ?? res));
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/auth/login']);
   }
 }
