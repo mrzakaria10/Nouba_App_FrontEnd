@@ -190,10 +190,15 @@ export class AgencyDashboardComponent implements OnInit, OnDestroy {
   }
 
   get filteredTickets(): Ticket[] {
-    if (this.statusFilter === 'ALL') {
-      return this.tickets; // Show all tickets if "ALL" is selected
+    // Always hide "TERMINE" and "ANNULE" for the waiting list
+    let filtered = this.tickets.filter(
+      ticket => ticket.status !== 'TERMINE' && ticket.status !== 'ANNULE'
+    );
+    // Apply status filter if not "ALL"
+    if (this.statusFilter !== 'ALL') {
+      filtered = filtered.filter(ticket => ticket.status === this.statusFilter);
     }
-    return this.tickets.filter(ticket => ticket.status === this.statusFilter); // Filter by status
+    return filtered;
   }
 
   // NEW: Filtered historique tickets

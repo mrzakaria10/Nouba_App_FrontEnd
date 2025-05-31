@@ -68,13 +68,23 @@
                 [disabled]="form.invalid || loading">
           Enregistrer
         </button>
-        <button type="button"
-                class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
-                (click)="router.navigate(['/admin/agencies'])">
+        <button type="button" (click)="onCancel()"
+                class="px-4 py-2 text-gray-600 hover:text-gray-800 transition">
           Annuler
         </button>
       </div>
     </form>
+  </div>
+
+  <!-- Success Popup -->
+  <div *ngIf="showSuccess" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+    <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col items-center">
+      <svg class="h-12 w-12 text-green-500 mb-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+      </svg>
+      <div class="text-lg font-semibold text-gray-800 mb-2">Modification enregistrée avec succès</div>
+      <div class="text-gray-500 text-sm">Les données de l'agence ont été mises à jour.</div>
+    </div>
   </div>
 </div>
 

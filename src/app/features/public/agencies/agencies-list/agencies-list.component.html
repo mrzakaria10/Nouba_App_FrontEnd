@@ -1,24 +1,48 @@
 <app-navbar></app-navbar>
-<div class="max-w-7xl mx-auto py-8">
-  <h1 class="text-3xl font-bold text-center mb-2">Nos Agences</h1>
-  <p class="text-center text-gray-500 mb-8">
+<div class="max-w-7xl mx-auto py-10 px-4">
+  <h1 class="text-4xl font-extrabold text-center mb-3 text-blue-700 drop-shadow">Nos Agences</h1>
+  <p class="text-center text-gray-500 mb-10 text-lg max-w-2xl mx-auto">
     Retrouvez toutes nos agences Nouba à travers le pays et choisissez celle la plus proche de chez vous.
   </p>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let agency of agencies" class="bg-white rounded-lg shadow p-4 flex flex-col">
-      <img [src]="'http://localhost:8080/api/uploads/' + agency.photoUrl" alt="{{ agency.name }}" class="w-full h-40 object-cover rounded mb-4" />
-      <h2 class="text-lg font-bold mb-1">{{ agency.name }}</h2>
-      <div class="text-gray-500 mb-1">{{ agency.city.name }}</div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div *ngFor="let agency of agencies" class="bg-white rounded-2xl shadow-xl p-6 flex flex-col transition hover:scale-105 duration-200">
+      <img [src]="'http://localhost:8080/api/uploads/' + agency.photoUrl"
+           alt="{{ agency.name }}"
+           class="w-full h-48 object-cover rounded-xl mb-5 border-2 border-blue-100 shadow-sm" />
+      <h2 class="text-xl font-bold mb-1 text-blue-800">{{ agency.name }}</h2>
+      <div class="text-blue-500 font-semibold mb-1 flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-5.657 5.657l4.243 4.243a8 8 0 1011.314-11.314l-4.243 4.243z"/>
+        </svg>
+        {{ agency.city.name }}
+      </div>
       <div class="text-gray-600 text-sm mb-1">
-        <span class="font-semibold">Adresse:</span> {{ agency.address }}
+        <span class="font-semibold">Adresse :</span> {{ agency.address }}
       </div>
-      <div class="text-gray-600 text-sm mb-2">
-        <span class="font-semibold">Téléphone:</span> {{ agency.phone }}
+      <div class="text-gray-600 text-sm mb-4">
+        <span class="font-semibold">Téléphone :</span> {{ agency.phone }}
       </div>
-      <button class="mt-auto bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full">
+      <button (click)="handleTicketClick()"
+        class="mt-auto bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-blue-700 transition w-full text-base">
         Obtenir un ticket en 2 clics
       </button>
     </div>
   </div>
 </div>
 <app-footer></app-footer>
+
+<!-- Modal Connexion requise -->
+<div *ngIf="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+  <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-sm animate-fade-in">
+    <div class="font-bold text-xl mb-3 text-blue-700 text-center">Connexion requise</div>
+    <div class="mb-8 text-gray-700 text-center text-base">Veuillez vous connecter pour obtenir un ticket.</div>
+    <div class="flex justify-center gap-4">
+      <button (click)="closeModal()" class="px-5 py-2 rounded-lg text-gray-700 bg-gray-100 hover:bg-gray-200 transition font-semibold">
+        Annuler
+      </button>
+      <button (click)="goToLogin()" class="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition font-semibold shadow">
+        Se connecter
+      </button>
+    </div>
+  </div>
+</div>

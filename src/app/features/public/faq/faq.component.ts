@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../../shared/navbar/navbar.component';
 import { FooterComponent } from '../../../shared/footer/footer.component';
+import { Router } from '@angular/router';
+
 
 interface FaqItem {
   question: string;
@@ -78,7 +80,13 @@ export class FaqComponent {
     }
   ];
 
+  constructor(private router: Router) {}
+
   toggleFaq(index: number): void {
     this.faqItems[index].isOpen = !this.faqItems[index].isOpen;
+  }
+
+  goToContact() {
+    this.router.navigate(['/contact']);
   }
 }

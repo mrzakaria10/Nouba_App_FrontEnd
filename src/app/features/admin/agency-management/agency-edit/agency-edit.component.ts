@@ -20,6 +20,7 @@ export class AgencyEditComponent implements OnInit {
   photoUrl: string | ArrayBuffer | null = null;
   currentPhotoUrl: string | null = null;
   loading = false;
+  showSuccess = false;
   backendUrl = 'http://localhost:8080/api/uploads/'; // Adjust to your backend's static files path
 
   form = this.fb.group({
@@ -36,7 +37,7 @@ export class AgencyEditComponent implements OnInit {
     private fb: FormBuilder,
     private agenciesAdminService: AgenciesAdminService,
     private ticketService: TicketService,
-public router: Router,
+    public router: Router,
     private toastr: ToastrService
   ) {}
 
@@ -96,13 +97,20 @@ public router: Router,
     this.agenciesAdminService.updateAgency(this.agencyId, agency).subscribe({
       next: res => {
         this.loading = false;
+        this.showSuccess = true;
         this.toastr.success('Agence mise à jour avec succès', 'Succès');
-        this.router.navigate(['/admin/agencies/list']);
+        setTimeout(() => {
+          this.showSuccess = false;
+          this.router.navigate(['/admin/agencies/list']);
+        }, 1000);
       },
       error: err => {
         this.loading = false;
         this.toastr.error('Erreur lors de la mise à jour', 'Erreur');
       }
     });
+  }
+    onCancel(): void {
+    this.router.navigate(['/admin/agencies/list']);
   }
 }

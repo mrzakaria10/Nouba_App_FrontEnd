@@ -1,82 +1,85 @@
 <div *ngIf="authService.isAdmin()">
   <div [ngClass]="{
         'w-64': !isCollapsed,
-        'w-20': isCollapsed,
+        'w-16 sm:w-20': isCollapsed,
         'fixed md:static': true,
         'h-full': true,
         'bg-white': true,
-        'border-r': true,
+        'border-r border-gray-200': true,
         'flex flex-col': true,
-        'transition-all duration-300': true
+        'transition-all duration-300 ease-in-out': true,
+        'z-10': true
       }">
     <!-- Logo and Collapse Button -->
-    <div class="flex items-center justify-between p-4 border-b">
-      <div class="flex items-center space-x-2">
+    <div class="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200">
+      <div class="flex items-center space-x-2 min-w-0">
         <!-- SVG Logo -->
-        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v10a1 1 0 01-1 1h-3m-6 0h6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <span *ngIf="!isCollapsed" class="text-lg font-bold text-blue-600">Admin Nouba</span>
+        <span *ngIf="!isCollapsed" class="text-lg font-bold text-blue-600 truncate">Admin Nouba</span>
       </div>
       <!-- Collapse/Expand Icon -->
-      <button (click)="toggleSidebar()" class="text-gray-600 hover:text-gray-800 focus:outline-none">
-        <svg *ngIf="!isCollapsed" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <button (click)="toggleSidebar()" class="text-gray-500 hover:text-gray-700 focus:outline-none transition-colors">
+        <svg *ngIf="!isCollapsed" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M19 12H5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <svg *ngIf="isCollapsed" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <svg *ngIf="isCollapsed" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
     </div>
 
     <!-- Admin Name -->
-    <div *ngIf="!isCollapsed" class="p-4 text-gray-700 border-b">
-      <span class="block text-sm">Bienvenue,</span>
-      <span class="block font-medium text-blue-600">{{ adminName }}</span>
+    <div *ngIf="!isCollapsed" class="p-3 sm:p-4 text-gray-700 border-b border-gray-200">
+      <span class="block text-xs sm:text-sm">Bienvenue,</span>
+      <span class="block font-medium text-blue-600 truncate text-sm sm:text-base">{{ adminName }}</span>
     </div>
 
     <!-- Menu -->
-    <nav class="flex-1 p-4 space-y-2">
-      <ul>
+    <nav class="flex-1 p-2 sm:p-4 space-y-1 overflow-y-auto">
+      <ul class="space-y-1">
         <li>
-          <a routerLink="/admin/dashboard" routerLinkActive="font-bold text-blue-600"
-             class="flex items-center gap-2 py-2 px-4 rounded hover:bg-blue-50">
+          <a routerLink="/admin/dashboard" routerLinkActive="bg-blue-50 font-semibold text-blue-600"
+             class="flex items-center gap-2 py-2 px-3 sm:px-4 rounded hover:bg-blue-50 transition-colors">
             <!-- Dashboard Icon -->
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8v-10h-8v10zm0-18v6h8V3h-8z"/>
             </svg>
-            <span *ngIf="!isCollapsed">Tableau de bord</span>
+            <span *ngIf="!isCollapsed" class="text-sm sm:text-base truncate">Tableau de bord</span>
           </a>
         </li>
         <li>
-          <a routerLink="/admin/agencies/list" routerLinkActive="font-bold text-blue-600"
-             class="flex items-center gap-2 py-2 px-4 rounded hover:bg-blue-50">
+          <a routerLink="/admin/agencies/list" routerLinkActive="bg-blue-50 font-semibold text-blue-600"
+             class="flex items-center gap-2 py-2 px-3 sm:px-4 rounded hover:bg-blue-50 transition-colors">
             <!-- Agencies Icon -->
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M16 11V5a1 1 0 00-1-1H5a1 1 0 00-1 1v6m16 0V5a1 1 0 00-1-1h-6a1 1 0 00-1 1v6m0 0v6a1 1 0 001 1h6a1 1 0 001-1v-6m-8 0v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6"/>
             </svg>
-            <span *ngIf="!isCollapsed">Gérer les agences</span>
+            <span *ngIf="!isCollapsed" class="text-sm sm:text-base truncate">Gérer les agences</span>
           </a>
         </li>
         <li>
-          <a routerLink="/admin/users" routerLinkActive="font-bold text-blue-600" class="flex items-center gap-2 py-2 px-4 rounded hover:bg-blue-50">
+          <a routerLink="/admin/users" routerLinkActive="bg-blue-50 font-semibold text-blue-600" 
+             class="flex items-center gap-2 py-2 px-3 sm:px-4 rounded hover:bg-blue-50 transition-colors">
             <!-- Users Icon -->
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-2a4 4 0 10-8 0 4 4 0 008 0zm6-2a4 4 0 10-8 0 4 4 0 008 0z"/>
             </svg>
-            <span *ngIf="!isCollapsed">Utilisateurs</span>
+            <span *ngIf="!isCollapsed" class="text-sm sm:text-base truncate">Utilisateurs</span>
           </a>
         </li>
       </ul>
     </nav>
 
     <!-- Logout Button -->
-    <div class="p-4 border-t mt-auto">
-      <button (click)="logout()" class="w-full text-red-600 border border-red-600 px-4 py-2 rounded hover:bg-red-50 flex items-center justify-center">
-        <svg *ngIf="isCollapsed" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <div class="p-3 sm:p-4 border-t border-gray-200 mt-auto">
+      <button (click)="logout()" 
+              class="w-full text-red-600 border border-red-200 px-3 py-1.5 sm:px-4 sm:py-2 rounded hover:bg-red-50 flex items-center justify-center gap-1 transition-colors">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1"/>
         </svg>
-        <span *ngIf="!isCollapsed">-&gt; Déconnexion</span>
+        <span *ngIf="!isCollapsed" class="text-sm sm:text-base">Déconnexion</span>
       </button>
     </div>
   </div>

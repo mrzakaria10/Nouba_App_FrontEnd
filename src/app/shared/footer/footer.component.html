@@ -1,63 +1,286 @@
 <!-- Pied de page principal -->
 <footer class="bg-gray-900 text-gray-300">
-    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
       <!-- Logo et description -->
       <div>
-        <!-- Logo de l'entreprise -->
-        <a routerLink="/" class="text-4xl font-bold text-blue-500 mb-4 block">Nouba</a>
-        <!-- Description courte -->
-        <p>
+        <a routerLink="/" class="flex items-center space-x-2 mb-4">
+          <!-- Optionally add a logo image here -->
+          <!-- <img src="assets/logo-nouba.svg" alt="Nouba" class="h-10 w-10"> -->
+          <span class="text-3xl sm:text-4xl font-extrabold text-blue-500">Nouba</span>
+        </a>
+        <p class="text-sm sm:text-base leading-relaxed">
           Gestion intelligente des files d'attente pour optimiser l'expérience client et réduire les temps d'attente.
         </p>
       </div>
       <!-- Navigation principale -->
       <div>
+        <h3 class="text-lg font-semibold text-white mb-3">Navigation</h3>
         <ul class="space-y-2">
-          <li><a routerLink="/" class="hover:text-white">Accueil</a></li>
-          <li><a routerLink="/verifier" class="hover:text-white">Vérifier votre ticket</a></li>
-          <li><a routerLink="/contact" class="hover:text-white">Contact</a></li>
-          <li><a routerLink="/faq" class="hover:text-white">FAQ</a></li>
+          <li><a routerLink="/" class="hover:text-blue-400 transition">Accueil</a></li>
+          <li><a routerLink="/ListAgencies" class="hover:text-blue-400 transition">Nos agences</a></li>
+          <li><a routerLink="/contact" class="hover:text-blue-400 transition">Contact</a></li>
+          <li><a routerLink="/faq" class="hover:text-blue-400 transition">FAQ</a></li>
         </ul>
       </div>
       <!-- Informations sur l'entreprise -->
       <div>
+        <h3 class="text-lg font-semibold text-white mb-3">Entreprise</h3>
         <ul class="space-y-2">
-          <li><a routerLink="/about" class="hover:text-white">À propos</a></li>
-          <li><a routerLink="/clients" class="hover:text-white">Clients</a></li>
-          <li><a routerLink="/blog" class="hover:text-white">Blog</a></li>
-          <li><a routerLink="/careers" class="hover:text-white">Carrières</a></li>
+<li>
+  <button 
+    type="button"
+    (click)="showAboutModal = true"
+    class="hover:text-blue-400 transition bg-transparent p-0 m-0 outline-none border-none cursor-pointer"
+  >
+    À propos
+  </button>
+</li>
+<li>
+  <button
+    type="button"
+    (click)="showClientsModal = true"
+    class="hover:text-blue-400 transition bg-transparent p-0 m-0 outline-none border-none cursor-pointer"
+  >
+    Clients au Maroc
+  </button>
+</li>
         </ul>
       </div>
       <!-- Contact et réseaux sociaux -->
       <div>
-        <ul class="space-y-2">
-          <li>contact&#64;nouba.com</li>
-          <li>+33 1 23 45 67 89</li>
+        <h3 class="text-lg font-semibold text-white mb-3">Contact</h3>
+        <ul class="space-y-2 text-sm sm:text-base">
+          <li><a href="mailto:contact@nouba.com" class="hover:text-blue-400 transition">contact&#64;nouba.com</a></li>
+          <li><a href="tel:+33123456789" class="hover:text-blue-400 transition">+33 1 23 45 67 89</a></li>
           <li>123 Avenue des Files, Paris</li>
         </ul>
-        <!-- Icônes réseaux sociaux -->
         <div class="flex space-x-4 mt-4">
-          <a href="https://twitter.com/nouba" target="_blank" rel="noopener" class="hover:text-white">
+          <a href="https://twitter.com/nouba" target="_blank" rel="noopener" class="hover:text-blue-400 transition text-xl">
             <i class="fab fa-twitter"></i>
           </a>
-          <a href="https://facebook.com/nouba" target="_blank" rel="noopener" class="hover:text-white">
+          <a href="https://facebook.com/nouba" target="_blank" rel="noopener" class="hover:text-blue-400 transition text-xl">
             <i class="fab fa-facebook"></i>
           </a>
-          <a href="https://linkedin.com/company/nouba" target="_blank" rel="noopener" class="hover:text-white">
+          <a href="https://linkedin.com/company/nouba" target="_blank" rel="noopener" class="hover:text-blue-400 transition text-xl">
             <i class="fab fa-linkedin"></i>
           </a>
         </div>
       </div>
     </div>
     <!-- Ligne de séparation -->
-    <div class="border-t border-gray-800 mt-8"></div>
+    <div class="border-t border-gray-800 mt-10"></div>
     <!-- Mentions légales et droits -->
-    <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+    <div class="flex flex-col md:flex-row justify-between items-center text-xs sm:text-sm text-gray-400 py-4 gap-2">
       <p>© 2025 Nouba. Tous droits réservés.</p>
-      <div class="flex space-x-4 mt-2 md:mt-0">
-        <a routerLink="/privacy" class="hover:text-white">Politique de confidentialité</a>
-        <a routerLink="/terms" class="hover:text-white">Conditions d'utilisation</a>
-        <a routerLink="/legal" class="hover:text-white">Mentions légales</a>
+      <!-- <div class="flex flex-wrap gap-x-4 gap-y-1 mt-2 md:mt-0">
+        <a routerLink="/privacy" class="hover:text-blue-400 transition">Politique de confidentialité</a>
+        <a routerLink="/terms" class="hover:text-blue-400 transition">Conditions d'utilisation</a>
+        <a routerLink="/legal" class="hover:text-blue-400 transition">Mentions légales</a>
+      </div> -->
+    </div>
+  </div>
+</footer>
+
+<!-- Modal À propos de Nouba -->
+<div 
+  *ngIf="showAboutModal" 
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-2"
+>
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg sm:max-w-2xl p-3 sm:p-6 relative animate-fade-in overflow-y-auto max-h-[90vh]">
+    <!-- Close button -->
+    <button 
+      (click)="showAboutModal = false"
+      class="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition"
+      aria-label="Fermer"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <!-- Modal Content -->
+    <div>
+      <div class="flex items-center gap-2 mb-2">
+        <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z"/>
+        </svg>
+        <h2 class="text-xl font-bold text-gray-900">À propos de Nouba</h2>
+      </div>
+      <h3 class="text-blue-600 font-semibold mb-2">Innovation au Maroc</h3>
+      <p class="text-gray-700 mb-4 text-sm sm:text-base">
+        Nouba est une solution innovante 100% marocaine qui révolutionne la gestion des files d'attente. Notre mission est d'optimiser l'expérience client dans tout le Maroc grâce à une technologie de pointe et une approche centrée sur l'utilisateur.
+      </p>
+      <h4 class="text-blue-600 font-semibold mb-2">Notre Équipe</h4>
+      <div class="space-y-2 sm:space-y-3">
+        <!-- Zakaria -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 bg-blue-50 rounded-xl p-2 sm:p-3">
+          <svg class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M16 18v-1a4 4 0 00-8 0v1M12 14a4 4 0 100-8 4 4 0 000 8z"/>
+          </svg>
+          <div>
+            <div class="font-bold text-gray-900 text-sm sm:text-base">
+              Zakaria Derkaoui
+              <span class="text-blue-600 block text-xs sm:text-sm font-medium">Front-end Developer</span>
+            </div>
+            <div class="text-xs text-gray-600">Expert en développement Angular et interfaces utilisateur modernes</div>
+          </div>
+        </div>
+        <!-- El Oufir -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 bg-blue-50 rounded-xl p-2 sm:p-3">
+          <svg class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M16 18v-1a4 4 0 00-8 0v1M12 14a4 4 0 100-8 4 4 0 000 8z"/>
+          </svg>
+          <div>
+            <div class="font-bold text-gray-900 text-sm sm:text-base">
+              El Oufir Chakib
+              <span class="text-blue-600 block text-xs sm:text-sm font-medium">Back-end Developer</span>
+            </div>
+            <div class="text-xs text-gray-600">Spécialiste en architecture serveur et bases de données</div>
+          </div>
+        </div>
+        <!-- Ennajmi -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 bg-blue-50 rounded-xl p-2 sm:p-3">
+          <svg class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M16 18v-1a4 4 0 00-8 0v1M12 14a4 4 0 100-8 4 4 0 000 8z"/>
+
+          </svg>
+          <div>
+            <div class="font-bold text-gray-900 text-sm sm:text-base">
+              Ennajmi Hannan
+              <span class="text-blue-600 block text-xs sm:text-sm font-medium">UI/UX Designer</span>
+            </div>
+            <div class="text-xs text-gray-600">Créatrice d'expériences utilisateur exceptionnelles</div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-blue-50 rounded-lg p-3 mt-4 text-xs sm:text-sm text-gray-700 font-semibold">
+        <span class="text-blue-700">Nouba</span> - Fière d'être une innovation 100% marocaine au service de la modernisation des services publics et privés au Royaume du Maroc.
       </div>
     </div>
-  </footer>
+  </div>
+</div>
+
+<!-- Modal Clients au Maroc -->
+<div
+  *ngIf="showClientsModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-2"
+>
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg sm:max-w-2xl p-3 sm:p-6 relative animate-fade-in overflow-y-auto max-h-[90vh]">
+    <!-- Close button -->
+    <button
+      (click)="showClientsModal = false"
+      class="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition"
+      aria-label="Fermer"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <!-- Modal Content -->
+    <div>
+      <div class="flex items-center gap-2 mb-2">
+        <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 7v4a1 1 0 001 1h3v2a1 1 0 001 1h4a1 1 0 001-1v-2h3a1 1 0 001-1V7a1 1 0 00-1-1H4a1 1 0 00-1 1z"/>
+        </svg>
+        <h2 class="text-xl font-bold text-gray-900">Nos Clients au Maroc</h2>
+      </div>
+      <p class="text-gray-700 mb-4 text-sm sm:text-base">
+        Plus de <span class="font-bold text-blue-700">200 agences</span> à travers le Maroc font confiance à Nouba pour optimiser leur gestion des files d'attente et améliorer l'expérience de leurs clients.
+      </p>
+      <div class="space-y-3">
+        <!-- Banque Populaire -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-gray-50 rounded-xl p-2 sm:p-4 border mb-2">
+          <div>
+            <div class="font-bold text-gray-900 text-sm sm:text-base">Banque Populaire</div>
+            <div class="flex items-center gap-1 text-xs text-gray-500 mt-1 break-words">
+              <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z"/>
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 11a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+              Casablanca, Rabat
+            </div>
+            <div class="text-xs text-blue-700 mt-1">Secteur Bancaire</div>
+          </div>
+          <div class="flex items-center gap-1 mt-2 sm:mt-0">
+            <svg class="h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.455a1 1 0 00-1.176 0l-3.38 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z"/>
+            </svg>
+            <span class="text-green-600 font-bold text-xs sm:text-sm">98%</span>
+          </div>
+        </div>
+        <!-- CNSS -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-gray-50 rounded-xl p-4 border mb-2">
+          <div>
+            <div class="font-bold text-gray-900">CNSS</div>
+            <div class="flex items-center gap-1 text-xs text-gray-500 mt-1">
+              <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z"/>
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 11a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+              Tout le Maroc
+            </div>
+            <div class="text-xs text-blue-700 mt-1">Organisme Public</div>
+          </div>
+          <div class="flex items-center gap-1 mt-2 sm:mt-0">
+            <svg class="h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.455a1 1 0 00-1.176 0l-3.38 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z"/>
+            </svg>
+            <span class="text-green-600 font-bold text-xs sm:text-sm">95%</span>
+          </div>
+        </div>
+        <!-- Maroc Telecom -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-gray-50 rounded-xl p-4 border mb-2">
+          <div>
+            <div class="font-bold text-gray-900">Maroc Telecom</div>
+            <div class="flex items-center gap-1 text-xs text-gray-500 mt-1">
+              <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z"/>
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 11a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+              Agences principales
+            </div>
+            <div class="text-xs text-blue-700 mt-1">Télécommunications</div>
+          </div>
+          <div class="flex items-center gap-1 mt-2 sm:mt-0">
+            <svg class="h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.455a1 1 0 00-1.176 0l-3.38 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z"/>
+            </svg>
+            <span class="text-green-600 font-bold text-xs sm:text-sm">97%</span>
+          </div>
+        </div>
+        <!-- Centres de santé -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-gray-50 rounded-xl p-4 border mb-2">
+          <div>
+            <div class="font-bold text-gray-900">Centres de santé</div>
+            <div class="flex items-center gap-1 text-xs text-gray-500 mt-1">
+              <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z"/>
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 11a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+              Casablanca, Fès, Marrakech
+            </div>
+            <div class="text-xs text-blue-700 mt-1">Secteur Médical</div>
+          </div>
+          <div class="flex items-center gap-1 mt-2 sm:mt-0">
+            <svg class="h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.455a1 1 0 00-1.176 0l-3.38 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z"/>
+            </svg>
+            <span class="text-green-600 font-bold text-xs sm:text-sm">96%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bg-green-50 border border-green-200 rounded-lg p-4 mt-4 text-center">
+        <span class="text-2xl font-bold text-green-600">40%</span>
+        <div class="text-green-700 text-sm">Réduction moyenne du temps d'attente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.animate-fade-in { animation: fade-in 0.5s cubic-bezier(.4,0,.2,1) both; }
+</style>

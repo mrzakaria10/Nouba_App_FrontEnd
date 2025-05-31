@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 export class AdminSidebarComponent implements OnInit {
   isCollapsed = false;
   adminName = '';
+  
 
   constructor(public authService: AuthService) {}
 

@@ -32,6 +32,11 @@ export interface Agency {
 export class AgenciesListComponent implements OnInit {
   agencies: any[] = [];
 
+  // Ajoute ces propriétés pour la gestion du modal
+  showModal = false;
+  modalType: 'login' | '' = '';
+  modalMessage = '';
+
   constructor(
     private agencyService: AgencyService,
     private router: Router,
@@ -46,5 +51,25 @@ export class AgenciesListComponent implements OnInit {
     this.agencyService.getAllAgencies().subscribe((data: Agency[]) => {
       this.agencies = data;
     });
+  }
+
+  handleTicketClick(): void {
+    if (!this.authService.isAuthenticated()) {
+      this.modalMessage = 'Veuillez vous connecter pour obtenir un ticket.';
+      this.modalType = 'login';
+      this.showModal = true;
+    } 
+  }
+
+  // Optionnel : méthodes pour fermer ou agir sur le modal
+  closeModal(): void {
+    this.showModal = false;
+    this.modalType = '';
+    this.modalMessage = '';
+  }
+
+  goToLogin(): void {
+    this.showModal = false;
+    this.router.navigate(['/auth/login']);
   }
 }

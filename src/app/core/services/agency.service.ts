@@ -52,7 +52,7 @@ export class AgencyService {
 
   createAgency(agency: any): Observable<any> {
     const formData = this.buildFormDataForCreate(agency);
-    return this.http.post(this.apiUrl, formData, { headers: this.getHeaders() });
+    return this.http.post(this.apiUrl, formData,);
   }
 
   updateAgency(id: number, agency: any): Observable<any> {

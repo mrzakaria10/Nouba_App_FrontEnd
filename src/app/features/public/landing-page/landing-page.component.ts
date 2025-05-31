@@ -23,6 +23,8 @@ export class LandingPageComponent {
   agencies: any[] = [];
   selectedAgency: any = null;
   clientName: string = '';
+    redirectTo: string = ''; // <-- Ajoute cette ligne
+
 
   constructor(
     private router: Router,
@@ -52,22 +54,27 @@ export class LandingPageComponent {
     this.modalType = '';
   }
 
-  handleTicketClick(): void {
+ handleTicketClick(): void {
     if (!this.authService.isAuthenticated()) {
       this.modalMessage = 'Veuillez vous connecter pour obtenir un ticket.';
       this.modalType = 'login';
+      this.redirectTo = '/ticket-wizard'; // <- pour obtenir un ticket
       this.showModal = true;
-    } 
-    // else if (!this.authService.hasRole('CLIENT')) {
-    //   this.modalMessage = 'Seuls les clients peuvent obtenir des tickets.';
-    //   this.modalType = 'error';
-    //   this.showModal = true;
-    // } 
-    else {
+    } else {
       this.router.navigate(['/ticket-wizard']);
     }
   }
 
+  handleTicketClickTT(): void {
+    if (!this.authService.isAuthenticated()) {
+      this.modalMessage = 'Veuillez vous connecter pour vérifier votre ticket.';
+      this.modalType = 'login';
+      this.redirectTo = '/verifier'; // <- pour vérifier un ticket
+      this.showModal = true;
+    } else {
+      this.router.navigate(['/verifier']);
+    }
+  }
   loadCities() {
     this.ticketService.getAllCities().subscribe({
       next: (response) => {
@@ -93,9 +100,9 @@ export class LandingPageComponent {
     this.showModal = true;
   }
 
-  navigateToLogin(): void {
+    navigateToLogin(): void {
     this.closeModal();
-    this.router.navigate(['/auth/login'], { queryParams: { redirectTo: '/ticket-wizard' } });
+    this.router.navigate(['/auth/login'], { queryParams: { redirectTo: this.redirectTo || '/' } });
   }
 
   replayVideo(video: HTMLVideoElement) {

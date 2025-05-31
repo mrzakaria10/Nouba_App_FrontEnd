@@ -1,15 +1,15 @@
 <app-navbar></app-navbar>
 
-<section class="min-h-[60vh] flex items-center justify-center bg-white">
+<section class="min-h-[60vh] flex items-center justify-center bg-white px-2">
   <div class="w-full max-w-xl mx-auto">
-    <h2 class="text-3xl font-bold text-center mb-10 mt-8">Vérifiez votre ticket</h2>
-    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-center mb-10 mt-8 text-blue-700">Vérifiez votre ticket</h2>
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
       <div class="bg-blue-100 px-8 py-5">
         <span class="text-blue-600 text-xl font-semibold">Statut de votre ticket</span>
       </div>
       <form class="flex flex-col gap-4 px-6 py-6 bg-white" (ngSubmit)="onSubmit()">
         <select
-          class="border border-gray-200 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-600"
+          class="border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-600"
           [(ngModel)]="selectedCity"
           name="city"
           (change)="onCityChange()"
@@ -18,7 +18,7 @@
           <option *ngFor="let city of cities" [ngValue]="city">{{ city.name }}</option>
         </select>
         <select
-          class="border border-gray-200 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-600"
+          class="border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-600"
           [(ngModel)]="selectedAgency"
           name="agency"
           [disabled]="!selectedCity"
@@ -31,13 +31,13 @@
           [(ngModel)]="ticketNumber"
           name="ticketNumber"
           placeholder="Entrez votre numéro de ticket"
-          class="border border-gray-200 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-600"
+          class="border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-600"
           required
         />
         <button
           type="submit"
           [disabled]="isLoading"
-          class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition"
+          class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
         >
           {{ isLoading ? 'Vérification...' : 'Vérifier le ticket' }}
         </button>
@@ -72,17 +72,17 @@
             <div><span class="font-semibold">Temps d'attente:</span> <span class="text-gray-700">{{ result.estimatedWaitTime }}</span></div>
           </div>
           <!-- Annuler button if ticket is EN_ATTENTE -->
-          <div *ngIf="result.status === 'EN_ATTENTE'" class="flex gap-3 mt-4 justify-center">
-            <button (click)="cancelTicket()" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded shadow transition">
+          <div *ngIf="result.status === 'EN_ATTENTE'" class="flex gap-3 mt-4 justify-center flex-wrap">
+            <button (click)="cancelTicket()" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
               Annuler le ticket
             </button>
-            <button (click)="returnToLanding()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2 rounded shadow transition">
+            <button (click)="returnToLanding()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2 rounded-lg shadow transition">
               Retour à l'accueil
             </button>
           </div>
           <!-- Only return button for other statuses -->
           <div *ngIf="result.status !== 'EN_ATTENTE'" class="flex gap-3 mt-4 justify-center">
-            <button (click)="returnToLanding()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2 rounded shadow transition">
+            <button (click)="returnToLanding()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2 rounded-lg shadow transition">
               Retour à l'accueil
             </button>
           </div>

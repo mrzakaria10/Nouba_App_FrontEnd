@@ -77,4 +77,9 @@ export class AgencyAddComponent implements OnInit {
       }
     });
   }
+
+  // Ajoute cette méthode pour le bouton Annuler
+  onCancel(): void {
+    this.router.navigate(['/admin/agencies/list']);
+  }
 }

@@ -37,4 +37,10 @@ export class AdminService {
         map(res => res.data ? res.data : res)
       );
   }
+
+  resetAllTickets(): Observable<any> {
+  const token = this.authService.getToken();
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.post<any>(`${environment.apiUrl}/tickets/admin/reset-tickets`, {}, { headers });
+}
 }

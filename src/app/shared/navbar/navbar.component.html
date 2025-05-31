@@ -25,16 +25,16 @@
           </svg> Nos agences
         </a>
       </li>
-      <!-- Lien Espace Agence (agence uniquement)  *ngIf="isAgency()"-->
+      <!-- Lien Espace Agence (agence uniquement)  *ngIf="isAgency()"
       <li *ngIf="isAgency()">
         <a routerLink="/agency/dashboard" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/>
           </svg> Espace Agence
         </a>
-      </li>
+      </li> -->
       <!-- Lien Vérifier votre ticket -->
-      <li>
+      <li *ngIf="isClient()">
         <a routerLink="/verifier" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M5 13l4 4L19 7"></path>
@@ -59,7 +59,7 @@
           </svg> Contact
         </a>
       </li>
-      <!-- Lien Gérer les agences (admin uniquement) -->
+      <!-- Lien Gérer les agences (admin uniquement) 
       <li *ngIf="isAdmin()">
         <a routerLink="/admin/dashboard" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@
           </svg>
           Gérer les agences
         </a>
-      </li>
+      </li> -->
     </ul>
     <!-- Actions utilisateur -->
     <div class="hidden md:flex space-x-2 items-center">
@@ -109,16 +109,17 @@
       </li>
       <!-- Lien Nos Agences (admin et client) -->
       <li>
-        <a routerLink="/agencies" (click)="closeMenu()" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
+        <a routerLink="/ListAgencies" (click)="closeMenu()" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           Nos agences
         </a>
       </li>
-      <!-- Lien Espace Agence (agence uniquement) *ngIf="isAgency()" -->
-      <li >
-        <a routerLink="/dashboard" (click)="closeMenu()" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
-          Espace Agence
+      <!-- lien verifier votre ticket -->
+       <li *ngIf="isClient()">
+        <a routerLink="/verifier" (click)="closeMenu()" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
+         Vérifier votre ticket
         </a>
-      </li>
+
+       </li>      
       <li>
         <a routerLink="/contact" (click)="closeMenu()" routerLinkActive="text-blue-600 font-bold" class="flex items-center text-gray-700 hover:text-blue-600">
           Contact

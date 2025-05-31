@@ -84,5 +84,5 @@ export class AgencyListComponent implements OnInit {
         this.toastr.error(err.error.message, 'Erreur');
       }
     });
-  }
-}
+  }}
+  

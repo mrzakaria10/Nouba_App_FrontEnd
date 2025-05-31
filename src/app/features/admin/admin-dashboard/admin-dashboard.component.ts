@@ -57,6 +57,9 @@ export class AdminDashboardComponent implements OnInit {
 
   confirmed = false;
 
+  // Controls the visibility of the reset confirmation modal
+  showResetModal = false; 
+
   constructor(private adminService: AdminService, private ticketService: TicketService) {}
 
   ngOnInit() {
@@ -156,4 +159,45 @@ export class AdminDashboardComponent implements OnInit {
   onRetry(): void {
     this.loadSummaryData();
   }
+
+  // Open the reset confirmation modal
+  openResetModal(): void {
+    this.showResetModal = true;
+  }
+
+  // Close the reset confirmation modal
+  closeResetModal(): void {
+    this.showResetModal = false;
+  }
+
+  // Perform the reset action
+  confirmResetTickets(): void {
+    this.adminService.resetAllTickets().subscribe({
+      next: (res) => {
+        this.closeResetModal();
+        this.loadSummaryData(); // Recharge les données du dashboard (méthode à adapter selon ton code)
+        this.loadTodayReservations(); // Recharge la liste des réservations si besoin
+        // Optionnel : Affiche un toast de succès
+        // this.toastr.success('Tous les tickets ont été réinitialisés');
+      },
+      error: () => {
+        this.closeResetModal();
+        // Optionnel : Affiche un toast d’erreur
+        // this.toastr.error('Erreur lors de la réinitialisation');
+      }
+    });
+  }
+
+  // resetTicketsAndUpdateSummary(): void {
+  //   this.adminService.resetAllTickets().subscribe({
+  //     next: () => {
+  //       // Reload the summary data after resetting tickets
+  //       this.loadSummaryData();
+  //     },
+  //     error: (err) => {
+  //       console.error('Error resetting tickets:', err);
+  //       alert('Une erreur est survenue lors de la réinitialisation des tickets.');
+  //     }
+  //   });
+  // }
 }

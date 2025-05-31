@@ -14,7 +14,17 @@ export class NavbarComponent implements OnInit {
   isMenuOpen = false;
   userName = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  showModal = false;
+  modalMessage = '';
+  modalType = '';
+  redirectTo: string = '';
+
+
+
+  constructor(
+    public authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     console.log('=== Navbar Component Initialized ===');
@@ -40,6 +50,19 @@ export class NavbarComponent implements OnInit {
 
   isLoggedIn(): boolean {
     return this.authService.isAuthenticated();
+  }
+
+ 
+
+  closeModal() {
+    this.showModal = false;
+    this.modalMessage = '';
+    this.modalType = '';
+  }
+
+  navigateToLoginTT() {
+    this.closeModal();
+    this.router.navigate(['/auth/login']);
   }
 
   navigateToLogin(): void {
@@ -82,4 +105,8 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
+
+
+
+ 
 }

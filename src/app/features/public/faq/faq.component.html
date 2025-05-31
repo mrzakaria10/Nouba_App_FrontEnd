@@ -1,15 +1,16 @@
 <app-navbar></app-navbar>
 
-<div class="faq-container">
-  <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Questions Fréquemment Posées</h1>
+<div class="faq-container max-w-3xl mx-auto py-10 px-4">
+  <h1 class="text-4xl font-extrabold text-center mb-8 text-blue-700 drop-shadow">Questions Fréquemment Posées</h1>
   
   <div class="space-y-4">
-    <div *ngFor="let item of faqItems; let i = index" class="faq-item">
-      <div class="faq-question" (click)="toggleFaq(i)">
-        <span>{{ item.question }}</span>
+    <div *ngFor="let item of faqItems; let i = index" class="faq-item bg-white rounded-xl shadow p-6 transition hover:scale-[1.02] duration-200">
+      <div class="faq-question flex justify-between items-center cursor-pointer" (click)="toggleFaq(i)">
+        <span class="text-lg font-semibold text-gray-800">{{ item.question }}</span>
         <svg 
-          class="faq-icon" 
+          class="faq-icon transition-transform duration-300" 
           [class.open]="item.isOpen"
+          [ngClass]="{'rotate-180': item.isOpen}"
           width="24" 
           height="24" 
           viewBox="0 0 24 24" 
@@ -22,15 +23,17 @@
           <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
       </div>
-      <div class="faq-answer" *ngIf="item.isOpen">
+      <div class="faq-answer mt-3 text-gray-600 text-base leading-relaxed" *ngIf="item.isOpen">
         {{ item.answer }}
       </div>
     </div>
   </div>
 
-  <div class="mt-8 text-center">
-    <p class="text-gray-600 mb-4">Vous n'avez pas trouvé votre réponse ?</p>
-    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+  <div class="mt-10 text-center">
+    <p class="text-gray-600 mb-4 text-lg">Vous n'avez pas trouvé votre réponse ?</p>
+    <button 
+      class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg shadow hover:bg-blue-700 transition"
+      (click)="goToContact()">
       Contactez-nous
     </button>
   </div>

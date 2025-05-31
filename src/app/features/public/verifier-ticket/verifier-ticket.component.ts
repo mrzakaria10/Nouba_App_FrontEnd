@@ -33,7 +33,7 @@ export class VerifierTicketComponent implements OnInit {
       },
       error: (error) => {
         console.error('Erreur lors du chargement des villes:', error);
-        alert('Erreur lors du chargement des villes. Veuillez réessayer.');
+       // alert('Erreur lors du chargement des villes. Veuillez réessayer.');
       }
     });
   }
