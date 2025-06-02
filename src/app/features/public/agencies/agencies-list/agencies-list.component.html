@@ -35,12 +35,12 @@
 <div *ngIf="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
   <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-sm animate-fade-in">
     <div class="font-bold text-xl mb-3 text-blue-700 text-center">Connexion requise</div>
-    <div class="mb-8 text-gray-700 text-center text-base">Veuillez vous connecter pour obtenir un ticket.</div>
+    <div class="mb-8 text-gray-700 text-center text-base">{{ modalMessage }}</div>
     <div class="flex justify-center gap-4">
       <button (click)="closeModal()" class="px-5 py-2 rounded-lg text-gray-700 bg-gray-100 hover:bg-gray-200 transition font-semibold">
         Annuler
       </button>
-      <button (click)="goToLogin()" class="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition font-semibold shadow">
+      <button *ngIf="modalType === 'login'" (click)="goToLogin()" class="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition font-semibold shadow">
         Se connecter
       </button>
     </div>
